@@ -78,30 +78,31 @@ export default function Login() {
             notify('Password is required');
             return;
         }
-        try {
-            setLoading(true)
-            const response = await axios.post(API.loginUrl, { email, password });
-            console.log('response----->', response.data);
+        // try {
+        //     setLoading(true)
+        //     const response = await axios.post(API.loginUrl, { email, password });
+        //     console.log('response----->', response.data);
 
-            const dataOfUser = {
-                _id: response.data.user._id,
-                email: response.data.user.email,
-                password: response.data.user.password,
-                role_based_control: response.data.user.role_based_control,
-                updatedAt: response.data.user.updatedAt
-            }
+        //     const dataOfUser = {
+        //         _id: response.data.user._id,
+        //         email: response.data.user.email,
+        //         password: response.data.user.password,
+        //         role_based_control: response.data.user.role_based_control,
+        //         updatedAt: response.data.user.updatedAt
+        //     }
 
-            localStorage.setItem('userData', JSON.stringify(dataOfUser))
-            setTimeout(() => {
-                setLoading(false)
-                navigate(`/usertableData`)
-            }, 2000);
-
-        } catch (error) {
-            console.log(error);
-            notify(error.response.data.message);
+        //     localStorage.setItem('userData', JSON.stringify(dataOfUser))
+           
+        // } catch (error) {
+        //     console.log(error);
+        //     notify(error.response.data.message);
+        //     setLoading(false)
+        // }
+        setTimeout(() => {
             setLoading(false)
-        }
+            navigate(`/uploadDocument`)
+        }, 2000);
+
     };
 
     const stepField = () => {
