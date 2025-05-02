@@ -21,6 +21,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios';
 import API from './BaseURL';
 import Markdown from 'markdown-to-jsx';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 export default function Sidebar({ title, children, loading, selectedId }) {
@@ -462,7 +463,7 @@ export default function Sidebar({ title, children, loading, selectedId }) {
     return (
         <>
             <Stack direction={'row'}>
-                <Box sx={{ bgcolor: '#fff', minHeight: '100vh', width: '20%' }}>
+                <Box sx={{ bgcolor: '#fff', minHeight: '100vh', width: '20%', position: 'relative' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
                         <img
                             src={aihlogo}
@@ -477,15 +478,15 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                     </Box>
 
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: '100%', ml: '30px' }} >
+                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: '100%', ml: '30px', mt: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#fdcf6f' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "70%" }}>
+                            <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#fdcf6f' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "fit-content", p: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 0.9 : '' }}>
                                 <Typography
                                     sx={{
                                         fontSize: '14px',
                                         color: '#656565',
                                         fontWeight: '600',
-                                        whiteSpace:"nowrap"
+                                        whiteSpace: "nowrap"
                                     }}
                                 >
                                     Upload Document
@@ -501,10 +502,10 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                             <Box mb={'20px'}>
                                 <Link to={`/usertableData`} style={{ textDecoration: "none" }}>
                                     <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'usertableData' ? '#aaa' : '', p: mainUrl[mainUrl.length - 1] === 'usertableData' ? 0.9 : '', borderRadius: mainUrl[mainUrl.length - 1] === 'usertableData' ? '8px' : '' }}>
-                                        <GridViewIcon sx={{ color: '#656565', fontSize: '20px' }} />
+                                        <GridViewIcon sx={{ color: '#656565', fontSize: '25px' }} />
                                         <Typography
                                             sx={{
-                                                fontSize: '14px',
+                                                fontSize: '16px',
                                                 color: '#656565',
                                                 fontWeight: '600'
                                             }}
@@ -545,10 +546,10 @@ export default function Sidebar({ title, children, loading, selectedId }) {
 
                             >
                                 <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                    <LockOutlinedIcon sx={{ color: '#656565', fontSize: '20px' }} />
+                                    <LockOutlinedIcon sx={{ color: '#656565', fontSize: '25px' }} />
                                     <Typography
                                         sx={{
-                                            fontSize: '14px',
+                                            fontSize: '16px',
                                             color: '#656565',
                                             fontWeight: '600'
                                         }}
@@ -566,65 +567,54 @@ export default function Sidebar({ title, children, loading, selectedId }) {
 
 
                     </Box>
-                    <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'} mt={'60px'}>
-                        <Box>
-                            <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '35px', height: '35px' }} />
-                        </Box>
-                        <Box>
-                            <Typography sx={{ fontSize: '15px', color: '#858585', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
-                            <Typography sx={{ fontSize: '13px', color: '#858585', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
-                        </Box>
-                    </Stack>
+                    <Box sx={{
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        bgcolor: "#06756f",
+                        py: 2,
+                        borderTopLeftRadius: '20px',
+                        borderTopRightRadius: '20px'
+
+                    }} >
+                        <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'}>
+                            <Box>
+                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '35px', height: '35px' }} />
+                            </Box>
+                            <Box>
+                                <Typography sx={{ fontSize: '15px', color: '#fff', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
+                                <Typography sx={{ fontSize: '13px', color: '#fff', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+                            </Box>
+                        </Stack>
+                    </Box>
                 </Box>
 
 
-                <Box sx={{ width: '90%', bgcolor: '#EFEADB' }}>
+                <Box sx={{ width: '90%', bgcolor: '#ddd4bb' }}>
 
-                    <Stack direction={'row'} justifyContent={'space-between'} p={1} sx={{ bgcolor: '#06756f', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px' }}>
-                        <Typography sx={{ mt: '15%', mb: '15px', p: 0.7, fontSize: '18px', color: '#000', fontWeight: '600', fontStyle: 'normal' }} >{title}</Typography>
+                    <Box p={1}
+                        sx={{ bgcolor: '#06756f', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px', height: '30vh' }}>
+                        <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+                            <Typography sx={{ mb: '15px', p: 0.7, fontSize: '18px', color: '#fff', fontWeight: '600', fontStyle: 'normal', mt: '10px' }} >{title}</Typography>
 
-                    </Stack>
+                            <Stack direction={'row'} alignItems={'center'} sx={{ cursor: 'pointer' }}>
+                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#fff', color: '#000' }} />
 
-
-                    <Stack direction={'row'} spacing={1.5} >
-                        {/* <Box sx={{ bgcolor: "#fff", width: '80%', overflowY: 'auto', height: "80vh", borderRadius: '35px', boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;", scrollbarWidth: 'none', p: 1.5 }}>
-                            {children}
-                        </Box> */}
-
-                        {mainUrl[mainUrl.length - 2] === 'demographic' || mainUrl[mainUrl.length - 2] === 'finalreport' || mainUrl[mainUrl.length - 2] === 'regularity' || mainUrl[mainUrl.length - 2] === 'spendpattern' || mainUrl[mainUrl.length - 2] === 'transactionpattern' || mainUrl[mainUrl.length - 2] === 'Transaction-Frequency-And-Size-Details' ? <Box sx={{ pt: '20px' }}>
-
-                            <Stack direction={'row'} alignItems={'center'} spacing={0.5}>
-                                <Tooltip
-                                    title={tooltipFun()}
-                                    placement="left"
-                                    slotProps={{
-                                        tooltip: {
-                                            sx: {
-                                                bgcolor: '#fff',
-                                                maxWidth: '680px',
-                                                overflowY: 'auto',
-                                                height: '70vh',
-                                                scrollbarWidth: 'none',
-                                                boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px;',
-                                                borderRadius: '12px',
-                                                p: 3,
-
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <InfoIcon sx={{ fontSize: '20px', color: '#656565' }} />
-                                </Tooltip>
-
-                                <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', fontStyle: 'normal' }}>Assumptions</Typography>
+                                <ArrowDropDownIcon sx={{ color: '#fff', fontSize: '25px' }} />
                             </Stack>
 
 
-                        </Box> : ''}
+                        </Stack>
+                    </Box>
 
-                    </Stack>
+                    <Box>
+                        {children}
+                    </Box>
 
-                </Box >
+                </Box>
 
             </Stack >
         </>
