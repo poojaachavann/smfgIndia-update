@@ -1,4 +1,4 @@
-import { Avatar, Box, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, CircularProgress, Menu, Stack, Tooltip, Typography } from '@mui/material'
 import aihlogo from '../assets/logoofsmfg.png';
 import AddchartIcon from '@mui/icons-material/Addchart';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
@@ -459,6 +459,16 @@ export default function Sidebar({ title, children, loading, selectedId }) {
         )
     }
 
+    const [anchorEl1, setAnchorEl1] = useState(null);
+    const open1 = Boolean(anchorEl1);
+    const handleClick = (event) => {
+        setAnchorEl1(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl1(null);
+    };
+
+
 
     return (
         <>
@@ -603,11 +613,63 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                             <Stack direction={'row'} alignItems={'center'} sx={{ cursor: 'pointer' }}>
                                 <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#fff', color: '#000' }} />
 
-                                <ArrowDropDownIcon sx={{ color: '#fff', fontSize: '25px' }} />
+                                <ArrowDropDownIcon sx={{ color: '#fff', fontSize: '25px' }} onClick={handleClick} />
                             </Stack>
 
 
                         </Stack>
+
+                        <Menu
+                            anchorEl={anchorEl1}
+                            open={open1}
+                            onClose={handleClose}
+
+                        >
+                            <Box sx={{ bgcolor: '#fff' }}>
+                                <Box>
+                                    <Stack direction={'row'} alignItems={'center'} spacing={1} p={1.5}>
+                                        <Box>
+                                            <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '30px', height: '30px' }} />
+                                        </Box>
+                                        <Box>
+                                            <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
+                                            <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+                                        </Box>
+                                    </Stack>
+                                </Box>
+                                
+                                <Box sx={{ border: '1px solid #aaa' }} />
+
+                                <Box mt={'10px'} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }}>
+                                    <Button sx={{ bgcolor: 'transparent', textTransform: 'none' }}>
+                                        <Box
+                                            onClick={() => {
+                                                setTimeout(() => {
+                                                    localStorage.removeItem('userData')
+                                                    window.location.href = '/'
+                                                }, 100)
+                                            }}
+                                            sx={{ cursor: 'pointer' }}
+                                        >
+                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                <LockOutlinedIcon sx={{ color: '#676767', fontSize: '20px', '&:hover': { color: '#006bb4' } }} />
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: '14px',
+                                                        color: '#676767',
+                                                        fontWeight: '600',
+                                                        '&:hover': { color: '#006bb4' }
+                                                    }}
+                                                >
+                                                    Logout
+                                                </Typography>
+
+                                            </Stack>
+                                        </Box>
+                                    </Button>
+                                </Box>
+                            </Box>
+                        </Menu>
                     </Box>
 
                     <Box>
