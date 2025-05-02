@@ -606,7 +606,7 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                 <Box sx={{ width: '90%', bgcolor: '#ddd4bb' }}>
 
                     <Box p={1}
-                        sx={{ bgcolor: '#06756f', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px', height: '30vh' }}>
+                        sx={{ bgcolor: '#06756f', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px', height: '25vh' }}>
                         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
                             <Typography sx={{ mb: '15px', p: 0.7, fontSize: '18px', color: '#fff', fontWeight: '600', fontStyle: 'normal', mt: '10px' }} >{title}</Typography>
 
@@ -637,7 +637,7 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                                         </Box>
                                     </Stack>
                                 </Box>
-                                
+
                                 <Box sx={{ border: '1px solid #aaa' }} />
 
                                 <Box mt={'10px'} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }}>

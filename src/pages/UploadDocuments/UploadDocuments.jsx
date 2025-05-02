@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from '../../Component/Sidebar'
 import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
 import idProof from '../../assets/idProof.png'
@@ -7,10 +7,13 @@ import pdficon from '../../assets/pdf.png'
 import crdebureau from '../../assets/creditBureau.png'
 import bankStatement from '../../assets/bankStatement.png'
 import { motion } from 'framer-motion';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function UploadDocuments() {
 
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState(null);
+  const [fileName, setFileName] = useState('')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -27,6 +30,63 @@ function UploadDocuments() {
       clearInterval(timer);
     };
   }, []);
+
+  const fileInputRef = useRef(null);
+
+  const [validFiles, setValidFiles] = useState([]);
+
+  const processFile = async (files) => {
+    const maxFileSize = 30 * 1024 * 1024;
+    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.pdf'];
+    const unsupportedExtensions = ['.docx', '.gif', '.svg', '.txt', '.csv', '.xlsx', '.xls',];
+
+    const validFiles = [];
+    const errors = [];
+
+    for (let file of files) {
+      const fileNameLower = file.name.toLowerCase();
+      const fileExtension = fileNameLower.slice(fileNameLower.lastIndexOf('.'));
+
+      if (unsupportedExtensions.includes(fileExtension)) {
+        errors.push(`File type not supported: ${fileExtension}.`);
+      } else if (!allowedExtensions.includes(fileExtension)) {
+        errors.push('Supported file types are: png, jpg, jpeg, webp, pdf.');
+      } else if (file.size > maxFileSize) {
+        errors.push('File size should not exceed 20MB.');
+      } else {
+        validFiles.push(file);
+      }
+    }
+
+    if (errors.length > 0) {
+      setError(errors.join(' '));
+      setFileName('');
+    } else {
+      setError('');
+      setFileName(validFiles.map(file => file.name).join(', '));
+      setValidFiles(validFiles);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Handle preview if needed
+      };
+      reader.readAsDataURL(validFiles[0]);
+    }
+
+    return validFiles;
+  };
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    processFile(files).then(validFiles => {
+      if (validFiles.length > 0) {
+        setValidFiles(validFiles);
+      }
+    });
+  };
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
 
   return (
     <Sidebar title={"Upload Documents"}>
@@ -99,8 +159,15 @@ function UploadDocuments() {
                 <input
                   type="file"
                   style={{
-                    display: 'none',
+                    color: '#000',
+                    border: '1px solid #000',
+                    padding: 10,
+                    borderRadius: '5px',
+                    width: '350px',
+                    display: 'none'
                   }}
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
                   name="file_path"
                   multiple
                 />
@@ -137,70 +204,73 @@ function UploadDocuments() {
                     transition: 'transform 0.3s ease-in-out',
                   },
                 }}
+                onClick={handleImageClick}
               >
                 Select file
               </Button>
             </Box>
+            <Typography sx={{ textAlign: 'center', fontSize: '14px', color: 'red', fontWeight: '600' }}>{error}</Typography>
+
           </Box>
 
+
           <Box sx={{ width: "100%", mt: 0.5 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <Box sx={{ width: "100%", mt: 1 }}>
-                {[...Array(3)].map((_, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <Box
-                      sx={{
-                        mb: 1,
-                        bgcolor: "#fff",
-                        p: 2,
-                        borderRadius: "10px",
-                        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+            {validFiles.map((file, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <Box
+                  sx={{
+                    mb: 1,
+                    bgcolor: "#fff",
+                    p: 2,
+                    borderRadius: "10px",
+                    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                  }}
+                >
+                  <Stack direction={"row"} alignItems="center" spacing={1}>
+                    <img
+                      src={pdficon}
+                      alt="Uploaded file"
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        cursor: "pointer",
+                        mixBlendMode: "darken",
                       }}
-                    >
-                      <Stack direction={"row"} alignItems="center">
-                        <img
-                          src={pdficon}
-                          alt="Uploaded file"
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            cursor: "pointer",
-                            mixBlendMode: "darken",
-                          }}
-                        />
-                        <Box width={"100%"} sx={{ pl: "10px" }}>
-                          <Typography
-                            sx={{
-                              color: "#676767",
-                              fontSize: "16px",
-                              fontWeight: "600",
-                              mb: "3px",
-                            }}
-                          >
-                            abc.pdf
-                          </Typography>
-                          <LinearProgress
-                            variant="determinate"
-                            value={progress}
-                            sx={{ width: "100%" }}
-                            color="success"
-                          />
-                        </Box>
-                      </Stack>
+                    />
+                    <Box width={"100%"} sx={{ pl: "10px" }}>
+                      <Typography
+                        sx={{
+                          color: "#676767",
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          mb: "3px",
+                        }}
+                      >
+                        {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
+                      </Typography>
+                      <LinearProgress
+                        variant="determinate"
+                        value={progress}
+                        sx={{ width: "100%" }}
+                        color="success"
+                      />
                     </Box>
-                  </motion.div>
-                ))}
-              </Box>
-            </motion.div>
+
+                    <Box>
+                      <CheckCircleIcon sx={{ color: 'green' }} />
+                    </Box>
+
+
+                  </Stack>
+                </Box>
+              </motion.div>
+            ))}
+
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ width: "100%", mt: 0.5 }}>
@@ -211,24 +281,30 @@ function UploadDocuments() {
                   color: '#fff',
                   cursor: 'pointer',
                   textTransform: 'none',
-                  '&:hover': {
-                    color: 'darkblue',
-                    transform: 'scale(1.1)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
                   bgcolor: 'orange',
-                  width: '100px',
+                  width: '120px',
+                  height: '40px',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    bgcolor: 'darkorange',
+                    transform: 'translateY(-2px) scale(1.05)',
+                    boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)',
+                  },
+                  '&:active': {
+                    transform: 'scale(0.98)',
+                  },
                 }}
               >
                 Submit
               </Button>
+
             </Box>
           </Box>
 
         </Box>
       </Box>
-
-
     </Sidebar>
   )
 }
