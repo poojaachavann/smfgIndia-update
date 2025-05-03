@@ -1,30 +1,18 @@
-import { Avatar, Box, Button, CircularProgress, Menu, Stack, Tooltip, Typography } from '@mui/material'
+import React from 'react';
+import { Avatar, Box, Button, Divider, Menu, Stack, Typography } from '@mui/material'
 import aihlogo from '../assets/logoofsmfg.png';
-import AddchartIcon from '@mui/icons-material/Addchart';
-import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import GridViewIcon from '@mui/icons-material/GridView';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
-import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
-import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import BubbleChartOutlinedIcon from '@mui/icons-material/BubbleChartOutlined';
-import DonutSmallOutlinedIcon from '@mui/icons-material/DonutSmallOutlined';
-import React from 'react';
-import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
-import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
-import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios';
 import API from './BaseURL';
 import Markdown from 'markdown-to-jsx';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import StraightIcon from '@mui/icons-material/Straight';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 
-export default function Sidebar({ title, children, loading, selectedId }) {
+export default function Sidebar({ title, children }) {
 
     const url = window.location.href
     const mainUrl = url.split('/')
@@ -57,407 +45,407 @@ export default function Sidebar({ title, children, loading, selectedId }) {
     }, [])
 
 
-    const tooltipFun = function () {
-        return (
-            <>
-                <Box sx={{ mb: '20px' }}>
-                    <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start' }}>Demographic Verifier</Typography>
+    // const tooltipFun = function () {
+    //     return (
+    //         <>
+    //             <Box sx={{ mb: '20px' }}>
+    //                 <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start' }}>Demographic Verifier</Typography>
 
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.categorization?.map((data, index) => (
-                        <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
-                            <Markdown
-                                options={{
-                                    overrides: {
-                                        ul: {
-                                            props: {
-                                                style: {
-                                                    paddingLeft: 35
-                                                },
-                                            },
-                                        },
-                                        p: {
-                                            props: {
-                                                style: {
-                                                    margin: '0.5em 0',
-                                                },
-                                            },
-                                        },
-                                    },
-                                }}
-                                style={{
-                                    color: '#656565',
-                                    fontSize: '13px',
-                                    fontFamily: 'sans-serif',
-                                    marginLeft: '10px',
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.categorization?.map((data, index) => (
+    //                     <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
+    //                         <Markdown
+    //                             options={{
+    //                                 overrides: {
+    //                                     ul: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 paddingLeft: 35
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                     p: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 margin: '0.5em 0',
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                 },
+    //                             }}
+    //                             style={{
+    //                                 color: '#656565',
+    //                                 fontSize: '13px',
+    //                                 fontFamily: 'sans-serif',
+    //                                 marginLeft: '10px',
 
-                                }}
-                            >
+    //                             }}
+    //                         >
 
-                                {data || 'no data found'}
-                            </Markdown>
-                        </Typography>
-                    ))}
-
-
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Scoring:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.scoring?.map((data, index) => (
-                        <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
-                            <Markdown
-                                options={{
-                                    overrides: {
-                                        ul: {
-                                            props: {
-                                                style: {
-                                                    paddingLeft: 35
-                                                },
-                                            },
-                                        },
-                                        p: {
-                                            props: {
-                                                style: {
-                                                    margin: '0.5em 0',
-                                                },
-                                            },
-                                        },
-                                    },
-                                }}
-                                style={{
-                                    color: '#656565',
-                                    fontSize: '13px',
-                                    fontFamily: 'sans-serif',
-                                    marginLeft: '10px',
-                                }}
-                            >
-
-                                {data || 'no data found'}
-                            </Markdown>
-                        </Typography>
-                    ))}
-                </Box>
-
-                <Box>
-                    <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Income Regularity Quantum Pattern</Typography>
-
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.categorization?.map((data, index) => (
-                        <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                            <Markdown
-                                options={{
-                                    overrides: {
-                                        ul: {
-                                            props: {
-                                                style: {
-                                                    paddingLeft: 35
-                                                },
-                                            },
-                                        },
-                                        p: {
-                                            props: {
-                                                style: {
-                                                    margin: '0.5em 0',
-                                                },
-                                            },
-                                        },
-                                    },
-                                }}
-                                style={{
-                                    color: '#656565',
-                                    fontSize: '13px',
-                                    fontFamily: 'sans-serif',
-                                    marginLeft: '10px',
-                                    whiteSpace: "pre-wrap"
-                                }}
-                            >
-
-                                {data || 'no data found'}
-                            </Markdown>
-                        </Typography>
-                    ))}
-
-                    <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px' }}>Scoring:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.scoring?.map((data, index) => (
-                        <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                            <Markdown
-                                options={{
-                                    overrides: {
-                                        ul: {
-                                            props: {
-                                                style: {
-                                                    paddingLeft: 35
-                                                },
-                                            },
-                                        },
-                                        p: {
-                                            props: {
-                                                style: {
-                                                    margin: '0.5em 0',
-                                                },
-                                            },
-                                        },
-                                    },
-                                }}
-                                style={{
-                                    color: '#656565',
-                                    fontSize: '13px',
-                                    fontFamily: 'sans-serif',
-                                    marginLeft: '10px',
-                                    whiteSpace: "pre-wrap"
-                                }}
-                            >
-
-                                {data}
-                            </Markdown>
-                        </Typography>
-                    ))}
-                </Box>
-
-                <Box>
-                    <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Spent Pattern</Typography>
-
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Categorization:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                        spent_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                            spent_pattern?.assumptions?.categorization?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                                    <Markdown
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-
-                                        {data || 'no data found'}
-                                    </Markdown>
-                                </Typography>
-                            ))}
-
-                    <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                        spent_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                            spent_pattern?.assumptions?.scoring?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                                    <Markdown
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-
-                                        {data}
-                                    </Markdown>
-                                </Typography>
-                            ))}
-                </Box>
-
-                <Box>
-                    <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Transaction Pattern</Typography>
-
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Categorization:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-
-                        transaction_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-
-                            transaction_pattern?.assumptions?.categorization?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                                    <Markdown
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-
-                                        {data || 'no data found'}
-                                    </Markdown>
-                                </Typography>
-                            ))}
-
-                    <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-
-                        transaction_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-
-                            transaction_pattern?.assumptions?.scoring?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                                    <Markdown
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-                                        {data}
-                                    </Markdown>
-                                </Typography>
-                            ))}
-                </Box>
-
-                <Box sx={{ maxWidth: '600px' }}>
-                    <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: 'nowrap' }}>Transaction Frequency And Size Details</Typography>
+    //                             {data || 'no data found'}
+    //                         </Markdown>
+    //                     </Typography>
+    //                 ))}
 
 
-                    <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                        granularity_of_transactions?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                            granularity_of_transactions?.assumptions?.categorization?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
-                                    <Markdown
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Scoring:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.demographic_assumptions?.demographic_verifier?.assumptions?.scoring?.map((data, index) => (
+    //                     <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
+    //                         <Markdown
+    //                             options={{
+    //                                 overrides: {
+    //                                     ul: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 paddingLeft: 35
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                     p: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 margin: '0.5em 0',
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                 },
+    //                             }}
+    //                             style={{
+    //                                 color: '#656565',
+    //                                 fontSize: '13px',
+    //                                 fontFamily: 'sans-serif',
+    //                                 marginLeft: '10px',
+    //                             }}
+    //                         >
 
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-                                        {data || 'no data found'}
-                                    </Markdown>
-                                </Typography>
-                            ))}
+    //                             {data || 'no data found'}
+    //                         </Markdown>
+    //                     </Typography>
+    //                 ))}
+    //             </Box>
 
-                    <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
-                    {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                        granularity_of_transactions?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
-                            granularity_of_transactions?.assumptions?.scoring?.map((data, index) => (
-                                <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
-                                    <Markdown
-                                        options={{
-                                            overrides: {
-                                                ul: {
-                                                    props: {
-                                                        style: {
-                                                            paddingLeft: 35
-                                                        },
-                                                    },
-                                                },
-                                                p: {
-                                                    props: {
-                                                        style: {
-                                                            margin: '0.5em 0',
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                        style={{
-                                            color: '#656565',
-                                            fontSize: '13px',
-                                            fontFamily: 'sans-serif',
-                                            marginLeft: '10px',
-                                            whiteSpace: "pre-wrap"
-                                        }}
-                                    >
-                                        {data}
-                                    </Markdown>
-                                </Typography>
-                            ))}
+    //             <Box>
+    //                 <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Income Regularity Quantum Pattern</Typography>
 
-                </Box>
-            </>
-        )
-    }
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.categorization?.map((data, index) => (
+    //                     <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                         <Markdown
+    //                             options={{
+    //                                 overrides: {
+    //                                     ul: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 paddingLeft: 35
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                     p: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 margin: '0.5em 0',
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                 },
+    //                             }}
+    //                             style={{
+    //                                 color: '#656565',
+    //                                 fontSize: '13px',
+    //                                 fontFamily: 'sans-serif',
+    //                                 marginLeft: '10px',
+    //                                 whiteSpace: "pre-wrap"
+    //                             }}
+    //                         >
+
+    //                             {data || 'no data found'}
+    //                         </Markdown>
+    //                     </Typography>
+    //                 ))}
+
+    //                 <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px' }}>Scoring:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.income_regularity_quantum_pattern?.assumptions?.scoring?.map((data, index) => (
+    //                     <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                         <Markdown
+    //                             options={{
+    //                                 overrides: {
+    //                                     ul: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 paddingLeft: 35
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                     p: {
+    //                                         props: {
+    //                                             style: {
+    //                                                 margin: '0.5em 0',
+    //                                             },
+    //                                         },
+    //                                     },
+    //                                 },
+    //                             }}
+    //                             style={{
+    //                                 color: '#656565',
+    //                                 fontSize: '13px',
+    //                                 fontFamily: 'sans-serif',
+    //                                 marginLeft: '10px',
+    //                                 whiteSpace: "pre-wrap"
+    //                             }}
+    //                         >
+
+    //                             {data}
+    //                         </Markdown>
+    //                     </Typography>
+    //                 ))}
+    //             </Box>
+
+    //             <Box>
+    //                 <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Spent Pattern</Typography>
+
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Categorization:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                     spent_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                         spent_pattern?.assumptions?.categorization?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                                 <Markdown
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+
+    //                                     {data || 'no data found'}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+
+    //                 <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                     spent_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                         spent_pattern?.assumptions?.scoring?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                                 <Markdown
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+
+    //                                     {data}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+    //             </Box>
+
+    //             <Box>
+    //                 <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: "pre-wrap" }}>Transaction Pattern</Typography>
+
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Categorization:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+
+    //                     transaction_pattern?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+
+    //                         transaction_pattern?.assumptions?.categorization?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                                 <Markdown
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+
+    //                                     {data || 'no data found'}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+
+    //                 <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+
+    //                     transaction_pattern?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+
+    //                         transaction_pattern?.assumptions?.scoring?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                                 <Markdown
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+    //                                     {data}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+    //             </Box>
+
+    //             <Box sx={{ maxWidth: '600px' }}>
+    //                 <Typography sx={{ fontSize: '16px', color: '#000', fontWeight: '600', mb: '10px', textAlign: 'start', whiteSpace: 'nowrap' }}>Transaction Frequency And Size Details</Typography>
+
+
+    //                 <Typography sx={{ fontSize: '14px', color: '#656565', fontWeight: '600', mb: '10px' }}>Categorization:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                     granularity_of_transactions?.assumptions?.categorization && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                         granularity_of_transactions?.assumptions?.categorization?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px' }} key={index}>
+    //                                 <Markdown
+
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+    //                                     {data || 'no data found'}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+
+    //                 <Typography sx={{ fontSize: '15px', color: '#656565', fontWeight: '600', mb: '10px', whiteSpace: "pre-wrap" }}>Scoring:</Typography>
+    //                 {selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                     granularity_of_transactions?.assumptions?.scoring && selectedData[0]?.check_history[0]?.text?.behaviour_assumptions?.
+    //                         granularity_of_transactions?.assumptions?.scoring?.map((data, index) => (
+    //                             <Typography sx={{ fontSize: '13px', color: '#656565', fontWeight: '500', mb: '10px', whiteSpace: "pre-wrap" }} key={index}>
+    //                                 <Markdown
+    //                                     options={{
+    //                                         overrides: {
+    //                                             ul: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         paddingLeft: 35
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                             p: {
+    //                                                 props: {
+    //                                                     style: {
+    //                                                         margin: '0.5em 0',
+    //                                                     },
+    //                                                 },
+    //                                             },
+    //                                         },
+    //                                     }}
+    //                                     style={{
+    //                                         color: '#656565',
+    //                                         fontSize: '13px',
+    //                                         fontFamily: 'sans-serif',
+    //                                         marginLeft: '10px',
+    //                                         whiteSpace: "pre-wrap"
+    //                                     }}
+    //                                 >
+    //                                     {data}
+    //                                 </Markdown>
+    //                             </Typography>
+    //                         ))}
+
+    //             </Box>
+    //         </>
+    //     )
+    // }
 
     const [anchorEl1, setAnchorEl1] = useState(null);
     const open1 = Boolean(anchorEl1);
@@ -469,12 +457,11 @@ export default function Sidebar({ title, children, loading, selectedId }) {
     };
 
 
-
     return (
         <>
-            <Stack direction={'row'}>
-                <Box sx={{ bgcolor: '#fff', minHeight: '100vh', width: '20%', position: 'relative' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
+            <Stack direction={'row'} sx={{ bgcolor: '#f8f8fa', height: '100vh', overflowY: 'hidden' }}>
+                <Box sx={{ bgcolor: '#f3ff90', height: '95vh', width: '20%', position: 'relative', borderRadius: '20px', m: 2 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, mb: '20px' }}>
                         <img
                             src={aihlogo}
                             alt="logo"
@@ -488,136 +475,165 @@ export default function Sidebar({ title, children, loading, selectedId }) {
                     </Box>
 
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: '100%', ml: '30px', mt: '20px' }} >
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#fdcf6f' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "fit-content", p: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 0.9 : '' }}>
+                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#c3d600' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 0.9 : '' }}>
+                                <DashboardIcon sx={{ color: '#000' }} />
+                                <Typography
+                                    sx={{
+                                        fontSize: '20px',
+                                        color: '#000',
+                                        fontWeight: '500',
+                                        whiteSpace: "nowrap"
+                                    }}
+                                >
+                                    Dashboard
+                                </Typography>
+
+                            </Stack>
+                        </Link>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
+                        <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
+                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#e1ea85' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: 1.5 }} >
+                                <DashboardIcon sx={{ color: '#656565', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
                                         fontSize: '14px',
                                         color: '#656565',
-                                        fontWeight: '600',
+                                        fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
                                 >
-                                    Upload Document
+                                    About
+                                </Typography>
+
+                            </Stack>
+                        </Link>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
+                        <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
+                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#e1ea85' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: 1.5 }} >
+                                <DashboardIcon sx={{ color: '#656565', fontSize: '20px' }} />
+                                <Typography
+                                    sx={{
+                                        fontSize: '14px',
+                                        color: '#656565',
+                                        fontWeight: '500',
+                                        whiteSpace: "nowrap"
+                                    }}
+                                >
+                                    Contact
                                 </Typography>
 
                             </Stack>
                         </Link>
                     </Box>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: '100%', height: '60%', ml: '30px' }} >
 
-                        <Box>
-                            <Box mb={'20px'}>
-                                <Link to={`/usertableData`} style={{ textDecoration: "none" }}>
-                                    <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'usertableData' ? '#aaa' : '', p: mainUrl[mainUrl.length - 1] === 'usertableData' ? 0.9 : '', borderRadius: mainUrl[mainUrl.length - 1] === 'usertableData' ? '8px' : '' }}>
-                                        <GridViewIcon sx={{ color: '#656565', fontSize: '25px' }} />
-                                        <Typography
-                                            sx={{
-                                                fontSize: '16px',
-                                                color: '#656565',
-                                                fontWeight: '600'
-                                            }}
-                                        >
-                                            Home
-                                        </Typography>
-
-                                    </Stack>
-                                </Link>
-                            </Box>
-
-                            {userLoginData.role_based_control === "Owner" ?
-                                <Box mb={'20px'}>
-                                    <Link to={`/costanalysis`} style={{ textDecoration: "none" }}>
-                                        <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'costanalysis' ? '#aaa' : '', p: mainUrl[mainUrl.length - 1] === 'costanalysis' ? 0.9 : '', borderRadius: mainUrl[mainUrl.length - 1] === 'costanalysis' ? '8px' : '' }}>
-                                            <QueryStatsIcon sx={{ color: '#656565', fontSize: '20px' }} />
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '14px',
-                                                    color: '#656565',
-                                                    fontWeight: '600'
-                                                }}
-                                            >
-                                                Cost Analysis
-                                            </Typography>
-
-                                        </Stack>
-                                    </Link>
-                                </Box> : ''}
-                            <Box mb={'20px'}
-                                onClick={() => {
-                                    setTimeout(() => {
-                                        localStorage.removeItem('userData')
-                                        window.location.href = '/'
-                                    }, 100)
-                                }}
-                                sx={{ cursor: 'pointer' }}
-
-                            >
-                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                    <LockOutlinedIcon sx={{ color: '#656565', fontSize: '25px' }} />
-                                    <Typography
-                                        sx={{
-                                            fontSize: '16px',
-                                            color: '#656565',
-                                            fontWeight: '600'
-                                        }}
-                                    >
-                                        Logout
-                                    </Typography>
-
-                                </Stack>
-
-
-                            </Box>
-
-                        </Box>
-
-
-
-                    </Box>
                     <Box sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        width: '100%',
                         display: 'flex',
                         justifyContent: 'center',
-                        flexDirection: 'column',
-                        bgcolor: "#06756f",
-                        py: 2,
-                        borderTopLeftRadius: '20px',
-                        borderTopRightRadius: '20px'
+                    }}>
+                        <Box sx={{
+                            position: 'absolute',
+                            bottom: 20,
+                            width: '70%',
+                            bgcolor: '#ffff',
+                            p: 2,
+                            borderRadius: '20px',
 
-                    }} >
-                        <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'}>
-                            <Box>
-                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '35px', height: '35px' }} />
+                        }} >
+
+                            <Box sx={{
+                                position: 'absolute',
+                                top: 8,
+                                right: 8,
+                                width: '10px',
+                                height: '10px',
+                                bgcolor: 'green',
+                                borderRadius: '50%',
+                                animation: 'blinker 1s linear infinite',
+                                '@keyframes blinker': {
+                                    '0%': { opacity: 1 },
+                                    '50%': { opacity: 0.2 },
+                                    '100%': { opacity: 1 },
+                                }
+                            }} />
+
+
+
+                            <Box sx={{ bgcolor: '#000', width: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20%', height: '30px', position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)' }}>
+                                <StraightIcon sx={{ color: '#fff' }} />
                             </Box>
-                            <Box>
-                                <Typography sx={{ fontSize: '15px', color: '#fff', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
-                                <Typography sx={{ fontSize: '13px', color: '#fff', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+
+                            <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography>
+
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                                <Button sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
+
+                                    disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
+                                >
+
+                                    <Typography
+                                        sx={{
+                                            fontSize: '14px',
+                                            color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
+                                            fontWeight: '600',
+                                            '&:hover': { color: '#006bb4' }
+
+                                        }}
+                                    >
+                                        <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '12px',
+                                                    color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
+                                                    fontWeight: '600',
+                                                    '&:hover': { color: '#006bb4' },
+                                                    whiteSpace: 'nowrap',
+                                                    cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'none' : 'pointer',
+
+
+                                                }}
+                                            >
+                                                Go to Upload Section
+                                            </Typography>
+                                            <ArrowForwardIcon sx={{ fontSize: '20px' }} />
+                                        </Stack>
+                                    </Typography>
+
+
+                                </Button>
                             </Box>
-                        </Stack>
+
+
+                        </Box>
                     </Box>
                 </Box>
 
 
-                <Box sx={{ width: '90%', bgcolor: '#ddd4bb' }}>
+                <Box sx={{ width: '90%', height: '95vh', m: 2 }}>
 
-                    <Box p={1}
-                        sx={{ bgcolor: '#06756f', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px', height: '25vh' }}>
+                    <Box sx={{ mb: '30px' }}>
                         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                            <Typography sx={{ mb: '15px', p: 0.7, fontSize: '18px', color: '#fff', fontWeight: '600', fontStyle: 'normal', mt: '10px' }} >{title}</Typography>
+                            <Box>
+                                <Typography sx={{ fontSize: '16px', color: '#aaa', fontWeight: '500', fontStyle: 'normal' }} >{'Hello User, Welcome back'}</Typography>
+                                <Typography sx={{ fontSize: '30px', color: '#000', fontWeight: '500', fontStyle: 'normal' }} >{title}</Typography>
+                            </Box>
 
-                            <Stack direction={'row'} alignItems={'center'} sx={{ cursor: 'pointer' }}>
-                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#fff', color: '#000' }} />
-
-                                <ArrowDropDownIcon sx={{ color: '#fff', fontSize: '25px' }} onClick={handleClick} />
+                            <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'}>
+                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#aaa', color: '#fff' }} onClick={handleClick} />
+                                <Box>
+                                    <Typography sx={{ fontSize: '15px', color: '#000', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
+                                    <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+                                </Box>
                             </Stack>
 
 
                         </Stack>
+
+                        <Divider sx={{ bgcolor: '#aaa', mt: 2 }} />
 
                         <Menu
                             anchorEl={anchorEl1}
