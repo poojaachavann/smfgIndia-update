@@ -318,7 +318,7 @@ function UploadDocuments() {
           )}
         </Box>
         {idProofFile || bankStatementFile || creditBureauFile ? (
-          <Box sx={{ width: "80%", p: 1 }}>
+          <Box sx={{ width: "80%" }}>
             {idProofFile && renderFileCard(idProofFile, "ID Proof", "id")}
             {bankStatementFile && renderFileCard(bankStatementFile, "Bank Statement", "bank")}
             {creditBureauFile && renderFileCard(creditBureauFile, "Credit Bureau", "credit")}

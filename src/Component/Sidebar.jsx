@@ -10,6 +10,7 @@ import Markdown from 'markdown-to-jsx';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import StraightIcon from '@mui/icons-material/Straight';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 
 
 export default function Sidebar({ title, children }) {
@@ -476,13 +477,13 @@ export default function Sidebar({ title, children }) {
 
 
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
-                        <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#c3d600' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 0.9 : '' }}>
-                                <DashboardIcon sx={{ color: '#000' }} />
+                        <Link to={`/home`} style={{ textDecoration: "none" }}>
+                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'home' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }}>
+                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === 'home' ? '#000' : '#656565', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
-                                        fontSize: '20px',
-                                        color: '#000',
+                                        fontSize: mainUrl[mainUrl.length - 1] === 'home' ? '20px' : '14px',
+                                        color: mainUrl[mainUrl.length - 1] === 'home' ? '#000' : '#656565',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
@@ -495,12 +496,13 @@ export default function Sidebar({ title, children }) {
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#e1ea85' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: 1.5 }} >
-                                <DashboardIcon sx={{ color: '#656565', fontSize: '20px' }} />
+                            <Stack
+                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }} >
+                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
-                                        fontSize: '14px',
-                                        color: '#656565',
+                                        fontSize: mainUrl[mainUrl.length - 1] === '' ? '20px' : '14px',
+                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
@@ -513,17 +515,18 @@ export default function Sidebar({ title, children }) {
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#e1ea85' : '', borderRadius: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '8px' : '', width: "200px", p: 1.5 }} >
-                                <DashboardIcon sx={{ color: '#656565', fontSize: '20px' }} />
+                            <Stack
+                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }} >
+                                <CreditScoreOutlinedIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
-                                        fontSize: '14px',
-                                        color: '#656565',
+                                        fontSize: mainUrl[mainUrl.length - 1] === '' ? '20px' : '14px',
+                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
                                 >
-                                    Contact
+                                    Cost Analysis
                                 </Typography>
 
                             </Stack>
@@ -551,7 +554,7 @@ export default function Sidebar({ title, children }) {
                                 right: 8,
                                 width: '10px',
                                 height: '10px',
-                                bgcolor: 'green',
+                                bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'green' : 'red',
                                 borderRadius: '50%',
                                 animation: 'blinker 1s linear infinite',
                                 '@keyframes blinker': {
@@ -559,9 +562,8 @@ export default function Sidebar({ title, children }) {
                                     '50%': { opacity: 0.2 },
                                     '100%': { opacity: 1 },
                                 }
-                            }} />
-
-
+                            }}
+                            />
 
                             <Box sx={{ bgcolor: '#000', width: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20%', height: '30px', position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)' }}>
                                 <StraightIcon sx={{ color: '#fff' }} />
@@ -570,11 +572,13 @@ export default function Sidebar({ title, children }) {
                             <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography>
 
                             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                <Button sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
 
+                                <Button
+                                    sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
                                     disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
-                                >
+                                    onClick={() => window.location.href = "/uploadDocument"}
 
+                                >
                                     <Typography
                                         sx={{
                                             fontSize: '14px',
@@ -603,7 +607,6 @@ export default function Sidebar({ title, children }) {
                                         </Stack>
                                     </Typography>
 
-
                                 </Button>
                             </Box>
 
@@ -625,8 +628,8 @@ export default function Sidebar({ title, children }) {
                             <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'}>
                                 <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#aaa', color: '#fff' }} onClick={handleClick} />
                                 <Box>
-                                    <Typography sx={{ fontSize: '15px', color: '#000', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
-                                    <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+                                    <Typography sx={{ fontSize: '15px', color: '#676767', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
+                                    <Typography sx={{ fontSize: '13px', color: '#676767', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
                                 </Box>
                             </Stack>
 
