@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../../Component/Sidebar';
 import {
   Box,
   Button,
-  LinearProgress,
   Modal,
   Stack,
   Typography
@@ -20,7 +19,6 @@ import checkIicon from '../../assets/checkicon.png'
 import warningicon from '../../assets/warningicon.png'
 
 function UploadDocuments() {
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
 
   const [step, setStep] = useState(1);
@@ -28,16 +26,6 @@ function UploadDocuments() {
   const [bankStatementFile, setBankStatementFile] = useState(null);
   const [creditBureauFile, setCreditBureauFile] = useState(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) return 0;
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-    return () => clearInterval(timer);
-  }, []);
 
   const validateFile = (file) => {
     const maxFileSize = 10 * 1024 * 1024;
@@ -164,21 +152,20 @@ function UploadDocuments() {
                 color: "#999",
                 fontSize: "13px",
                 fontStyle: "italic",
-                mb: "15px",
               }}
             >
               {label}
             </Typography>
-            <LinearProgress
+            {/* <LinearProgress
               variant="determinate"
               value={progress}
               sx={{ width: "100%" }}
               color="success"
-            />
+            /> */}
           </Box>
 
           <Box>
-            <CheckCircleIcon sx={{ color: 'green', fontSize: '20px' }} />
+            <img src={checkIicon} style={{ width: '40px' }} />
           </Box>
         </Stack>
       </Box>
