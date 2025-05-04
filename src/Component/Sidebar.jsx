@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from 'axios';
 import API from './BaseURL';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import StraightIcon from '@mui/icons-material/Straight';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
-
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function Sidebar({ title, children }) {
 
@@ -461,7 +461,7 @@ export default function Sidebar({ title, children }) {
     return (
         <>
             <Stack direction={'row'} sx={{ bgcolor: '#f8f8fa', height: '100vh', overflowY: 'hidden' }}>
-                <Box sx={{ bgcolor: '#f3ff90', height: '95vh', width: '20%', position: 'relative', borderRadius: '20px', m: 2 }}>
+                <Box sx={{ bgcolor: '#f3ff90', height: '95vh', width: '20%', position: 'relative', borderRadius: '20px', m: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, mb: '20px' }}>
                         <img
                             src={aihlogo}
@@ -571,7 +571,7 @@ export default function Sidebar({ title, children }) {
 
                             <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography>
 
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
 
                                 <Button
                                     sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
@@ -597,8 +597,6 @@ export default function Sidebar({ title, children }) {
                                                     '&:hover': { color: '#006bb4' },
                                                     whiteSpace: 'nowrap',
                                                     cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'none' : 'pointer',
-
-
                                                 }}
                                             >
                                                 Go to Upload Section
@@ -625,13 +623,25 @@ export default function Sidebar({ title, children }) {
                                 <Typography sx={{ fontSize: '30px', color: '#000', fontWeight: '500', fontStyle: 'normal' }} >{title}</Typography>
                             </Box>
 
-                            <Stack direction={'row'} alignItems={'center'} spacing={1} ml={'20px'}>
-                                <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '40px', height: '40px', bgcolor: '#aaa', color: '#fff' }} onClick={handleClick} />
-                                <Box>
-                                    <Typography sx={{ fontSize: '15px', color: '#676767', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
-                                    <Typography sx={{ fontSize: '13px', color: '#676767', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
-                                </Box>
-                            </Stack>
+                            <Box sx={{ bgcolor: '#f0f0f4', p: 1, borderRadius: '12px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
+                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                    <Avatar
+                                        src="Image"
+                                        alt={`${(userLoginData?.email || 'pooja@gmail.com')[0].toUpperCase()}${(userLoginData?.email || 'pooja@gmail.com').slice(1)}`}
+                                        sx={{ width: '40px', height: '40px' }}
+                                    />
+
+                                    <Box>
+                                        <Typography sx={{ fontSize: '15px', color: '#aaa', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
+                                        <Typography sx={{ fontSize: '13px', color: '#aaa', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
+                                    </Box>
+
+                                    <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
+                                        <KeyboardArrowDownIcon sx={{ color: '#aaa' }} />
+                                    </Box>
+
+                                </Stack>
+                            </Box>
 
 
                         </Stack>
@@ -647,9 +657,11 @@ export default function Sidebar({ title, children }) {
                             <Box sx={{ bgcolor: '#fff' }}>
                                 <Box>
                                     <Stack direction={'row'} alignItems={'center'} spacing={1} p={1.5}>
-                                        <Box>
-                                            <Avatar src='Image' alt={`${userLoginData?.email || 'pooja@gmail.com'}`} sx={{ width: '30px', height: '30px' }} />
-                                        </Box>
+                                        <Avatar
+                                            src="Image"
+                                            alt={`${(userLoginData?.email || 'pooja@gmail.com')[0].toUpperCase()}${(userLoginData?.email || 'pooja@gmail.com').slice(1)}`}
+                                            sx={{ width: '30px', height: '30px' }}
+                                        />
                                         <Box>
                                             <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
                                             <Typography sx={{ fontSize: '13px', color: '#000', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>

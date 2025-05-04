@@ -1,5 +1,5 @@
 .loader {
-    --s: 25px;
+    --s: 18px;
     --g :5px;  
     
     width: calc(2*(1.353*var(--s) + var(--g)));
