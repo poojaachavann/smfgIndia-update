@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   LinearProgress,
+  Modal,
   Stack,
   Typography
 } from '@mui/material';
@@ -14,6 +15,9 @@ import bankStatementImg from '../../assets/bankStatement.png';
 import { motion } from 'framer-motion';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import './UploadDouments.css'
+import checkIicon from '../../assets/checkicon.png'
+import warningicon from '../../assets/warningicon.png'
 
 function UploadDocuments() {
   const [progress, setProgress] = useState(0);
@@ -36,9 +40,9 @@ function UploadDocuments() {
   }, []);
 
   const validateFile = (file) => {
-    const maxFileSize = 30 * 1024 * 1024;
-    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.pdf'];
-    const unsupportedExtensions = ['.docx', '.gif', '.svg', '.txt', '.csv', '.xlsx', '.xls'];
+    const maxFileSize = 10 * 1024 * 1024;
+    const allowedExtensions = ['.pdf'];
+    const unsupportedExtensions = ['.docx', '.gif', '.svg', '.txt', '.csv', '.xlsx', '.xls', '.png', '.jpg', '.jpeg', '.webp',];
 
     const fileNameLower = file.name.toLowerCase();
     const fileExtension = fileNameLower.slice(fileNameLower.lastIndexOf('.'));
@@ -47,10 +51,10 @@ function UploadDocuments() {
       return `File type not supported: ${fileExtension}`;
     }
     if (!allowedExtensions.includes(fileExtension)) {
-      return 'Supported file types are: png, jpg, jpeg, webp, pdf.';
+      return 'Supported file types are: pdf.';
     }
     if (file.size > maxFileSize) {
-      return 'File size should not exceed 30MB.';
+      return 'File size should not exceed 10MB.';
     }
     return null;
   };
@@ -90,6 +94,18 @@ function UploadDocuments() {
       setStep(3);
     }
   };
+
+
+  const [open1, setOpen1] = useState(false);
+
+  const handleOpen1 = () => {
+    setOpen1(true);
+  };
+
+  const handleModalClose1 = () => {
+    setOpen1(false);
+  };
+
 
 
   const renderFileCard = (file, label, docType) => (
@@ -251,6 +267,7 @@ function UploadDocuments() {
                       width: '350px',
                     }}
                     disabled={idProofFile !== null}
+                    accept='application/pdf'
                   />
                 </Box>}
 
@@ -271,6 +288,8 @@ function UploadDocuments() {
                           width: '350px',
                         }}
                         disabled={bankStatementFile !== null}
+                        accept='application/pdf'
+
                       />
                     </Box>
                   )}
@@ -291,6 +310,8 @@ function UploadDocuments() {
                         width: '350px',
                       }}
                       disabled={creditBureauFile !== null}
+                      accept='application/pdf'
+
                     />
                   </Box>
                 )}
@@ -302,10 +323,10 @@ function UploadDocuments() {
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '10px' }}>
             <Box sx={{ mt: '8px', mb: '10px' }}>
               <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#000', textAlign: 'center' }}>
-                Drag pdf, jpeg, png here to import
+                Support pdf here to import
               </Typography>
               <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#676767', textAlign: 'center' }}>
-                or, click to browse (30MB per file).
+                or, click to browse (10MB per file).
               </Typography>
               <Typography sx={{ fontSize: '13px', fontWeight: '600', color: 'red', textAlign: 'start', mt: 2 }}>
                 Note: Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.
@@ -326,8 +347,6 @@ function UploadDocuments() {
         ) : null}
 
       </Stack>
-
-
 
 
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -355,11 +374,64 @@ function UploadDocuments() {
               transform: 'scale(0.98)',
             },
           }}
+
+          onClick={handleOpen1}
         >
           Submit
         </Button>
 
+        <Modal open={open1}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "auto",
+              bgcolor: "background.paper",
+              boxShadow: 2,
+              borderRadius: 2,
+              p: 2,
+            }}
+          >
+
+            <Typography sx={{ fontSize: '15px', fontWeight: '600', color: '#686868', mb: '10px', textAlign: 'center' }}>Please wait processing...</Typography>
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: '30px' }}>
+              <span class="loader"></span>
+            </Box>
+
+            <Box>
+              <Stack direction={'row'} alignItems={'center'} gap={3}>
+                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Demography Report Analysis</Typography>
+                <img src={checkIicon} style={{ width: '30px' }} />
+                {/* <span class="loader1"></span> */}
+              </Stack>
+              <Stack direction={'row'} alignItems={'center'} gap={3}>
+                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Regularity and quantum of income flow</Typography>
+                <img src={warningicon} style={{ width: '30px' }} />
+                {/* <span class="loader1"></span> */}
+              </Stack>
+              <Stack direction={'row'} alignItems={'center'} gap={3}>
+                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Balance build-up over period</Typography>
+                <img src={checkIicon} style={{ width: '30px' }} />
+                {/* <span class="loader1"></span> */}
+              </Stack>
+              <Stack direction={'row'} alignItems={'center'} gap={3}>
+                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Spend pattern</Typography>
+                <img src={warningicon} style={{ width: '30px' }} />
+                {/* <span class="loader1"></span> */}
+              </Stack>
+            </Box>
+
+          </Box>
+        </Modal>
+
+
       </Box>
+
+
+
 
     </Sidebar>
   );
