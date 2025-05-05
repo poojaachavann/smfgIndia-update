@@ -1,30 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../Component/Sidebar';
 import {
   Box,
   Button,
-  Modal,
+  LinearProgress,
   Stack,
   Typography
 } from '@mui/material';
-import idProofImg from '../../assets/idProof.png';
+import idProofImg from '../../assets/uploadDoc.png';
 import pdficon from '../../assets/pdf.png';
-import crdebureauImg from '../../assets/creditBureau.png';
-import bankStatementImg from '../../assets/bankStatement.png';
-import { motion } from 'framer-motion';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import crdebureauImg from '../../assets/creditBureau.png';
+// import bankStatementImg from '../../assets/bankStatement.png';
+import { color, motion } from 'framer-motion';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import './UploadDouments.css'
-import checkIicon from '../../assets/checkicon.png'
-import warningicon from '../../assets/warningicon.png'
+// import checkIicon from '../../assets/checkicon.png'
+// import warningicon from '../../assets/warningicon.png'
+import axios from 'axios';
+import API from '../../Component/BaseURL';
+import PropTypes from 'prop-types';
 
-function UploadDocuments() {
+
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" sx={{ color: '#676767', fontWeight: '600' }}>
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
+
+function UploadDocuments({ domainPath, userLoginData }) {
+
+  const [progress, setProgress] = React.useState(10);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const [step, setStep] = useState(1);
   const [idProofFile, setIdProofFile] = useState(null);
   const [bankStatementFile, setBankStatementFile] = useState(null);
   const [creditBureauFile, setCreditBureauFile] = useState(null);
+  const [progressMap, setProgressMap] = useState({});
 
 
   const validateFile = (file) => {
@@ -68,6 +107,16 @@ function UploadDocuments() {
     } else if (docType === 'credit') {
       setCreditBureauFile(file);
     }
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      setProgressMap(prev => ({
+        ...prev,
+        [docType]: progress
+      }));
+      if (progress >= 100) clearInterval(interval);
+    }, 100);
   };
 
   const handleRemoveFile = (docType) => {
@@ -81,22 +130,65 @@ function UploadDocuments() {
       setCreditBureauFile(null);
       setStep(3);
     }
+
+    setProgressMap(prev => {
+      const newMap = { ...prev };
+      delete newMap[docType];
+      return newMap;
+    });
   };
 
+  const imageRespose = async () => {
+    try {
+      setIsLoading(true);
 
-  const [open1, setOpen1] = useState(false);
+      const formData = new FormData();
 
-  const handleOpen1 = () => {
-    setOpen1(true);
+      if (idProofFile) formData.append('idProofFile', idProofFile);
+      if (bankStatementFile) formData.append('bankStatementFile', bankStatementFile);
+      if (creditBureauFile) formData.append('creditBureauFile', creditBureauFile);
+
+      formData.append('id', userLoginData?._id);
+
+      const response = await axios.post(API.fileUploadByid, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Uploaded file paths:', response.data?.updatedData?.file_path);
+      setTimeout(() => {
+        window.location.href = `/uploadDocument/${userLoginData?._id}`
+      }, 1000);
+      await analizeDocument(response.data?.updatedData?.file_path)
+
+
+    } catch (error) {
+      console.error('Upload failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleModalClose1 = () => {
-    setOpen1(false);
-  };
+  const analizeDocument = async (file) => {
+    try {
+      setIsLoading(true)
+      const response = await axios.post(API.startLoanForm, {
+        pdfPath: file?.bankStatement,
+        userId: userLoginData?._id,
+        domain: domainPath
+      })
+      console.log('response ai analysis', response.data);
+      setIsLoading(false)
 
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
 
+  }
 
-  const renderFileCard = (file, label, docType) => (
+  const renderFileCard = (file, label, docType, progress) => (
     <motion.div
       key={file.name}
       initial={{ opacity: 0, x: 10 }}
@@ -105,322 +197,325 @@ function UploadDocuments() {
     >
       <Box
         sx={{
-          position: 'relative',
-          mb: 2,
-          bgcolor: "#fff",
-          p: 3,
+          bgcolor: "#f0f0f4",
+          p: 1,
           borderRadius: "10px",
-          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+          boxShadow: "md",
+          ml: '10px',
+          mr: '10px',
+          mt: '10px',
         }}
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: -9,
-            right: -3,
             cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'flex-end'
           }}
           onClick={() => handleRemoveFile(docType)}
         >
-          <CancelOutlinedIcon sx={{ color: 'red' }} />
+          <CancelOutlinedIcon sx={{ color: 'red', fontSize: '20px' }} />
         </Box>
 
-        <Stack direction={"row"} alignItems="center" spacing={1}>
-          <img
-            src={pdficon}
-            alt="Uploaded file"
-            style={{
-              width: "30px",
-              height: "30px",
-              cursor: "pointer",
-              mixBlendMode: "darken",
-            }}
-          />
-          <Box width={"100%"} sx={{ pl: "10px" }}>
-            <Typography
-              sx={{
-                color: "#676767",
-                fontSize: "14px",
-                fontWeight: "600",
-                mb: "5px",
+        <Stack direction={"row"} justifyContent={'space-between'} alignItems="center" spacing={1}>
+          <Stack direction={'row'} spacing={2}>
+            <img
+              src={pdficon}
+              alt="Uploaded file"
+              style={{
+                width: "30px",
+                height: "30px",
+                cursor: "pointer",
+                mixBlendMode: "darken",
               }}
-            >
-              {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
-            </Typography>
-            <Typography
-              sx={{
-                color: "#999",
-                fontSize: "13px",
-                fontStyle: "italic",
-              }}
-            >
-              {label}
-            </Typography>
-            {/* <LinearProgress
-              variant="determinate"
-              value={progress}
-              sx={{ width: "100%" }}
-              color="success"
-            /> */}
-          </Box>
+            />
+            <Box>
+              <Typography
+                sx={{
+                  color: "#676767",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  mb: "5px",
+                }}
+              >
+                {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#999",
+                  fontSize: "13px",
+                  fontStyle: "italic",
+                }}
+              >
+                {label}
+              </Typography>
+              <Box sx={{ width: '100%' }}>
+                <LinearProgressWithLabel value={progress} />
+              </Box>
+            </Box>
+          </Stack>
 
-          <Box>
-            <img src={checkIicon} style={{ width: '40px' }} />
-          </Box>
         </Stack>
       </Box>
     </motion.div>
   );
 
 
-
   return (
     <Sidebar title={"Upload Documents"}>
-      <Stack direction={'row'} justifyContent={'center'} spacing={2}>
+
+      <Box sx={{ display: "flex", justifyContent: 'center' }}>
         <Box
-          sx={{
-            bgcolor: "#fff",
-            p: 2,
-            borderRadius: "20px",
-            width: "80%",
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
-          }}
+          sx={{ bgcolor: '#fff', width: '45%', p: 2, borderRadius: '20px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}
         >
-          <Box display={'flex'} justifyContent={'center'}>
-            <Box>
+          <Box
+            sx={{
+              mb: '10px',
+            }}
+          >
+            <Typography
+              style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#000',
+                textAlign: 'center',
+              }}
+            >
+              Upload and attach{' '}
+              {idProofFile === null
+                ? 'ID Proof'
+                : bankStatementFile === null
+                  ? 'Bank Statement'
+                  : creditBureauFile === null
+                    ? 'Credit Bureau Report'
+                    : 'All Documents Uploaded'}.
+            </Typography>
+
+            <Typography
+              style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#aaa',
+                textAlign: 'center',
+              }}
+            >
+              Attachments will be a part of this project.
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box
+              sx={{ width: '100%' }}
+            >
               <Box
-                sx={{
-                  position: 'relative',
-                  width: '300px',
-                  height: '200px',
-                  margin: 'auto',
-                }}
+                sx={{ border: "2px dashed #aaa", p: 2, borderRadius: '20px', bgcolor: '#fff' }}
               >
-                <img
-                  src={idProofImg}
-                  alt="ID Proof"
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    position: 'absolute',
-                    top: '60%',
-                    left: '20%',
-                    transform: 'translate(-50%, -50%) rotate(-20deg)',
-                    mixBlendMode: 'darken',
-                    cursor: 'pointer',
-                  }}
-                />
-                <img
-                  src={crdebureauImg}
-                  alt="Credit Bureau"
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    position: 'absolute',
-                    top: '0%',
-                    left: '50%',
-                    transform: 'translate(-50%, 0%)',
-                    mixBlendMode: 'darken',
-                    cursor: 'pointer',
-                  }}
-                />
-                <img
-                  src={bankStatementImg}
-                  alt="Bank Statement"
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    position: 'absolute',
-                    top: '60%',
-                    left: '80%',
-                    transform: 'translate(-50%, -50%) rotate(20deg)',
-                    mixBlendMode: 'darken',
-                    cursor: 'pointer',
-                  }}
-                />
-              </Box>
-
-              {idProofFile !== null ? '' :
-                <Box>
-                  <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '7px' }}>Id Proof <span style={{ color: 'red' }}>*</span></Typography>
-                  <input
-                    type="file"
-                    onChange={(e) => handleFileChange(e, 'id')}
-                    style={{
-                      color: '#000',
-                      border: '1px solid #000',
-                      padding: 10,
-                      borderRadius: '5px',
-                      width: '350px',
-                    }}
-                    disabled={idProofFile !== null}
-                    accept='application/pdf'
-                  />
-                </Box>}
-
-
-              {bankStatementFile !== null ? '' :
-                <Box>
-                  {step >= 2 && (
-                    <Box>
-                      <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '7px' }}>Bank Statement <span style={{ color: 'red' }}>*</span></Typography>
-                      <input
-                        type="file"
-                        onChange={(e) => handleFileChange(e, 'bank')}
-                        style={{
-                          color: '#000',
-                          border: '1px solid #000',
-                          padding: 10,
-                          borderRadius: '5px',
-                          width: '350px',
-                        }}
-                        disabled={bankStatementFile !== null}
-                        accept='application/pdf'
-
-                      />
-                    </Box>
-                  )}
-                </Box>}
-
-              <Box>
-                {step >= 3 && (
+                <Box display={'flex'} justifyContent={'center'}>
                   <Box>
-                    <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '7px' }}>Credit Burea Report <span style={{ color: 'red' }}>*</span></Typography>
-                    <input
-                      type="file"
-                      onChange={(e) => handleFileChange(e, 'credit')}
-                      style={{
-                        color: '#000',
-                        border: '1px solid #000',
-                        padding: 10,
-                        borderRadius: '5px',
-                        width: '350px',
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center'
                       }}
-                      disabled={creditBureauFile !== null}
-                      accept='application/pdf'
+                    >
+                      <img
+                        src={idProofImg}
+                        alt="ID Proof"
+                        style={{
+                          width: '100px',
+                          height: '100px',
 
-                    />
+                          mixBlendMode: 'darken',
+                          cursor: 'pointer',
+                        }}
+                      />
+
+                    </Box>
+
+                    {idProofFile !== null ? '' :
+                      <Box>
+                        <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '5px' }}>Id Proof <span style={{ color: 'red' }}>*</span></Typography>
+                        <input
+                          type="file"
+                          onChange={(e) => handleFileChange(e, 'id')}
+                          style={{
+                            color: '#000',
+                            border: '1px solid #000',
+                            padding: 10,
+                            borderRadius: '5px',
+                            width: '350px',
+                          }}
+                          disabled={idProofFile !== null}
+                          accept='application/pdf'
+                        />
+                      </Box>}
+
+
+                    {bankStatementFile !== null ? '' :
+                      <Box>
+                        {step >= 2 && (
+                          <Box>
+                            <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '5px' }}>Bank Statement <span style={{ color: 'red' }}>*</span></Typography>
+                            <input
+                              type="file"
+                              onChange={(e) => handleFileChange(e, 'bank')}
+                              style={{
+                                color: '#000',
+                                border: '1px solid #000',
+                                padding: 10,
+                                borderRadius: '5px',
+                                width: '350px',
+                              }}
+                              disabled={bankStatementFile !== null}
+                              accept='application/pdf'
+
+                            />
+                          </Box>
+                        )}
+                      </Box>}
+
+                    <Box>
+                      {step >= 3 && (
+                        <Box>
+                          <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#656565', mb: '5px' }}>Credit Burea Report <span style={{ color: 'red' }}>*</span></Typography>
+                          <input
+                            type="file"
+                            onChange={(e) => handleFileChange(e, 'credit')}
+                            style={{
+                              color: '#000',
+                              border: '1px solid #000',
+                              padding: 10,
+                              borderRadius: '5px',
+                              width: '350px',
+                            }}
+                            disabled={creditBureauFile !== null}
+                            accept='application/pdf'
+
+                          />
+                        </Box>
+                      )}
+                    </Box>
+
                   </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: '10px' }}>
+                  <Box sx={{ mt: '8px', mb: '10px' }}>
+                    <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#000', textAlign: 'center' }}>
+                      Support (.pdf) here to import
+                    </Typography>
+                    <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#676767', textAlign: 'center' }}>
+                      or, click to browse (10MB per file).
+                    </Typography>
+
+                  </Box>
+                </Box>
+
+                {error && (
+                  <Typography sx={{ textAlign: 'center', fontSize: '14px', color: 'red', fontWeight: '600' }}>{error}</Typography>
                 )}
               </Box>
 
+              <Box
+                sx={{
+                  mt: '10px',
+                }}
+              >
+                {idProofFile || bankStatementFile || creditBureauFile ? (
+                  <>
+                    <Box>
+                      <Typography
+                        sx={{
+                          textAlign: 'start',
+                          fontSize: '14px',
+                          color: '#656565',
+                          fontWeight: '600',
+                        }}
+                      >
+                        {[
+                          idProofFile,
+                          bankStatementFile,
+                          creditBureauFile
+                        ].filter(Boolean).length} File Uploaded...
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ overflowX: 'auto' }}>
+                      <Stack
+                        direction={'column'}
+                        sx={{
+                          width: '100%',
+                          gap: 1,
+                          overflowY: 'auto',
+                          height: idProofFile || bankStatementFile ? 'auto' : '40vh',
+                          scrollbarWidth: 'none'
+                        }}
+                      >
+                        {idProofFile && renderFileCard(idProofFile, "ID Proof", "id", progressMap['id'] || 0)}
+                        {bankStatementFile && renderFileCard(bankStatementFile, "Bank Statement", "bank", progressMap['bank'] || 0)}
+                        {creditBureauFile && renderFileCard(creditBureauFile, "Credit Bureau", "credit", progressMap['credit'] || 0)}
+                      </Stack>
+                    </Box>
+
+
+                  </>
+                ) : null}
+              </Box>
             </Box>
           </Box>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '10px' }}>
-            <Box sx={{ mt: '8px', mb: '10px' }}>
-              <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#000', textAlign: 'center' }}>
-                Support pdf here to import
-              </Typography>
-              <Typography style={{ fontSize: '14px', fontWeight: '600', color: '#676767', textAlign: 'center' }}>
-                or, click to browse (10MB per file).
-              </Typography>
-              <Typography sx={{ fontSize: '13px', fontWeight: '600', color: 'red', textAlign: 'start', mt: 2 }}>
-                Note: Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.
-              </Typography>
-            </Box>
-          </Box>
+          <Stack direction={'row'} justifyContent={'center'} spacing={2}>
 
-          {error && (
-            <Typography sx={{ textAlign: 'center', fontSize: '14px', color: 'red', fontWeight: '600' }}>{error}</Typography>
-          )}
+            <Box
+              sx={{
+                borderRadius: "20px",
+              }}
+            >
+
+              <Box sx={{ display: "flex", justifyContent: "center", mt: '20px' }}>
+
+                <Button
+                  disabled={!idProofFile || !bankStatementFile || !creditBureauFile}
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#fff',
+                    cursor: 'pointer',
+                    textTransform: 'none',
+                    bgcolor: '#c3d600',
+                    width: '250px',
+                    height: '40px',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      bgcolor: 'darkorange',
+                      transform: 'translateY(-2px) scale(1.05)',
+                      boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)',
+                    },
+                    '&:active': {
+                      transform: 'scale(0.98)',
+                    },
+                  }}
+
+                  onClick={imageRespose}
+                >
+                  Submit
+                </Button>
+
+
+
+              </Box>
+
+            </Box>
+
+
+
+          </Stack>
         </Box>
-        {idProofFile || bankStatementFile || creditBureauFile ? (
-          <Box sx={{ width: "80%" }}>
-            {idProofFile && renderFileCard(idProofFile, "ID Proof", "id")}
-            {bankStatementFile && renderFileCard(bankStatementFile, "Bank Statement", "bank")}
-            {creditBureauFile && renderFileCard(creditBureauFile, "Credit Bureau", "credit")}
-          </Box>
-        ) : null}
-
-      </Stack>
-
-
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-
-        <Button
-          disabled={!idProofFile || !bankStatementFile || !creditBureauFile}
-          sx={{
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#fff',
-            cursor: 'pointer',
-            textTransform: 'none',
-            bgcolor: '#c3d600',
-            width: '15%',
-            height: '40px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            transition: 'all 0.3s ease-in-out',
-            '&:hover': {
-              bgcolor: 'darkorange',
-              transform: 'translateY(-2px) scale(1.05)',
-              boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)',
-            },
-            '&:active': {
-              transform: 'scale(0.98)',
-            },
-          }}
-
-          onClick={handleOpen1}
-        >
-          Submit
-        </Button>
-
-        <Modal open={open1}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "auto",
-              bgcolor: "background.paper",
-              boxShadow: 2,
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-
-            <Typography sx={{ fontSize: '15px', fontWeight: '600', color: '#686868', mb: '10px', textAlign: 'center' }}>Please wait processing...</Typography>
-
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: '30px' }}>
-              <span class="loader"></span>
-            </Box>
-
-            <Box>
-              <Stack direction={'row'} alignItems={'center'} gap={3}>
-                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Demography Report Analysis</Typography>
-                <img src={checkIicon} style={{ width: '30px' }} />
-                {/* <span class="loader1"></span> */}
-              </Stack>
-              <Stack direction={'row'} alignItems={'center'} gap={3}>
-                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Regularity and quantum of income flow</Typography>
-                <img src={warningicon} style={{ width: '30px' }} />
-                {/* <span class="loader1"></span> */}
-              </Stack>
-              <Stack direction={'row'} alignItems={'center'} gap={3}>
-                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Balance build-up over period</Typography>
-                <img src={checkIicon} style={{ width: '30px' }} />
-                {/* <span class="loader1"></span> */}
-              </Stack>
-              <Stack direction={'row'} alignItems={'center'} gap={3}>
-                <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#676767' }}>Spend pattern</Typography>
-                <img src={warningicon} style={{ width: '30px' }} />
-                {/* <span class="loader1"></span> */}
-              </Stack>
-            </Box>
-
-          </Box>
-        </Modal>
-
-
       </Box>
 
-
-
-
-    </Sidebar>
+    </Sidebar >
   );
 }
 

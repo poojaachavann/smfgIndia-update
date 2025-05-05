@@ -1,0 +1,71 @@
+Date,Type,Description,Amount,Balance,Tags
+20 Jan 24,Debit,UPI/SEED2PLANT,147.0,5254.14,miscellaneous_expense
+20 Jan 24,Debit,UPI/ADD-MONEY@,1000.0,4254.14,miscellaneous_expense
+20 Jan 24,Debit,UPI/R B STOR,2125.0,2129.14,miscellaneous_expense
+23 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,2334.6,4463.74,other_income
+23 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,5467.7,9931.44,other_income
+23 Jan 24,Debit,UPI/ANJALAI,2694.0,7237.44,miscellaneous_expense
+24 Jan 24,Credit,IMPS/GOOGLEINDI,310.0,7547.44,other_income
+24 Jan 24,Credit,NEFT/ZOMATO LIMITED,15176.45,22723.89,other_income
+25 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,1224.93,23948.82,other_income
+25 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,6061.64,30010.46,other_income
+26 Jan 24,Credit,IMPS/GOOGLEINDI,200.0,30210.46,other_income
+26 Jan 24,Debit,MONTHLY MAINTENANCE CHARGES,590.0,29620.46,fees_charges
+26 Jan 24,Debit,SMS CHARGES,33.0,29587.46,fees_charges
+26 Jan 24,Debit,UPI/THIYAGHA,25000.0,4587.46,miscellaneous_expense
+26 Jan 24,Credit,IMPS/GOOGLEINDI,350.0,4937.46,other_income
+27 Jan 24,Debit,POS/TASMAC SHOP,2220.0,2717.46,entertainment_dining_out
+28 Jan 24,Credit,IMPS/GOOGLEINDI,200.0,2917.46,other_income
+30 Jan 24,Debit,UPI/ADD-MONEY@,1000.0,1917.46,miscellaneous_expense
+30 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,6567.52,8484.98,other_income
+30 Jan 24,Credit,NEFT/BUNDL TECHNOLOGI,2557.08,11042.06,other_income
+30 Jan 24,Credit,IMPS/GOOGLEINDI,500.0,11542.06,other_income
+31 Jan 24,Debit,UPI/PRAKASHP,95.0,11447.06,miscellaneous_expense
+31 Jan 24,Debit,UPI/SIVA SHA,105.0,11342.06,miscellaneous_expense
+31 Jan 24,Credit,NEFT/ZOMATO LIMITED,14424.29,25766.35,other_income
+01 Feb 24,Debit,UPI/BAKIYARA,200.0,25566.35,miscellaneous_expense
+02 Feb 24,Debit,UPI/BALAJI N,20000.0,5566.35,miscellaneous_expense
+02 Feb 24,Debit,UPI/PUMP 1 K,1000.0,4566.35,fuel
+03 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,697.55,5263.9,other_income
+03 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,5575.59,10839.49,other_income
+04 Feb 24,Debit,UPI/DEEPADEE,2000.0,8839.49,miscellaneous_expense
+04 Feb 24,Debit,UPI/POTHYS P,6255.0,2584.49,shopping
+05 Feb 24,Credit,IMPS/HOTEL JAIH,4000.0,6584.49,other_income
+07 Feb 24,Debit,UPI/JIO,300.1,6284.39,mobile_recharge
+07 Feb 24,Credit,NEFT/ZOMATO LIMITED,13043.5,19327.89,other_income
+07 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,923.28,20251.17,other_income
+07 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,4754.84,25006.01,other_income
+07 Feb 24,Debit,UPI/THIYAGHA,20000.0,5006.01,miscellaneous_expense
+08 Feb 24,Debit,UPI/ASWINS H,655.0,4351.01,miscellaneous_expense
+08 Feb 24,Debit,UPI/ASWINS H,2750.0,1601.01,miscellaneous_expense
+09 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,3831.53,5432.54,other_income
+09 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,955.51,6388.05,other_income
+11 Feb 24,Debit,UPI/ADD-MONEY@,1000.0,5388.05,miscellaneous_expense
+11 Feb 24,Debit,UPI/PARTHIPA,3800.0,1588.05,miscellaneous_expense
+11 Feb 24,Debit,UPI/ANBARASA,500.0,1088.05,miscellaneous_expense
+12 Feb 24,Debit,UPI/LABURAM,190.0,898.05,miscellaneous_expense
+12 Feb 24,Debit,UPI/SIMPLCHE,400.0,498.05,miscellaneous_expense
+13 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,7186.12,7684.17,other_income
+13 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,2228.77,9912.94,other_income
+13 Feb 24,Debit,UPI/ALAGURAJ,3800.0,6112.94,miscellaneous_expense
+14 Feb 24,Debit,UPI/SUNDARIM,800.0,5312.94,miscellaneous_expense
+14 Feb 24,Credit,NEFT/ZOMATO LIMITED,15682.39,20995.33,other_income
+15 Feb 24,Debit,UPI/ADD-MONEY@,1000.0,19995.33,miscellaneous_expense
+15 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,907.2,20902.53,other_income
+15 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,6172.43,27074.96,other_income
+15 Feb 24,Debit,UPI/THIYAGHA,25000.0,2074.96,miscellaneous_expense
+17 Feb 24,Debit,UPI/HDFC BAN,1000.0,1074.96,miscellaneous_expense
+17 Feb 24,Debit,UPI/MAHENDRA,240.0,834.96,miscellaneous_expense
+18 Feb 24,Debit,MONTHLY MAINTENANCE CHARGES,590.0,244.96,fees_charges
+20 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,5087.15,5332.11,other_income
+20 Feb 24,Credit,NEFT/BUNDL TECHNOLOGI,1736.57,7068.68,other_income
+21 Feb 24,Debit,UPI/ASWINS H,495.0,6573.68,miscellaneous_expense
+21 Feb 24,Debit,UPI/JAYALAKS,770.0,5803.68,miscellaneous_expense
+21 Feb 24,Debit,UPI/R SYED A,240.0,5563.68,miscellaneous_expense
+21 Feb 24,Credit,NEFT/ZOMATO LIMITED,15335.63,20899.31,other_income
+22 Feb 24,Debit,UPI/AMMA KAN,300.0,20599.31,miscellaneous_expense
+22 Feb 24,Debit,UPI/MR RAJI,1600.0,18999.31,miscellaneous_expense
+22 Feb 24,Debit,UPI/MD RAMAZ,1200.0,17799.31,miscellaneous_expense
+22 Feb 24,Debit,UPI/SANTHOSH,1300.0,16499.31,miscellaneous_expense
+22 Feb 24,Debit,UPI/SHARMILN,1680.0,14819.31,miscellaneous_expense
+22 Feb 24,Debit,UPI/SUBRAHMA,5930.0,8889.31,miscellaneous_expense

@@ -1,0 +1,4 @@
+azure-ai-documentintelligence==1.0.0b4
+azure-ai-vision==0.15.1b1
+azure-ai-vision-imageanalysis==1.0.0
+azure-core==1.33.0

@@ -1,0 +1,6 @@
+{
+  "page": 4,
+  "account_info": "Based on the extracted text from the bank statement page, I will format the information according to the specified structure. \n\n### Account Information\n- **Holder Name**: Not Present\n- **Account Number**: Not Present\n- **Address**: Not Present\n- **Contact**: Not Present\n- **Opening Balance**: 19513.00\n- **Closing Balance**: 1167.80\n\n### CSV-Formatted Transactions\n```text",
+  "csv_path": "C:\\smfgIndiaUpdate\\server\\assets\\uid-67a44ea780a5707936c594b9\\pid-d3d38778-7cec-4860-9013-4bf587d5c706\\page_csv\\page_4.csv",
+  "page_confidence": 0.975460784313726
+}

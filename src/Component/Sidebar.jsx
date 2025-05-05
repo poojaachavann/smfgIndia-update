@@ -461,29 +461,30 @@ export default function Sidebar({ title, children }) {
     return (
         <>
             <Stack direction={'row'} sx={{ bgcolor: '#f8f8fa', height: '100vh', overflowY: 'hidden' }}>
-                <Box sx={{ bgcolor: '#f3ff90', height: '95vh', width: '20%', position: 'relative', borderRadius: '20px', m: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
+                <Box sx={{ bgcolor: '#004831', height: '95vh', width: '20%', position: 'relative', borderRadius: '20px', m: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, mb: '20px' }}>
-                        <img
-                            src={aihlogo}
-                            alt="logo"
-                            style={{
-                                width: "70%",
-                                borderRadius: '10px',
-                                mixBlendMode: 'darken'
+                        <Box sx={{ bgcolor: '#fff', borderRadius: '10px', display: 'flex', justifyContent: 'center', width: '200px', p: 1 }}>
+                            <img
+                                src={aihlogo}
+                                alt="logo"
+                                style={{
+                                    width: "70%",
+                                    borderRadius: '10px',
+                                    mixBlendMode: 'darken'
 
-                            }}
-                        />
+                                }}
+                            />
+                        </Box>
                     </Box>
-
 
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/home`} style={{ textDecoration: "none" }}>
-                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'home' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }}>
-                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === 'home' ? '#000' : '#656565', fontSize: '20px' }} />
+                            <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'home' ? '#c3d600' : '', borderRadius: '8px', width: "200px", p: 1 }}>
+                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === 'home' ? '#000' : '#fff', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
                                         fontSize: mainUrl[mainUrl.length - 1] === 'home' ? '20px' : '14px',
-                                        color: mainUrl[mainUrl.length - 1] === 'home' ? '#000' : '#656565',
+                                        color: mainUrl[mainUrl.length - 1] === 'home' ? '#fff' : '#fff',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
@@ -497,12 +498,12 @@ export default function Sidebar({ title, children }) {
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
                             <Stack
-                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }} >
-                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565', fontSize: '20px' }} />
+                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '', borderRadius: '8px', width: "200px", p: 1.5 }} >
+                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
                                         fontSize: mainUrl[mainUrl.length - 1] === '' ? '20px' : '14px',
-                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565',
+                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
@@ -516,12 +517,12 @@ export default function Sidebar({ title, children }) {
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
                             <Stack
-                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '#e1ea85', borderRadius: '8px', width: "200px", p: 1.5 }} >
-                                <CreditScoreOutlinedIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565', fontSize: '20px' }} />
+                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '', borderRadius: '8px', width: "200px", p: 1.5 }} >
+                                <CreditScoreOutlinedIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff', fontSize: '20px' }} />
                                 <Typography
                                     sx={{
                                         fontSize: mainUrl[mainUrl.length - 1] === '' ? '20px' : '14px',
-                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#656565',
+                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff',
                                         fontWeight: '500',
                                         whiteSpace: "nowrap"
                                     }}
@@ -623,7 +624,7 @@ export default function Sidebar({ title, children }) {
                                 <Typography sx={{ fontSize: '30px', color: '#000', fontWeight: '500', fontStyle: 'normal' }} >{title}</Typography>
                             </Box>
 
-                            <Box sx={{ bgcolor: '#f0f0f4', p: 1, borderRadius: '12px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
+                            <Box sx={{ bgcolor: '#fff', p: 1, borderRadius: '12px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
                                 <Stack direction={'row'} alignItems={'center'} spacing={1}>
                                     <Avatar
                                         src="Image"
@@ -703,7 +704,7 @@ export default function Sidebar({ title, children }) {
                         </Menu>
                     </Box>
 
-                    <Box>
+                    <Box sx={{ overflowY: 'auto', height: '80vh' ,scrollbarWidth:'none'}}>
                         {children}
                     </Box>
 

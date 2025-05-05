@@ -20,6 +20,7 @@
     "framer-motion": "^12.9.4",
     "lodash.debounce": "^4.0.8",
     "markdown-to-jsx": "^7.7.6",
+    "papaparse": "^5.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",

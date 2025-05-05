@@ -1,0 +1,2 @@
+# from services.ocrExtreme.extraction_parser import parse_statement_pages
+from services.ocrExtreme.image_parser import extract_text_from_images
