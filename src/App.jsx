@@ -15,8 +15,6 @@ export default function App() {
   const domainPath = mainUrls[mainUrls.length - 2]
   console.log(domainPath)
 
-
-
   const [userLoginData, setUserLoginData] = useState('')
   const userDataOfLogin = localStorage.getItem('userData')
   useEffect(() => {
@@ -33,56 +31,52 @@ export default function App() {
 
   const analizeDocument = async (file) => {
     try {
-
-      if (file.bankStatement) {
-        setIsLoadingBankStatement(true)
-      }
-      if (file.creditBureau) {
-        setIsLoadingcreditbuero(true)
-
-      }
-      if (file.idProof) {
-        setIsLoadingIdProof(true)
-      }
-
+      setIsLoadingIdProof(true)
       const response = await axios.post(API.startLoanForm, {
-        bankStatementpdfPath: file?.bankStatement,
         idProofpdfPath: file?.idProof,
-        creditBureopdfPath: file?.creditBureau,
         userId: userLoginData?._id,
-        domain: domainPath
+        domain: domainPath,
+        type: "idProof"
       })
       console.log('response ai analysis', response.data.answer);
-
       setApiRes(response.data.answer)
+      setIsLoadingIdProof(false)
 
-      if (file.bankStatement) {
+      if (response.data.answer?.validation_result?.document_type === "id_proof") {
+        setIsLoadingBankStatement(true)
+        const response = await axios.post(API.startLoanForm, {
+          bankStatementpdfPath: file?.bankStatement,
+          userId: userLoginData?._id,
+          domain: domainPath,
+          type: "bankStatement"
+
+        })
+        console.log('response ai analysis', response?.data?.answer);
+        setApiRes(response.data.answer)
         setIsLoadingBankStatement(false)
-      }
-      if (file.creditBureau) {
-        setIsLoadingcreditbuero(false)
 
-      }
-      if (file.idProof) {
-        setIsLoadingIdProof(false)
-      }
+        if (response.data.answer?.validation_result?.document_type === "bank_statement") {
+          setIsLoadingcreditbuero(true)
 
-      setTimeout(() => {
-        window.location.reload()
-      }, 1000)
+          const response = await axios.post(API.startLoanForm, {
+            creditBureopdfPath: file?.creditBureau,
+            userId: userLoginData?._id,
+            domain: domainPath,
+            type: "creditBureau"
+          })
+          console.log('response ai analysis', response?.data?.answer);
+          setApiRes(response.data.answer)
+          setIsLoadingcreditbuero(false)
+
+        }
+      }
 
     } catch (error) {
       console.log(error)
-      if (file.bankStatement) {
-        setIsLoadingBankStatement(false)
-      }
-      if (file.creditBureau) {
-        setIsLoadingcreditbuero(false)
+      setIsLoadingBankStatement(false)
+      setIsLoadingcreditbuero(false)
+      setIsLoadingIdProof(false)
 
-      }
-      if (file.idProof) {
-        setIsLoadingIdProof(false)
-      }
     }
 
   }

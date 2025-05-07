@@ -242,7 +242,7 @@ text
             response_and_usage = await client_vision.async_extract_text(
                 prompt_persona=prompt_persona,
                 system_persona=system_persona,
-                image_path=image_path,
+                images_paths=[image_path],
                 # functions=response_schema,
                 # function_call={"name": "text_extraction"},
             )

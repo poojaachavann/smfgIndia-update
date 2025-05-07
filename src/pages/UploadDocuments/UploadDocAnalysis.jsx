@@ -149,7 +149,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         </Typography>
 
                                         <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.reason?.info}`} arrow>
-                                            <InfoIcon  sx={{color:'#aaa',fontSize:'20px'}}/>
+                                            <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
 
                                         </Tooltip>
                                     </Stack>
@@ -409,7 +409,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         </Typography>
 
                                         <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.reason?.info}`} arrow>
-                                            <InfoIcon  sx={{color:'#aaa',fontSize:'20px'}}/>
+                                            <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
                                     <Typography
@@ -668,7 +668,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         </Typography>
 
                                         <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.reason?.info}`} arrow>
-                                            <InfoIcon  sx={{color:'#aaa',fontSize:'20px'}}/>
+                                            <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
                                     <Typography
@@ -795,7 +795,8 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
+                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'present' ?'#00c853': 'red'
+                                                }`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',

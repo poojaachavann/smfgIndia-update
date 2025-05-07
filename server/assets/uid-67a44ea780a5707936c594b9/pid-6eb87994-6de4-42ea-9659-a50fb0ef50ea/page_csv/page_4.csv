@@ -1,0 +1,13 @@
+Date,Type,Description,Amount,Balance,Tags
+02 Dec 24,Debit,UPI/PARIMAL MO,8000.0,207655.43,p2p_transfer
+01 Dec 24,Debit,UPI/ARIF USMAN,460.0,215655.43,p2p_transfer
+01 Dec 24,Debit,UPI/RUBEL SK,6000.0,216115.43,p2p_transfer
+01 Dec 24,Debit,UPI/HAIDUL SK,50000.0,222115.43,p2p_transfer
+30 Nov 24,Debit,UPI/SALAUDDIN,10000.0,272115.43,p2p_transfer
+30 Nov 24,Debit,UPI/MOHD ARSHA,2000.0,282115.43,p2p_transfer
+30 Nov 24,Debit,UPI/PARMAR RAH,20000.0,284115.43,p2p_transfer
+30 Nov 24,Credit,RTGS HDFC BANK MILAN ROAD BUILDTECH LLP,250000.0,304115.43,external_transfer
+30 Nov 24,Debit,UPI/BANK ACCOU,5000.0,54115.43,p2p_transfer
+30 Nov 24,Debit,UPI/ABU TAHER,50000.0,59115.43,p2p_transfer
+30 Nov 24,Debit,UPI/URMILA BIB,6000.0,109115.43,p2p_transfer
+30 Nov 24,Debit,UPI/EKART,1114.0,115115.43,online_shopping
