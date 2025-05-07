@@ -280,6 +280,21 @@ Components:
     MARITAL_STATUS = "marital_status"
     RESIDENT_STATUS = "resident_status"
 
+Approach. 
+Your first task is to understand what type of id proof is given.  
+e.g. Adhaar pan, Voter id, Driving Licence, Passport, etc.
+And then validate the document based on the type of id proof.
+e.g. if Adhaar is given, then you need to validate the document based on the Adhaar card rules.
+     - Name
+     - DOB
+     - Address
+     - Gender
+     - Issue Date
+     - Expiry Date
+     - Authority
+     - Nationality
+     - Adhaar number
+    
 """
 
 
