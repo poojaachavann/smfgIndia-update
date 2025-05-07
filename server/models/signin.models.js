@@ -21,8 +21,9 @@ const signInData = new mongoose.Schema({
         creditBureau: { type: String }
     },
     file_response: {
-        type: Object,
-        required: false
+        idProof: { type: Object },
+        bankStatement: { type: Object },
+        creditBureau: { type: Object }
     }
 
 }, { timestamps: true });

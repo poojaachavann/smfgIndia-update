@@ -1,4 +1,5 @@
 from PIL import Image
+
 # @retry_async(delay=2.17, backoff=2)
 import asyncio
 import logging
@@ -52,6 +53,7 @@ response_schema = [
                     "description": "The confidence of the extraction",
                 },
             },
+            "required": ["text", "confidence"],
         },
     }
 ]
@@ -62,11 +64,11 @@ client_vision = AzureOpenAIVisionModel(
     azure_api_version=azure_api_version,
     engine="gpt-4-turbo-vision",
     parameters={
-        # "temperature": 0.1,
-        # "max_tokens": 4000,
-        # "top_p": 0.95,
-        # "seed": 42,
-        # "top_k": 40,
+        "temperature": 0.1,
+        "max_tokens": 4000,
+        "top_p": 0.95,
+        "seed": 42,
+        "top_k": 40,
     },
     async_client=True,
 )
@@ -75,8 +77,8 @@ client_vision = AzureOpenAIVisionModel(
 class ExtractionConfig(BaseModel):
     provider: str = "azure"
     model: str = "azure_vision"
-    system_persona: str = ''
-    prompt_persona: str = ''
+    system_persona: str = ""
+    prompt_persona: str = ""
 
 
 class Hallucination(Exception):
@@ -98,7 +100,7 @@ async def extract_text_from_image(
     image_path: str = None,
     extraction_config: ExtractionConfig = None,
 ) -> Response:
-    print("Extracting text from image, Path:",image_path)
+    print("Extracting text from image, Path:", image_path)
     prompt_persona = "Extract the following information from the bank statement image, Please Ensure You dont just give output of \n\n in responses"
     if (
         extraction_config.system_persona is None
@@ -213,8 +215,7 @@ text
 #
 
 #  '''"""
-    
-    
+        system_persona = None
     else:
         system_persona = extraction_config.system_persona
     if (
@@ -230,38 +231,30 @@ text
             client_vision = AzureOpenAIVisionModel(
                 azure_api_key=azure_api_key,
                 azure_endpoint=azure_endpoint,
-                azure_api_version=azure_api_version,
-                engine="gpt-4o",
-                parameters={
-                    "temperature": 0.1,
-                    "max_tokens": 8000,
-                    "top_p": 0.95,
-                    "seed": 42,
-                    # "top_k": 40,
-                },
-                async_client=False,
+                azure_api_version="2024-12-01-preview",
+                engine="gpt-4-turbo-vision",
+                parameters={"temperature": 0.1, "max_tokens": 4000},
+                async_client=True,
             )
-            
+
             print("Using Azure OpenAI Vision Model")
             # print("inputs", prompt_persona, system_persona, image_path,response_schema)
-            response_and_usage = client_vision.extract_text(
+            response_and_usage = await client_vision.async_extract_text(
                 prompt_persona=prompt_persona,
                 system_persona=system_persona,
                 image_path=image_path,
-                functions=response_schema,
-                function_call={"name": "text_extraction"},
-                
+                # functions=response_schema,
+                # function_call={"name": "text_extraction"},
             )
 
         elif extraction_config.model == "azure-hub-vision":
             response_and_usage = azure_image_parser(image_path=image_path)
             return response_and_usage
         elif extraction_config.model == "ai-document-intelligence":
-
             client = await azure_bank_statement_extraction.get_document_client()
             with Image.open(image_path) as img:
                 compressed = await (
-                      azure_bank_statement_extraction.compress_image_to_target_size(img)
+                    azure_bank_statement_extraction.compress_image_to_target_size(img)
                 )
                 response_and_usage = (
                     await azure_bank_statement_extraction.analyze_image(
@@ -322,5 +315,4 @@ if __name__ == "__main__":
             ),
         )
     )
-    print('Results',results)
-    
+    print("Results", results)

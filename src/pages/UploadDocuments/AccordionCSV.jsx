@@ -17,49 +17,59 @@ const AccordionCSV = ({ csvUrl }) => {
     }, [csvUrl]);
 
     return (
-        <Box sx={{ padding: 2, overflowX: 'auto' }}>
-            <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                minWidth: '600px'
-            }}>
-                <thead>
-                    <tr>
-                        {csvData.length > 0 && Object.keys(csvData[0]).map((header, idx) => (
-                            <th
-                                key={idx}
-                                style={{
-                                    border: '1px solid #ccc',
-                                    padding: '8px',
-                                    background: '#f5f5f5',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                {header}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {csvData.map((row, idx) => (
-                        <tr key={idx}>
-                            {Object.values(row).map((cell, i) => (
-                                <td
-                                    key={i}
-                                    style={{
-                                        border: '1px solid #ddd',
-                                        padding: '8px',
-                                        whiteSpace: 'nowrap'
-                                    }}
-                                >
-                                    {cell}
-                                </td>
-                            ))}
-                        </tr>
+        <Box sx={{ display: 'flex', justifyContent: 'center', padding: 2 }}>
+    <table style={{
+        width: '100%',
+        maxWidth: '1000px',
+        borderCollapse: 'separate',
+        borderSpacing: '0',
+        minWidth: '600px',
+        fontFamily: 'Arial, sans-serif',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        borderRadius: '8px',
+        overflow: 'hidden'
+    }}>
+        <thead>
+            <tr>
+                {csvData.length > 0 && Object.keys(csvData[0]).map((header, idx) => (
+                    <th
+                        key={idx}
+                        style={{
+                            borderBottom: '2px solid #e0e0e0',
+                            padding: '12px 16px',
+                            backgroundColor: '#f0f4f8',
+                            textAlign: 'left',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}
+                    >
+                        {header}
+                    </th>
+                ))}
+            </tr>
+        </thead>
+        <tbody>
+            {csvData.map((row, idx) => (
+                <tr key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f9fafb', transition: 'background-color 0.3s' }}>
+                    {Object.values(row).map((cell, i) => (
+                        <td
+                            key={i}
+                            style={{
+                                padding: '12px 16px',
+                                borderBottom: '1px solid #eee',
+                                color: '#444',
+                                whiteSpace: 'nowrap'
+                            }}
+                        >
+                            {cell}
+                        </td>
                     ))}
-                </tbody>
-            </table>
-        </Box>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</Box>
+
     );
 };
 

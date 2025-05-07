@@ -4,7 +4,7 @@ import json
 
 model = YOLO(r".\models\yolov8l-face.pt")
 
-def extract_ROI(image, box, scale_factor_x=1.5, scale_factor_y=1.3):
+def extract_ROI(image, box, scale_factor_x=1.7, scale_factor_y=1.5):
     shape = image.shape
     x1, y1, x2, y2 = box['x1'], box['y1'], box['x2'], box['y2']
     
@@ -71,5 +71,5 @@ def save_faces(input_image, output_path):
 
         
 if __name__ == "__main__":
-    image_path = r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\data\ids\both_side_adhaar.png"
+    image_path = r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\v2\app\services\ocrExtreme\image.png"
     save_faces(image_path, "roi.jpg")

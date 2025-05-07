@@ -1,0 +1,71 @@
+{
+  "extraction": {
+    "overall_confidence": 0.8999999999999999,
+    "pages": [
+      {
+        "page": 1,
+        "personal_info": "**Personal & Account Information**  \nName: RAJANNA M D  \nDate of Birth / DOB: 06-Jul-1984  \nPAN / Tax ID: Not Present  \nAddress: NO 09, LIG 3RD PHASE, 19TH B CROSS YELAHANKA NEW TOWN YELAHANKA, BANGALORE KARNATAKA  \nContact / Phone / Email: RAJANMDRAJU@GMAIL.COM  \nReport Date: 25/07/2024",
+        "credit_report": "**Credit Report Details**  \nCredit Score: Not Present  \nAccount Summary:  \n  • Account Type: PERSONNEL LOAN - INDIVIDUAL  \n  • Days Past Due: 000  \n  • Payment History Start Date: 01/05/2024  \n  • Payment History End Date: 31/03/2024  \n  • Last Payment: 08/05/2024  \n  • Opened Date: 31/05/2024  \n  • Closed Date: Not Present  \n  • Reported And Certified: 31/05/2024  \n  • Sanctioned Amount: 1300000  \n  • Current Balance (Overdue): 1267024  \n  • Suit Filed / Written-off Status: Not Present  \nOutstanding Balance: 1267024  \nCredit Limit: Not Present  \nPayment History:  \n  • Start Date: 01/05/2024  \n  • End Date: 31/03/2024  \n  • Last Payment Date: 08/05/2024  \nInquiries:  \n  • Date: 20/07/2024  \n  • Purpose: PERSONEL LOAN  \n  • Amount: 500000  \nPublic Records: Not Present",
+        "page_confidence": 0.95
+      },
+      {
+        "page": 2,
+        "personal_info": "Name: Not Present\nDate of Birth / DOB: Not Present\nPAN / Tax ID: B2XP1709E\nAddress: Not Present\nContact / Phone / Email: 9845588070\nReport Date: 12/07/2024",
+        "credit_report": "Credit Score: 735\nAccount Summary: Not Present\nPayment History: Not Present\nInquiries: Not Present\nPublic Records: Not Present",
+        "page_confidence": 0.85
+      }
+    ],
+    "reason": {
+      "info": "Moderately low confidence in OCR results. Please review and verify.",
+      "level": "warning"
+    }
+  },
+  "validation_result": {
+    "address_status": "partial",
+    "personal_info_status": "partial",
+    "components": [
+      {
+        "component": "full_name",
+        "present": true,
+        "confidence": 0.95,
+        "value": "RAJANNA M D"
+      },
+      {
+        "component": "date_of_birth",
+        "present": true,
+        "confidence": 0.95,
+        "value": "06-Jul-1984"
+      },
+      {
+        "component": "tax_id_num",
+        "present": true,
+        "confidence": 0.95,
+        "value": "B2XP1709E"
+      },
+      {
+        "component": "full_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "NO 09, LIG 3RD PHASE, 19TH B CROSS YELAHANKA NEW TOWN YELAHANKA, BANGALORE KARNATAKA"
+      },
+      {
+        "component": "email_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "RAJANMDRAJU@GMAIL.COM"
+      },
+      {
+        "component": "phone_number",
+        "present": true,
+        "confidence": 0.95,
+        "value": "9845588070"
+      }
+    ],
+    "overall_confidence": 0.9500000000000001,
+    "document_type": "credit_report",
+    "reason": {
+      "info": "Information is likely accurate.",
+      "level": "success"
+    }
+  }
+}

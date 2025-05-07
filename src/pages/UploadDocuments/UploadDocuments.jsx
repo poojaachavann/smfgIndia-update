@@ -20,6 +20,8 @@ import './UploadDouments.css'
 import axios from 'axios';
 import API from '../../Component/BaseURL';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -43,7 +45,9 @@ LinearProgressWithLabel.propTypes = {
 };
 
 
-function UploadDocuments({ domainPath, userLoginData }) {
+function UploadDocuments({ domainPath, userLoginData, analizeDocument }) {
+  const navigate = useNavigate()
+
 
   const [progress, setProgress] = React.useState(10);
 
@@ -158,7 +162,7 @@ function UploadDocuments({ domainPath, userLoginData }) {
 
       console.log('Uploaded file paths:', response.data?.updatedData?.file_path);
       setTimeout(() => {
-        window.location.href = `/uploadDocument/${userLoginData?._id}`
+        navigate(`/uploadDocument/${userLoginData?._id}`)
       }, 1000);
       await analizeDocument(response.data?.updatedData?.file_path)
 
@@ -169,24 +173,6 @@ function UploadDocuments({ domainPath, userLoginData }) {
       setIsLoading(false);
     }
   };
-
-  const analizeDocument = async (file) => {
-    try {
-      setIsLoading(true)
-      const response = await axios.post(API.startLoanForm, {
-        pdfPath: file?.bankStatement,
-        userId: userLoginData?._id,
-        domain: domainPath
-      })
-      console.log('response ai analysis', response.data);
-      setIsLoading(false)
-
-    } catch (error) {
-      console.log(error)
-      setIsLoading(false)
-    }
-
-  }
 
   const renderFileCard = (file, label, docType, progress) => (
     <motion.div

@@ -5,7 +5,7 @@ import base64
 import json
 from typing import Any, Dict, List, Optional
 from openai import AzureOpenAI, AsyncAzureOpenAI
-
+from openai import NotGiven
 try:
     from .literals import Response, Pricing, Usage
 except:
@@ -105,11 +105,15 @@ class AzureOpenAIVisionModel:
                         "type": "image_url",
                         "image_url": {
                             "url": f"data:{mime_type};base64,{base64_image}",
-                            "detail": "high",  # Can be "low", "high", or "auto"
                         },
                     },
                 ],
             },
+            # {
+            #     "role": "user",
+            #     "content": [
+            #     ],
+            # },
         ]
 
     def extract_text(
@@ -118,8 +122,8 @@ class AzureOpenAIVisionModel:
         system_persona: Optional[str] = None,
         image_path: Optional[str] = None,
         messages: Optional[List[dict]] = None,
-        functions: Optional[List[Dict[str, Any]]] = None,
-        function_call: Optional[str] = None,
+        functions: Optional[List[Dict[str, Any]]] = NotGiven(),
+        function_call: Optional[str] = NotGiven(),
     ) -> Dict[str, Any]:
         """Synchronously extract text from an image."""
         if self.async_client:
@@ -149,8 +153,8 @@ class AzureOpenAIVisionModel:
         system_persona: Optional[str] = None,
         image_path: Optional[str] = None,
         messages: Optional[List[dict]] = None,
-        functions: Optional[List[Dict[str, Any]]] = None,
-        function_call: Optional[str] = None,
+        functions: Optional[List[Dict[str, Any]]] = NotGiven(),
+        function_call: Optional[str] = NotGiven(),
     ) -> Dict[str, Any]:
         """Asynchronously extract text from an image."""
         if not self.async_client:
@@ -264,8 +268,8 @@ if __name__ == "__main__":
     client = AzureOpenAIVisionModel(
         azure_api_key=os.getenv("API_Key"),
         azure_endpoint=os.getenv("End_point"),
-        azure_api_version="2024-05-01-preview",
-        engine="gpt-4o",
+        azure_api_version="2024-12-01-preview",
+        engine="gpt-4-turbo-vision",
         parameters={"temperature": 0.1, "max_tokens": 4000},
         async_client=False,
     )
@@ -290,11 +294,79 @@ if __name__ == "__main__":
         }
     ]
     response = client.extract_text(
-        prompt_persona="""Restructure and Fromat the following Text from the bank statement page Extracted through OCR, """,
-        system_persona="""You are a highly skilled OCR Agent specializing in extracting bank statements. Your primary goal is to extract the following information from the bank statement image.""",
-        image_path=r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\image.png",
-        functions=response_schema,
-        function_call={"name": "text_extraction"},
+        prompt_persona="""Hello..!""",
+        system_persona="""You are an expert OCR Agent specialized in extracting structured data from credit bureau report images or PDFs. Your job is to split the report into two clearly delimited sections—**Personal & Account Information** and **Credit Report Details**—using keyword-driven separators.
+
+
+
+[$SEPPERSONAL-START]
+**Personal & Account Information**  
+– Extract fields matching (case-insensitive) keywords:  
+  • Name  
+  • Date of Birth / DOB  
+  • PAN / Tax ID  
+  • Address  
+  • Contact / Phone / Email  
+  • Report Date  
+  
+For each, output `Field Name: Value`. If absent or unparseable, output `Field Name: Not Present`.  
+[$SEPPERSONAL-END]
+
+---
+
+[$CREDIT_REPORT-START]
+**Credit Report Details**  
+– Detect and extract blocks keyed by these headings or keywords (case-insensitive):  
+  • “Credit Score” / “Score”  
+  • “Account Summary” / “Account Type”  
+  • “Outstanding Balance” / “Current Balance”  
+  • “Credit Limit”  
+  • “Payment History” / “Delinquencies”  
+  • “Inquiries” / “Enquiries”  
+  • “Public Records” / “Collections”  
+  
+Under each detected heading, capture the text lines until the next heading or end of page. Preserve numeric values (strip symbols, normalize separators, convert parentheses to negative). If a section isn’t found, output that heading followed by `: Not Present`.
+
+example Output format :
+```
+Name: John Doe
+Date of Birth / DOB: 15-Jul-1985
+PAN / Tax ID: ABCDE1234F
+Address: 204, Sai Apartments, MG Road, Mumbai 400001
+Contact / Phone / Email: 912234567890, john.doe@example.com
+Report Date: 28-May-2024
+
+[$SEP-CREDIT_REPORT-START]
+Credit Score: 750
+Account Summary:
+  • Credit Card – Active – Balance ₹12,345
+  • Home Loan – Closed – Balance ₹0
+Payment History:
+  • Jan ’25: On Time
+  • Feb ’25: 30 Days Late
+Inquiries: 2 (Mar ’25, Apr ’25)
+Public Records: None
+[$SEP-CREDIT_REPORT-END]
+
+[$SEP-CONFIDENCE-START]
+0.23
+[$SEP-CONFIDENCE-END]
+
+
+---
+
+**Edge Rules:**  
+- Ignore page footers/headers like “Page X of Y” or “Confidential.”  
+- If no data falls under a given heading, still emit the heading with `Not Present`.  
+- Return only the two delimited blocks, in plain text, preserving line breaks.  
+- Enclose the two blocks between `[$SEPPERSONAL-START]` and `[$SEPPERSONAL-END]` for personal info, and `[$SEP-CREDIT_REPORT-START]` and `[$SEP-CREDIT_REPORT-END]` for credit report details.
+- Confidence is a number between 0 and 1. 0 means low confidence and 1 means high confidence.
+
+""",
+        image_path=r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\assets\uid-testing\pid-santosh2\images\credit_report_credit-report\credit-report_page_1.png",
+        # functions=response_schema,
+        # function_call={"name": "text_extraction"},
+        # parameters={"temperature": 0.1, "max_tokens": 4000},
     )
     print(response)
 

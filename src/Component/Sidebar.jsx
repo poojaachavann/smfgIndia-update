@@ -495,25 +495,7 @@ export default function Sidebar({ title, children }) {
                             </Stack>
                         </Link>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
-                        <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
-                            <Stack
-                                direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === '' ? '#c3d600' : '', borderRadius: '8px', width: "200px", p: 1.5 }} >
-                                <DashboardIcon sx={{ color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff', fontSize: '20px' }} />
-                                <Typography
-                                    sx={{
-                                        fontSize: mainUrl[mainUrl.length - 1] === '' ? '20px' : '14px',
-                                        color: mainUrl[mainUrl.length - 1] === '' ? '#000' : '#fff',
-                                        fontWeight: '500',
-                                        whiteSpace: "nowrap"
-                                    }}
-                                >
-                                    About
-                                </Typography>
-
-                            </Stack>
-                        </Link>
-                    </Box>
+                    
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
                             <Stack

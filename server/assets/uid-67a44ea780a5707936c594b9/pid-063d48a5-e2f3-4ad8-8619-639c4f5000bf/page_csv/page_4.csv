@@ -1,9 +1,0 @@
-Date,Type,Description,Amount,Balance,Tags
-20 Sep 24,Debit,SDP_B017109118001_50558868_BY CASH,25000.0,26238.6,cash_withdrawal
-20 Sep 24,Debit,NFS-ATM/ CASHWD/200924/09:48,3000.0,23238.6,cash_withdrawal
-20 Sep 24,Debit,NFS-ATM/CASHWD CHRG/200924/09:48,23.6,23215.0,fees_charges
-20 Sep 24,Debit,NFS-ATM/ CASHWD/200924/12:37,10000.0,13215.0,cash_withdrawal
-20 Sep 24,Debit,NFS-ATM/CASHWD CHRG/200924/12:37,23.6,13191.4,fees_charges
-20 Sep 24,Debit,NFS-ATM/ CASHWD/200924/12:38,10000.0,3191.4,cash_withdrawal
-20 Sep 24,Debit,NFS-ATM/CASHWD CHRG/200924/12:38,23.6,3167.8,fees_charges
-20 Sep 24,Debit,NFS-ATM/ CASHWD/200924/12:39,2000.0,1167.8,cash_withdrawal
