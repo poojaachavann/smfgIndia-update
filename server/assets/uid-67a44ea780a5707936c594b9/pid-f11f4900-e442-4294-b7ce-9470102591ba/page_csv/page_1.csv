@@ -1,0 +1,13 @@
+Date,Type,Description,Amount,Balance,Tags
+09 Dec 24,Debit,UPI/Md Sahil S,9000.0,56937.17,p2p_transfer
+09 Dec 24,Debit,UPI/MD SAKIR,200.0,65937.17,p2p_transfer
+09 Dec 24,Debit,UPI/SALAUDDIN,2000.0,66137.17,p2p_transfer
+09 Dec 24,Debit,UPI/PARESH P R,1150.0,68137.17,p2p_transfer
+10 Dec 24,Debit,UPI/PIYARUL HA,10000.0,40141.17,p2p_transfer
+10 Dec 24,Debit,UPI/AMRUTA HIT,50.0,50141.17,p2p_transfer
+10 Dec 24,Debit,UPI/MD SELIM M,2940.0,50191.17,p2p_transfer
+10 Dec 24,Debit,UPI/Mr ASIF MO,1778.0,53131.17,p2p_transfer
+10 Dec 24,Debit,UPI/Mr ASIF MO,18.0,54909.17,p2p_transfer
+10 Dec 24,Debit,UPI/Mrs MANJU,500.0,54927.17,p2p_transfer
+10 Dec 24,Debit,UPI/EKART,510.0,55427.17,online_shopping
+10 Dec 24,Debit,UPI/SMARTSHIFT,1000.0,55937.17,miscellaneous_expense
