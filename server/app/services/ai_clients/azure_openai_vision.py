@@ -6,6 +6,7 @@ import json
 from typing import Any, Dict, List, Optional
 from openai import AzureOpenAI, AsyncAzureOpenAI
 from openai import NotGiven
+
 try:
     from .literals import Response, Pricing, Usage
 except:
@@ -79,7 +80,7 @@ class AzureOpenAIVisionModel:
         self,
         system_persona: Optional[str],
         prompt_persona: Optional[str],
-        image_path: str,
+        images_paths: str,
         messages: Optional[List[dict]],
     ) -> List[dict]:
         """Prepare messages structure for the API request."""
@@ -91,9 +92,9 @@ class AzureOpenAIVisionModel:
                 "System and prompt personas are required when messages are not provided"
             )
 
-        mime_type = self._guess_mime_type(image_path)
-        image_data = self._read_image(image_path)
-        base64_image = self._encode_base64(image_data)
+        # mime_type = self._guess_mime_type(image_path)
+        # image_data = self._read_image(image_path)
+        # base64_image = self._encode_base64(image_data)
 
         return [
             {"role": "system", "content": system_persona},
@@ -101,12 +102,15 @@ class AzureOpenAIVisionModel:
                 "role": "user",
                 "content": [
                     {"type": "text", "text": prompt_persona},
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:{mime_type};base64,{base64_image}",
-                        },
-                    },
+                    *[
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:{self._guess_mime_type(image_path)};base64,{self._encode_base64(self._read_image(image_path))}",
+                            },
+                        }
+                        for image_path in images_paths
+                    ],
                 ],
             },
             # {
@@ -151,7 +155,7 @@ class AzureOpenAIVisionModel:
         self,
         prompt_persona: Optional[str] = None,
         system_persona: Optional[str] = None,
-        image_path: Optional[str] = None,
+        images_paths: Optional[str] = None,
         messages: Optional[List[dict]] = None,
         functions: Optional[List[Dict[str, Any]]] = NotGiven(),
         function_call: Optional[str] = NotGiven(),
@@ -161,7 +165,7 @@ class AzureOpenAIVisionModel:
             raise RuntimeError("Async method called with sync client configured")
 
         messages = self._prepare_messages(
-            system_persona, prompt_persona, image_path, messages
+            system_persona, prompt_persona, images_paths, messages
         )
 
         try:
@@ -271,7 +275,7 @@ if __name__ == "__main__":
         azure_api_version="2024-12-01-preview",
         engine="gpt-4-turbo-vision",
         parameters={"temperature": 0.1, "max_tokens": 4000},
-        async_client=False,
+        async_client=True,
     )
     response_schema = [
         {
@@ -293,82 +297,26 @@ if __name__ == "__main__":
             },
         }
     ]
-    response = client.extract_text(
-        prompt_persona="""Hello..!""",
-        system_persona="""You are an expert OCR Agent specialized in extracting structured data from credit bureau report images or PDFs. Your job is to split the report into two clearly delimited sections—**Personal & Account Information** and **Credit Report Details**—using keyword-driven separators.
-
-
-
-[$SEPPERSONAL-START]
-**Personal & Account Information**  
-– Extract fields matching (case-insensitive) keywords:  
-  • Name  
-  • Date of Birth / DOB  
-  • PAN / Tax ID  
-  • Address  
-  • Contact / Phone / Email  
-  • Report Date  
-  
-For each, output `Field Name: Value`. If absent or unparseable, output `Field Name: Not Present`.  
-[$SEPPERSONAL-END]
-
----
-
-[$CREDIT_REPORT-START]
-**Credit Report Details**  
-– Detect and extract blocks keyed by these headings or keywords (case-insensitive):  
-  • “Credit Score” / “Score”  
-  • “Account Summary” / “Account Type”  
-  • “Outstanding Balance” / “Current Balance”  
-  • “Credit Limit”  
-  • “Payment History” / “Delinquencies”  
-  • “Inquiries” / “Enquiries”  
-  • “Public Records” / “Collections”  
-  
-Under each detected heading, capture the text lines until the next heading or end of page. Preserve numeric values (strip symbols, normalize separators, convert parentheses to negative). If a section isn’t found, output that heading followed by `: Not Present`.
-
-example Output format :
-```
-Name: John Doe
-Date of Birth / DOB: 15-Jul-1985
-PAN / Tax ID: ABCDE1234F
-Address: 204, Sai Apartments, MG Road, Mumbai 400001
-Contact / Phone / Email: 912234567890, john.doe@example.com
-Report Date: 28-May-2024
-
-[$SEP-CREDIT_REPORT-START]
-Credit Score: 750
-Account Summary:
-  • Credit Card – Active – Balance ₹12,345
-  • Home Loan – Closed – Balance ₹0
-Payment History:
-  • Jan ’25: On Time
-  • Feb ’25: 30 Days Late
-Inquiries: 2 (Mar ’25, Apr ’25)
-Public Records: None
-[$SEP-CREDIT_REPORT-END]
-
-[$SEP-CONFIDENCE-START]
-0.23
-[$SEP-CONFIDENCE-END]
-
-
----
-
-**Edge Rules:**  
-- Ignore page footers/headers like “Page X of Y” or “Confidential.”  
-- If no data falls under a given heading, still emit the heading with `Not Present`.  
-- Return only the two delimited blocks, in plain text, preserving line breaks.  
-- Enclose the two blocks between `[$SEPPERSONAL-START]` and `[$SEPPERSONAL-END]` for personal info, and `[$SEP-CREDIT_REPORT-START]` and `[$SEP-CREDIT_REPORT-END]` for credit report details.
-- Confidence is a number between 0 and 1. 0 means low confidence and 1 means high confidence.
-
+    response = asyncio.run(
+        client.async_extract_text(
+            prompt_persona="""Hello..!""",
+            system_persona="""You are a OCR agent. Your task is to Extract the Id proof info and tell me wheather photo identity is present or not. 
 """,
-        image_path=r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\assets\uid-testing\pid-santosh2\images\credit_report_credit-report\credit-report_page_1.png",
-        # functions=response_schema,
-        # function_call={"name": "text_extraction"},
-        # parameters={"temperature": 0.1, "max_tokens": 4000},
+            images_paths=[
+                r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\assets\uid-testing\pid-id_proof\images\id_proof_KYC-_8290883\KYC-_8290883_page_1.png",r"C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\SMFG-V2\assets\uid-testing\pid-id_proof\images\id_proof_KYC-_8290883\KYC-_8290883_page_0.png"
+            ],
+            # functions=response_schema,
+            # function_call={"name": "text_extraction"},
+            # parameters={"temperature": 0.1, "max_tokens": 4000},
+        )
     )
     print(response)
 
+
+
     # print(response.response)
     # print(response.usage)
+
+
+
+

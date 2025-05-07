@@ -14,9 +14,6 @@ from app import (
     PDFToImagesConverter,
 )
 from app.services.verifiers.personal_address_info_presence import validate_document
-import io
-import sys
-sys.stdout=io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8')
 
 # def verify_account_info(account_info):
 #     verify the wheather the address present in the bank statement
@@ -145,7 +142,7 @@ transaction_tags = [
     "asset_purchase",
 ]
 You can also give others tags name by your own if required. Ensure You will give tags in lower case seperated by comma and _ instead of space. 
----
+
 
 ## 3. OCR & Numeric Normalization  
 - Replace letter “O” with zero in numeric contexts (e.g., `1O00.00` → `1000.00`).  
