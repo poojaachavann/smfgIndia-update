@@ -67,6 +67,9 @@ export default function App() {
           console.log('response ai analysis', response?.data?.answer);
           setApiRes(response.data.answer)
           setIsLoadingcreditbuero(false)
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
 
         }
       }
