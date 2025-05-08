@@ -14,6 +14,10 @@ from app import (
     PDFToImagesConverter,
 )
 from app.services.verifiers.personal_address_info_presence import validate_document
+import io
+import sys
+sys.stdout=io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8')
+ 
 
 # def verify_account_info(account_info):
 #     verify the wheather the address present in the bank statement

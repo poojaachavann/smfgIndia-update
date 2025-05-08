@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import cv2 as cv
 import json
 
-model = YOLO(r".\models\yolov8l-face.pt")
+model = YOLO(r"C:\smfgIndiaUpdate\server\models\yolov8l_100e.pt")
 
 
 def extract_ROI(image, box, scale_factor_x=1.7, scale_factor_y=1.5):
