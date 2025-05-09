@@ -2,10 +2,11 @@ import Login from "./pages/Login/Login"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import React, { useEffect, useState } from "react"
 import UploadDocuments from "./pages/UploadDocuments/UploadDocuments"
-import Home from "./pages/Home/Home"
+// import Home from "./pages/Home/Home"
 import UploadDocAnalysis from "./pages/UploadDocuments/UploadDocAnalysis"
 import axios from "axios"
 import API from "./Component/BaseURL"
+import History from "./pages/History/History"
 
 
 export default function App() {
@@ -90,7 +91,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/uploadDocument" element={<UploadDocuments domainPath={domainPath} userLoginData={userLoginData} analizeDocument={analizeDocument} />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<History/>} />
           <Route path="/uploadDocument/:id" element={<UploadDocAnalysis domainPath={domainPath} userLoginData={userLoginData} isLoadingIdProof={isLoadingIdProof} isLoadingBankStatement={isLoadingBankStatement} isLoadingcreditbuero={isLoadingcreditbuero} apiRes={apiRes} />} />
         </Routes>
       </BrowserRouter>

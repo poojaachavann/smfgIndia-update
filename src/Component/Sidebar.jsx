@@ -606,18 +606,18 @@ export default function Sidebar({ title, children }) {
                                 <Typography sx={{ fontSize: '30px', color: '#000', fontWeight: '500', fontStyle: 'normal' }} >{title}</Typography>
                             </Box>
 
-                            <Box sx={{ bgcolor: '#fff', p: 1, borderRadius: '12px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
-                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                            <Box sx={{  p: 1, borderRadius: '12px',  }}>
+                                <Stack direction={'row'} alignItems={'center'}>
                                     <Avatar
                                         src="Image"
                                         alt={`${(userLoginData?.email || 'pooja@gmail.com')[0].toUpperCase()}${(userLoginData?.email || 'pooja@gmail.com').slice(1)}`}
                                         sx={{ width: '40px', height: '40px' }}
                                     />
 
-                                    <Box>
+                                    {/* <Box>
                                         <Typography sx={{ fontSize: '15px', color: '#aaa', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
                                         <Typography sx={{ fontSize: '13px', color: '#aaa', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
-                                    </Box>
+                                    </Box> */}
 
                                     <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
                                         <KeyboardArrowDownIcon sx={{ color: '#aaa' }} />

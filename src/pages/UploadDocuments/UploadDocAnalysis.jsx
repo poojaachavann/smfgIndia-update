@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../Component/Sidebar'
 import {
+    Avatar,
     // Accordion,
     // AccordionDetails,
     Box,
     Button,
+    Card,
+    CardContent,
     Pagination,
     Stack,
     // Table,
@@ -40,7 +43,7 @@ import InfoIcon from '@mui/icons-material/Info';
 export default function UploadDocAnalysis({ domainPath, userLoginData, isLoadingIdProof, isLoadingBankStatement, isLoadingcreditbuero, apiRes }) {
 
     const [uploadedData, setUploadedData] = useState('')
-
+    console.log("AssetData", uploadedData[0])
     const [currentPage_1, setCurrentPage_1] = useState(1);
     const itemsPerPage = 1;
 
@@ -218,7 +221,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                             <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
                                 <Stack direction="row" alignItems="center" gap={1}>
                                     <Typography sx={{ fontSize: '16px', fontWeight: '500', color: '#676767' }}>
-                                        Loading Bank Statement...
+                                        Loading Id Proof...
                                     </Typography>
                                     <span className="loader"></span>
 
@@ -314,56 +317,44 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
 
 
                         {expandedIdProof ?
-                            <Box sx={{ mt: "30px", width: '100%' }}>
-
-                                <Box>
-                                    {paginatedData?.map((item, index) => (
-                                        <React.Fragment key={item._id}>
-                                            <AccordionCSV
-                                                csvUrl={`${API.filePath}${item.csv_path
-                                                    .replace(/^.*?assets[\\/]/, '')
-                                                    .replace(/\\/g, '/')}`}
-                                            />
-                                        </React.Fragment>
-
-                                    ))}
-                                </Box>
-
-                                <Box>
-                                    {paginatedData?.length > 0 && (
-                                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                                            <Pagination
-                                                count={totalPages_1}
-                                                page={currentPage_1}
-                                                onChange={(e, val) => handlePageChange(e, val, 'page_1')}
-                                                shape="rounded"
-                                                variant="outlined"
-                                                sx={{
-                                                    '& .MuiPaginationItem-root': {
-                                                        fontSize: '14px',
-                                                        color: '#424242',
-                                                        borderRadius: '20px',
-                                                        border: '1px solid #e0e0e0',
-                                                        padding: '4px 12px',
-                                                        transition: 'all 0.3s',
-                                                        '&:hover': {
-                                                            backgroundColor: '#1976d2',
-                                                            color: '#fff',
-                                                            cursor: 'pointer',
-                                                        },
-                                                    },
-                                                    '& .Mui-selected': {
-                                                        backgroundColor: '#1976d2',
-                                                        color: '#fff',
-                                                        border: 'none',
-                                                    },
-                                                }}
-                                            />
-                                        </Box>
-                                    )}
-                                </Box>
-
-
+                            <Box sx={{ mt: 4, width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <Card sx={{ width: '100%', maxWidth: 800, p: 3, borderRadius: 3, boxShadow: 3, bgcolor: "#f0f0f4" }}>
+                                    <Stack direction="row" spacing={3} alignItems="center">
+                                        <Avatar
+                                            src={`${API.filePath}${uploadedData[0]?.file_response?.idProof?.at(-1)?.extraction?.faces[0][0]
+                                                .replace(/^.*?assets[\\/]/, '')
+                                                .replace(/\\/g, '/')}`}
+                                            alt="Profile"
+                                            sx={{ width: 100, height: 100, borderRadius: '50%', boxShadow: 2 }}
+                                        />
+                                        <CardContent sx={{ p: 0 }}>
+                                            {[
+                                                {
+                                                    label: "Full Name", value: 'Muta Ashok'
+                                                },
+                                                { label: "Date of Birth", value: "15-09-1976" },
+                                                { label: "Gender", value: "Male" },
+                                                { label: "Adhar Card Number", value: "5385 5385" },
+                                                {
+                                                    label: "Full Address",
+                                                    value:
+                                                        "8-234, Subhash Nagar Colony, Ichoda, Adilabad, Andhra Pradesh, 504307, India",
+                                                },
+                                                { label: "Issue Date", value: "27-07-2011" },
+                                                { label: "Expiry Date", value: "22-08-2023" },
+                                                {
+                                                    label: "Issuing Authority",
+                                                    value: "Unique Identification Authority of India",
+                                                },
+                                            ].map((item) => (
+                                                <Typography key={item.label} sx={{ mb: 1 }}>
+                                                    <strong style={{ color: "#333" }}>{item.label}:</strong>{" "}
+                                                    <span style={{ color: "#555" }}>{item.value}</span>
+                                                </Typography>
+                                            ))}
+                                        </CardContent>
+                                    </Stack>
+                                </Card>
                             </Box>
 
                             : ''}
@@ -736,7 +727,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                             <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
                                 <Stack direction="row" alignItems="center" gap={1}>
                                     <Typography sx={{ fontSize: '16px', fontWeight: '500', color: '#676767' }}>
-                                        Loading Bank Statement...
+                                        Loading  Credit Bureo Report...
                                     </Typography>
                                     <span className="loader"></span>
 
@@ -796,8 +787,8 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'present' ?'#00c853': 'red'
-                                                }`,
+                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'present' ? '#00c853' : 'red'
+                                                        }`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
@@ -968,6 +959,6 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                 </Box>
             </Box >
 
-        </Sidebar >
+        </Sidebar>
     )
 }
