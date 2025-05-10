@@ -612,6 +612,7 @@ export default function Sidebar({ title, children }) {
                                         src="Image"
                                         alt={`${(userLoginData?.email || 'pooja@gmail.com')[0].toUpperCase()}${(userLoginData?.email || 'pooja@gmail.com').slice(1)}`}
                                         sx={{ width: '40px', height: '40px' }}
+                                        onClick={handleClick}
                                     />
 
                                     {/* <Box>
@@ -619,9 +620,9 @@ export default function Sidebar({ title, children }) {
                                         <Typography sx={{ fontSize: '13px', color: '#aaa', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
                                     </Box> */}
 
-                                    <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
+                                    {/* <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
                                         <KeyboardArrowDownIcon sx={{ color: '#aaa' }} />
-                                    </Box>
+                                    </Box> */}
 
                                 </Stack>
                             </Box>
