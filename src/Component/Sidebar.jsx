@@ -477,6 +477,67 @@ export default function Sidebar({ title, children }) {
                         </Box>
                     </Box>
 
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}>
+                        <Box sx={{
+                            position: 'absolute',
+                            bottom: 20,
+                            width: '70%',
+                            bgcolor: '#ffff',
+                            p: 2,
+                            borderRadius: '20px',
+
+                        }} ></Box>
+                        
+
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
+
+                            <Button
+                                sx={{ bgcolor: '#c3d600', textTransform: 'none', borderRadius: '10px', mb:'20%'}}
+                                disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
+                                onClick={() => window.location.href = "/uploadDocument"}
+
+                            >
+                                <Typography
+                                    sx={{
+                                        fontSize: '14px',
+                                        color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
+                                        fontWeight: '600',
+                                        '&:hover': { color: '#006bb4' }
+
+                                    }}
+                                >
+                                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                                        <Typography
+                                            sx={{
+                                                fontSize: '12px',
+                                                color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
+                                                fontWeight: '600',
+                                                '&:hover': { color: '#006bb4' },
+                                                whiteSpace: 'nowrap',
+                                                cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'none' : 'pointer',
+                                            }}
+                                        >
+                                            Go to Upload Section
+                                        </Typography>
+                                        <ArrowForwardIcon sx={{ fontSize: '20px' }} />
+                                    </Stack>
+                                </Typography>
+
+                            </Button>
+                        </Box>
+
+                    </Box>
+                    <Box></Box>
+
+
+
+
+
+
+
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/home`} style={{ textDecoration: "none" }}>
                             <Stack direction={'row'} alignItems={'center'} spacing={2} sx={{ bgcolor: mainUrl[mainUrl.length - 1] === 'home' ? '#c3d600' : '', borderRadius: '8px', width: "200px", p: 1 }}>
@@ -495,7 +556,7 @@ export default function Sidebar({ title, children }) {
                             </Stack>
                         </Link>
                     </Box>
-                    
+
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: '20px' }} >
                         <Link to={`/uploadDocument`} style={{ textDecoration: "none" }}>
                             <Stack
@@ -531,7 +592,7 @@ export default function Sidebar({ title, children }) {
 
                         }} >
 
-                            <Box sx={{
+                            {/* <Box sx={{
                                 position: 'absolute',
                                 top: 8,
                                 right: 8,
@@ -546,15 +607,15 @@ export default function Sidebar({ title, children }) {
                                     '100%': { opacity: 1 },
                                 }
                             }}
-                            />
+                            /> */}
 
-                            <Box sx={{ bgcolor: '#000', width: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20%', height: '30px', position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)' }}>
+                            {/* <Box sx={{ bgcolor: '#000', width: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20%', height: '30px', position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)' }}>
                                 <StraightIcon sx={{ color: '#fff' }} />
-                            </Box>
+                            </Box> */}
 
-                            <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography>
+                            {/* <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography> */}
 
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
+                            {/* <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
 
                                 <Button
                                     sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
@@ -589,7 +650,7 @@ export default function Sidebar({ title, children }) {
                                     </Typography>
 
                                 </Button>
-                            </Box>
+                            </Box> */}
 
 
                         </Box>
@@ -606,7 +667,7 @@ export default function Sidebar({ title, children }) {
                                 <Typography sx={{ fontSize: '30px', color: '#000', fontWeight: '500', fontStyle: 'normal' }} >{title}</Typography>
                             </Box>
 
-                            <Box sx={{  p: 1, borderRadius: '12px',  }}>
+                            <Box sx={{ p: 1, borderRadius: '12px', }}>
                                 <Stack direction={'row'} alignItems={'center'}>
                                     <Avatar
                                         src="Image"
@@ -615,14 +676,6 @@ export default function Sidebar({ title, children }) {
                                         onClick={handleClick}
                                     />
 
-                                    {/* <Box>
-                                        <Typography sx={{ fontSize: '15px', color: '#aaa', fontWeight: '600', fontStyle: 'normal' }}>{userLoginData?.email || 'pooja@gmail.com'}</Typography>
-                                        <Typography sx={{ fontSize: '13px', color: '#aaa', fontWeight: '500', fontStyle: 'normal' }}>{userLoginData?.role_based_control || 'admin'}</Typography>
-                                    </Box> */}
-
-                                    {/* <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
-                                        <KeyboardArrowDownIcon sx={{ color: '#aaa' }} />
-                                    </Box> */}
 
                                 </Stack>
                             </Box>
@@ -687,7 +740,7 @@ export default function Sidebar({ title, children }) {
                         </Menu>
                     </Box>
 
-                    <Box sx={{ overflowY: 'auto', height: '80vh' ,scrollbarWidth:'none'}}>
+                    <Box sx={{ overflowY: 'auto', height: '80vh', scrollbarWidth: 'none' }}>
                         {children}
                     </Box>
 
