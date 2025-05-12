@@ -1,0 +1,95 @@
+{
+    "extraction": {
+        "pages": {
+            "personal_info": "1. Full Name: Muta Ashok\n2. Date of Birth: 15-09-1976\n3. ID Number: 5385 5385 5385\n4. Address: 8-234, subhash nagar colony, Ichoda; Adilabad; Andhra Pradesh; 504307; India\n5. Gender: MALE\n6. Issue Date: 27-07-2011\n7. Expiry Date: Not specified\n8. Authority: Unique Identification Authority of India",
+            "photo": "Presence: Yes",
+            "photo_quality": "0.8",
+            "confidence": "0.9"
+        },
+        "overall_confidence": 0.8017693826607617,
+        "reason": {
+            "info": "Low confidence in OCR results. Please review and verify.",
+            "level": "error"
+        },
+        "faces": [
+            [
+                "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-6441aa55-40a0-490a-a4dd-1c43d0fac61e\\images\\face_1_1747050751751-KYC-_8290883_page_0.png_conf_0.26.jpg"
+            ],
+            [
+                0.26283159852027893
+            ]
+        ]
+    },
+    "validation_result": {
+        "address_status": "present",
+        "personal_info_status": "partial",
+        "components": [
+            {
+                "component": "full_name",
+                "present": true,
+                "confidence": 0.95,
+                "value": "Muta Ashok"
+            },
+            {
+                "component": "date_of_birth",
+                "present": true,
+                "confidence": 0.95,
+                "value": "15-09-1976"
+            },
+            {
+                "component": "gender",
+                "present": true,
+                "confidence": 0.95,
+                "value": "MALE"
+            },
+            {
+                "component": "nationality",
+                "present": true,
+                "confidence": 0.95,
+                "value": "India"
+            },
+            {
+                "component": "aadhaar_num",
+                "present": true,
+                "confidence": 0.95,
+                "value": "5385 5385 5385"
+            },
+            {
+                "component": "issue_date",
+                "present": true,
+                "confidence": 0.95,
+                "value": "27-07-2011"
+            },
+            {
+                "component": "expiry_date",
+                "present": false,
+                "confidence": 0.0,
+                "value": null
+            },
+            {
+                "component": "city_district",
+                "present": true,
+                "confidence": 0.95,
+                "value": "Ichoda; Adilabad"
+            },
+            {
+                "component": "state_province",
+                "present": true,
+                "confidence": 0.95,
+                "value": "Andhra Pradesh"
+            },
+            {
+                "component": "postal_code",
+                "present": true,
+                "confidence": 0.95,
+                "value": "504307"
+            }
+        ],
+        "overall_confidence": 0.8550000000000001,
+        "document_type": "id_proof",
+        "reason": {
+            "info": "Please review and verify. Information might be partially missing or inaccurate.",
+            "level": "warning"
+        }
+    }
+}

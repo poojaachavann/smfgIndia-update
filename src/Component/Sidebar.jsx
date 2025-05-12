@@ -477,7 +477,7 @@ export default function Sidebar({ title, children }) {
                         </Box>
                     </Box>
 
-                    <Box sx={{
+                    {/* <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',
                     }}>
@@ -489,48 +489,63 @@ export default function Sidebar({ title, children }) {
                             p: 2,
                             borderRadius: '20px',
 
-                        }} ></Box>
-                        
+                        }} ></Box> */}
 
-                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
 
-                            <Button
-                                sx={{ bgcolor: '#c3d600', textTransform: 'none', borderRadius: '10px', mb:'20%'}}
-                                disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
-                                onClick={() => window.location.href = "/uploadDocument"}
 
-                            >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            mt: 2,
+                            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                        }}
+                    >
+                        <Button
+                            disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
+                            onClick={() => window.location.href = "/uploadDocument"}
+                            sx={{
+                                background: mainUrl[mainUrl.length - 1] === 'uploadDocument'
+                                    ? '#dcdcdc'
+                                    : 'linear-gradient(45deg, #c3d600, #009688)',
+                                textTransform: 'none',
+                                borderRadius: '10px',
+                                mb: '20%',
+                                px: 3,
+                                py: 1,
+                                transition: 'background 0.4s ease-in-out, transform 0.3s ease',
+                                '&:hover': {
+                                    background:
+                                        mainUrl[mainUrl.length - 1] === 'uploadDocument'
+                                            ? '#dcdcdc'
+                                            : 'linear-gradient(45deg, #009688, #c3d600)',
+                                    transform: 'scale(1.05)',
+                                },
+                            }}
+                        >
+                            <Stack direction="row" alignItems="center" spacing={2}>
                                 <Typography
                                     sx={{
                                         fontSize: '14px',
-                                        color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
-                                        fontWeight: '600',
-                                        '&:hover': { color: '#006bb4' }
-
+                                        color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#888' : '#fff',
+                                        fontWeight: 600,
+                                        whiteSpace: 'nowrap',
+                                        cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'not-allowed' : 'pointer',
                                     }}
                                 >
-                                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                        <Typography
-                                            sx={{
-                                                fontSize: '12px',
-                                                color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
-                                                fontWeight: '600',
-                                                '&:hover': { color: '#006bb4' },
-                                                whiteSpace: 'nowrap',
-                                                cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'none' : 'pointer',
-                                            }}
-                                        >
-                                            Go to Upload Section
-                                        </Typography>
-                                        <ArrowForwardIcon sx={{ fontSize: '20px' }} />
-                                    </Stack>
+                                    Go to Upload
                                 </Typography>
-
-                            </Button>
-                        </Box>
-
+                                <ArrowForwardIcon
+                                    sx={{
+                                        fontSize: 20,
+                                        color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#888' : '#fff',
+                                    }}
+                                />
+                            </Stack>
+                        </Button>
                     </Box>
-                    <Box></Box>
+
+
 
 
 
@@ -578,83 +593,7 @@ export default function Sidebar({ title, children }) {
                     </Box>
 
 
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}>
-                        <Box sx={{
-                            position: 'absolute',
-                            bottom: 20,
-                            width: '70%',
-                            bgcolor: '#ffff',
-                            p: 2,
-                            borderRadius: '20px',
 
-                        }} >
-
-                            {/* <Box sx={{
-                                position: 'absolute',
-                                top: 8,
-                                right: 8,
-                                width: '10px',
-                                height: '10px',
-                                bgcolor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'green' : 'red',
-                                borderRadius: '50%',
-                                animation: 'blinker 1s linear infinite',
-                                '@keyframes blinker': {
-                                    '0%': { opacity: 1 },
-                                    '50%': { opacity: 0.2 },
-                                    '100%': { opacity: 1 },
-                                }
-                            }}
-                            /> */}
-
-                            {/* <Box sx={{ bgcolor: '#000', width: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20%', height: '30px', position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)' }}>
-                                <StraightIcon sx={{ color: '#fff' }} />
-                            </Box> */}
-
-                            {/* <Typography sx={{ fontSize: '14px', color: '#000', fontWeight: '500', fontStyle: 'normal', textAlign: 'center' }}>{`Fast-track your process! Upload ID Proof, Bank Statement & Credit Bureau report.`}</Typography> */}
-
-                            {/* <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' }}>
-
-                                <Button
-                                    sx={{ bgcolor: '#000', textTransform: 'none', borderRadius: '10px', }}
-                                    disabled={mainUrl[mainUrl.length - 1] === 'uploadDocument'}
-                                    onClick={() => window.location.href = "/uploadDocument"}
-
-                                >
-                                    <Typography
-                                        sx={{
-                                            fontSize: '14px',
-                                            color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
-                                            fontWeight: '600',
-                                            '&:hover': { color: '#006bb4' }
-
-                                        }}
-                                    >
-                                        <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '12px',
-                                                    color: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? '#aaa' : '#fff',
-                                                    fontWeight: '600',
-                                                    '&:hover': { color: '#006bb4' },
-                                                    whiteSpace: 'nowrap',
-                                                    cursor: mainUrl[mainUrl.length - 1] === 'uploadDocument' ? 'none' : 'pointer',
-                                                }}
-                                            >
-                                                Go to Upload Section
-                                            </Typography>
-                                            <ArrowForwardIcon sx={{ fontSize: '20px' }} />
-                                        </Stack>
-                                    </Typography>
-
-                                </Button>
-                            </Box> */}
-
-
-                        </Box>
-                    </Box>
                 </Box>
 
 

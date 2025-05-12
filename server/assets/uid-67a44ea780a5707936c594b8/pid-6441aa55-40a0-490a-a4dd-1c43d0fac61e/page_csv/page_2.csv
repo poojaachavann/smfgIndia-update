@@ -1,0 +1,25 @@
+Date,Type,Description,Amount,Balance,Tags
+24 Aug 24,Credit,SDP_BY CASH,20000.0,21206.2,cash_deposit
+24 Aug 24,Debit,NFS-ATM/CASHWD,10000.0,11206.2,cash_withdrawal
+24 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,11182.6,atm_fee
+24 Aug 24,Debit,NFS-ATM/CASHWD,10000.0,1182.6,cash_withdrawal
+24 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,1159.0,atm_fee
+26 Aug 24,Credit,SDP_BY CASH,21000.0,22159.0,cash_deposit
+26 Aug 24,Debit,NFS-ATM/CASHWD,10000.0,12159.0,cash_withdrawal
+26 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,12135.4,atm_fee
+26 Aug 24,Debit,NFS-ATM/CASHWD,10000.0,2135.4,cash_withdrawal
+26 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,2111.8,atm_fee
+27 Aug 24,Debit,NFS-ATM/CASHWD,1000.0,1111.8,cash_withdrawal
+27 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,1088.2,atm_fee
+28 Aug 24,Credit,SDP_BY CASH,7000.0,8088.2,cash_deposit
+29 Aug 24,Credit,SDP_BY CASH,3000.0,11088.2,cash_deposit
+29 Aug 24,Debit,NFS-ATM/CASHWD,10000.0,1088.2,cash_withdrawal
+29 Aug 24,Debit,NFS-ATM/CASHWD CHRG,23.6,1064.6,atm_fee
+31 Aug 24,Credit,GDS Salary Aug-2024,18410.0,19474.6,salary
+03 Sep 24,Debit,NFS-ATM/CASHWD,10000.0,9474.6,cash_withdrawal
+03 Sep 24,Debit,NFS-ATM/CASHWD,5000.0,4474.6,cash_withdrawal
+04 Sep 24,Debit,NFS-ATM/CASHWD,3000.0,1474.6,cash_withdrawal
+04 Sep 24,Debit,NFS-ATM/CASHWD,500.0,974.6,cash_withdrawal
+05 Sep 24,Credit,SDP_BY CASH,16000.0,16974.6,cash_deposit
+05 Sep 24,Debit,NFS-ATM/CASHWD,10000.0,6974.6,cash_withdrawal
+05 Sep 24,Debit,NFS-ATM/CASHWD,5500.0,1474.6,cash_withdrawal
