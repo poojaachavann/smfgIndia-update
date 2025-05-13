@@ -602,6 +602,7 @@
 // export default UploadDocuments;
 
 
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -617,6 +618,7 @@ import {
 import Sidebar from '../../Component/Sidebar';
 import Check from '@mui/icons-material/Check';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -624,7 +626,11 @@ import API from '../../Component/BaseURL';
 import pdficon from '../../assets/pdf.png';
 
 const ColorlibStepIconRoot = styled('div')(({ ownerState }) => ({
-  backgroundColor: ownerState.completed ? '#4caf50' : '#e0e0e0',
+  backgroundColor: ownerState.completed
+    ? '#4caf50'
+    : ownerState.error
+    ? '#f44336'
+    : '#e0e0e0',
   zIndex: 1,
   color: '#fff',
   width: 35,
@@ -634,16 +640,19 @@ const ColorlibStepIconRoot = styled('div')(({ ownerState }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   fontWeight: 600,
+  fontFamily:"sans-serif",
   ...(ownerState.active && {
-    backgroundColor: '#4caf50',
     boxShadow: '0 0 0 4px #a5d6a7',
   }),
 }));
 
 function ColorlibStepIcon(props) {
-  const { active, completed, className, icon } = props;
+  const { active, completed, className, icon, error } = props;
   return (
-    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active, error }}
+      className={className}
+    >
       {completed ? <Check /> : icon}
     </ColorlibStepIconRoot>
   );
@@ -671,10 +680,17 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
     }));
   };
 
+  const handleDeleteFile = (key) => {
+    setUploadedFiles(prev => ({
+      ...prev,
+      [key]: null,
+    }));
+  };
+
   const isStepComplete = index => {
-    if (index === 0) return uploadedFiles.id;
-    if (index === 1) return uploadedFiles.bank;
-    if (index === 2) return uploadedFiles.credit;
+    if (index === 0) return !!uploadedFiles.id;
+    if (index === 1) return !!uploadedFiles.bank;
+    if (index === 2) return !!uploadedFiles.credit;
     return false;
   };
 
@@ -722,7 +738,7 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
   };
 
   return (
-    <Sidebar title={"Upload Documents"}>
+    <Sidebar title="Upload Documents">
       <Box sx={{ width: '100%', pt: 0.5 }}>
         <Stepper
           activeStep={activeStep}
@@ -735,11 +751,22 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
             },
           }}
         >
-          {steps.map((label, index) => (
-            <Step key={label} completed={isStepComplete(index)}>
-              <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-            </Step>
-          ))}
+          {steps.map((label, index) => {
+            const completed = isStepComplete(index);
+            const error = !completed && index !== activeStep;
+
+            return (
+              <Step key={label} completed={completed}>
+                <StepLabel
+                  StepIconComponent={(props) =>
+                    <ColorlibStepIcon {...props} completed={completed} error={error} icon={index + 1} />
+                  }
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
         </Stepper>
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -785,6 +812,7 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
                       bgColor="#e3f2fd"
                       color="#1976d2"
                       isActive={activeStep === 0}
+                      onDelete={() => handleDeleteFile('id')}
                     />
                   )}
                   {uploadedFiles.bank && (
@@ -794,6 +822,7 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
                       bgColor="#e3f2fd"
                       color="#1976d2"
                       isActive={activeStep === 1}
+                      onDelete={() => handleDeleteFile('bank')}
                     />
                   )}
                   {uploadedFiles.credit && (
@@ -803,13 +832,13 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
                       bgColor="#e3f2fd"
                       color="#1976d2"
                       isActive={activeStep === 2}
+                      onDelete={() => handleDeleteFile('credit')}
                     />
                   )}
                 </Stack>
               </Box>
             </Paper>
-
-          </Box> 
+          </Box>
 
           <Box
             sx={{
@@ -852,21 +881,19 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
               )}
             </Stack>
           </Box>
-
         </Box>
       </Box>
-
-
     </Sidebar>
   );
 }
 
-function FileItem({ label, file, bgColor, color, isActive }) {
+function FileItem({ label, file, bgColor, color, isActive, onDelete }) {
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         p: 1.5,
         borderRadius: 2,
         backgroundColor: bgColor,
@@ -875,23 +902,32 @@ function FileItem({ label, file, bgColor, color, isActive }) {
         transition: 'all 0.3s ease',
       }}
     >
-      <img
-        src={pdficon}
-        alt="PDF Icon"
-        style={{
-          width: '20px',
-          height: '20px',
-          marginRight: '10px',
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <img
+          src={pdficon}
+          alt="PDF Icon"
+          style={{
+            width: '20px',
+            height: '20px',
+            mixBlendMode: 'darken',
+          }}
+        />
+        <Typography variant="body2" noWrap sx={{ color }}>
+          <strong>{label}:</strong> {file.name}
+        </Typography>
+      </Box>
+      <CloseIcon
+        onClick={onDelete}
+        sx={{
           cursor: 'pointer',
-          mixBlendMode: 'darken',
+          color: 'red',
+          '&:hover': { opacity: 0.7 },
         }}
       />
-      <Typography variant="body2" noWrap sx={{ color }}>
-        <strong>{label}:</strong> {file.name}
-      </Typography>
     </Box>
   );
 }
+
 
 
 

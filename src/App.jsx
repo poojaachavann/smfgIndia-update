@@ -7,6 +7,7 @@ import UploadDocAnalysis from "./pages/UploadDocuments/UploadDocAnalysis"
 import axios from "axios"
 import API from "./Component/BaseURL"
 import History from "./pages/History/History"
+import CostAnalysis from "./pages/CostAnalysis/CostAnalysis"
 
 
 export default function App() {
@@ -27,8 +28,10 @@ export default function App() {
   const [isLoadingIdProof, setIsLoadingIdProof] = useState(false)
   const [isLoadingBankStatement, setIsLoadingBankStatement] = useState(false)
   const [isLoadingcreditbuero, setIsLoadingcreditbuero] = useState(false)
-  const [apiRes, setApiRes] = useState('')
 
+  const [apiResIdProof, setApiResIdProof] = useState('')
+  const [apiResBankStatement, setApiResBankStatement] = useState('')
+  const [apiResCreditBurea, setApiResCreditBurea] = useState('')
 
   const analizeDocument = async (file) => {
     try {
@@ -40,7 +43,7 @@ export default function App() {
         type: "idProof"
       })
       console.log('response ai analysis', response.data.answer);
-      setApiRes(response.data.answer)
+      setApiResIdProof(response.data.answer)
       setIsLoadingIdProof(false)
 
       if (response.data.answer?.validation_result?.document_type === "id_proof") {
@@ -53,7 +56,7 @@ export default function App() {
 
         })
         console.log('response ai analysis', response?.data?.answer);
-        setApiRes(response.data.answer)
+        setApiResBankStatement(response.data.answer)
         setIsLoadingBankStatement(false)
 
         if (response.data.answer?.validation_result?.document_type === "bank_statement") {
@@ -66,11 +69,11 @@ export default function App() {
             type: "creditBureau"
           })
           console.log('response ai analysis', response?.data?.answer);
-          setApiRes(response.data.answer)
+          setApiResCreditBurea(response.data.answer)
           setIsLoadingcreditbuero(false)
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000)
+          // setTimeout(() => {
+          //   window.location.reload()
+          // }, 1000)
 
         }
       }
@@ -91,8 +94,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/uploadDocument" element={<UploadDocuments domainPath={domainPath} userLoginData={userLoginData} analizeDocument={analizeDocument} />} />
-          <Route path="/home" element={<History/>} />
-          <Route path="/uploadDocument/:id" element={<UploadDocAnalysis domainPath={domainPath} userLoginData={userLoginData} isLoadingIdProof={isLoadingIdProof} isLoadingBankStatement={isLoadingBankStatement} isLoadingcreditbuero={isLoadingcreditbuero} apiRes={apiRes} />} />
+          <Route path="/home" element={<History />} />
+          <Route path="/CostAnalysis" element={<CostAnalysis />} />
+
+          <Route path="/uploadDocument/:id" element={<UploadDocAnalysis domainPath={domainPath} userLoginData={userLoginData} isLoadingIdProof={isLoadingIdProof} isLoadingBankStatement={isLoadingBankStatement} isLoadingcreditbuero={isLoadingcreditbuero} apiResIdProof={apiResIdProof} apiResBankStatement={apiResBankStatement} apiResCreditBurea={apiResCreditBurea} />} />
         </Routes>
       </BrowserRouter>
     </>

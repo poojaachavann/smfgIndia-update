@@ -10,6 +10,12 @@ import {
     CardContent,
     Pagination,
     Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
     // Table,
     // TableBody,
     // TableCell,
@@ -33,14 +39,14 @@ import personalInfo from '../../assets/personalInfo.png'
 import addressInfo from '../../assets/addressInfo.png'
 // import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 // import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-// import Markdown from 'markdown-to-jsx';
+import Markdown from 'markdown-to-jsx';
 import AccordionCSV from './AccordionCSV';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './UploadDouments.css'
 import InfoIcon from '@mui/icons-material/Info';
 
-export default function UploadDocAnalysis({ domainPath, userLoginData, isLoadingIdProof, isLoadingBankStatement, isLoadingcreditbuero, apiRes }) {
+export default function UploadDocAnalysis({ domainPath, userLoginData, isLoadingIdProof, isLoadingBankStatement, isLoadingcreditbuero, apiResIdProof, apiResBankStatement, apiResCreditBurea }) {
 
     const [uploadedData, setUploadedData] = useState('')
     console.log("AssetData", uploadedData[0])
@@ -63,12 +69,12 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
     }, [userLoginData])
 
 
-    const paginatedData = uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.pages.slice(
+    const paginatedData = apiResBankStatement?.extraction?.pages.slice(
         (currentPage_1 - 1) * itemsPerPage,
         currentPage_1 * itemsPerPage
     );
 
-    const totalPages_1 = Math.ceil(uploadedData[0]?.file_response?.bankStatement?.bankStatement?.at(-1)?.extraction?.pages.length / itemsPerPage);
+    const totalPages_1 = Math.ceil(apiResBankStatement?.extraction?.pages.length / itemsPerPage);
 
     const handlePageChange = (event, value, pageType) => {
         if (pageType === 'page_1') {
@@ -76,13 +82,12 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
         }
     };
 
-
-    const paginatedData1 = uploadedData[0]?.file_response?.creditBureau?.creditBureau?.at(-1)?.slice(
+    const paginatedData1 = uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components || apiResCreditBurea?.validation_result?.components?.slice(
         (currentPage_2 - 1) * itemsPerPage2,
         currentPage_2 * itemsPerPage2
     );
 
-    const totalPages_2 = Math.ceil(uploadedData[0]?.file_response?.creditBureau?.creditBureau?.at(-1)?.validation_result?.components?.length / itemsPerPage2);
+    const totalPages_2 = Math.ceil(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components || apiResCreditBurea?.validation_result?.components?.length / itemsPerPage2);
 
     const handlePageChange1 = (event, value, pageType) => {
         if (pageType === 'page_2') {
@@ -108,6 +113,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
     const handleAccordionChangeCreditBuore = () => {
         setExpandedCreditBuore(!expandedCreditBuore);
     };
+
+    console.log('apiResIdProof', apiResIdProof)
+    console.log('apiResBankStatement', apiResBankStatement)
+    console.log('apiResCreditBurea', apiResCreditBurea)
 
     return (
         <Sidebar title={"Upload Documents"}>
@@ -152,9 +161,8 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResIdProof?.extraction?.reason?.info}`} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
-
                                         </Tooltip>
                                     </Stack>
                                     <Typography
@@ -242,10 +250,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResIdProof?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
+                                                    border: `4px solid ${apiResIdProof?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
                                                     borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
                                                     borderRadius: '50%',
                                                     padding: '7px',
@@ -273,15 +281,12 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 />
                                             </Box>
                                         </Tooltip>
-
-
-
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
                                         <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
+                                                    border: `4px solid ${apiResIdProof?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResIdProof?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
@@ -319,47 +324,69 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                         {expandedIdProof ?
                             <Box sx={{ mt: 4, width: '100%', display: 'flex', justifyContent: 'center' }}>
                                 <Card sx={{ width: '100%', maxWidth: 800, p: 3, borderRadius: 3, boxShadow: 3, bgcolor: "#f0f0f4" }}>
-                                    <Stack direction="row" spacing={3} alignItems="center">
+                                    <Stack direction="row" spacing={3} alignItems="flex-start">
                                         <Avatar
-                                            src={`${API.filePath}${uploadedData[0]?.file_response?.idProof?.at(-1)?.extraction?.faces[0][0]
-                                                .replace(/^.*?assets[\\/]/, '')
-                                                .replace(/\\/g, '/')}`}
+                                            src={`${API.filePath}${(apiResIdProof?.extraction?.faces[0][0] ||
+                                                uploadedData[0]?.file_response?.idProof?.at(-1)?.extraction?.faces[0][0]
+                                            )
+                                                ?.replace(/^.*?assets[\\/]/, '')
+                                                ?.replace(/\\/g, '/')}`}
                                             alt="Profile"
                                             sx={{ width: 100, height: 100, borderRadius: '50%', boxShadow: 2 }}
                                         />
-                                        <CardContent sx={{ p: 0 }}>
-                                            {[
-                                                {
-                                                    label: "Full Name", value: 'Muta Ashok'
-                                                },
-                                                { label: "Date of Birth", value: "15-09-1976" },
-                                                { label: "Gender", value: "Male" },
-                                                { label: "Adhar Card Number", value: "5385 5385" },
-                                                {
-                                                    label: "Full Address",
-                                                    value:
-                                                        "8-234, Subhash Nagar Colony, Ichoda, Adilabad, Andhra Pradesh, 504307, India",
-                                                },
-                                                { label: "Issue Date", value: "27-07-2011" },
-                                                { label: "Expiry Date", value: "22-08-2023" },
-                                                {
-                                                    label: "Issuing Authority",
-                                                    value: "Unique Identification Authority of India",
-                                                },
-                                            ].map((item) => (
-                                                <Typography key={item.label} sx={{ mb: 1 }}>
-                                                    <strong style={{ color: "#333" }}>{item.label}:</strong>{" "}
-                                                    <span style={{ color: "#555" }}>{item.value}</span>
-                                                </Typography>
-                                            ))}
-                                        </CardContent>
+
+                                        <Stack direction="row" gap={6} flexWrap="wrap">
+                                            {(() => {
+                                                const components = apiResIdProof
+                                                    ? apiResIdProof?.validation_result?.components
+                                                    : uploadedData[0]?.file_response?.idProof?.at(-1)?.validation_result?.components || [];
+
+                                                const mid = Math.ceil(components.length / 2);
+                                                const firstHalf = components.slice(0, mid);
+                                                const secondHalf = components.slice(mid);
+
+                                                return (
+                                                    <>
+                                                        <Stack direction="column" spacing={1}>
+                                                            {firstHalf.map((data, index) => (
+                                                                <Box key={`left-${index}`}>
+                                                                    <Stack direction={'row'} gap={1} alignItems={'center'}>
+                                                                        <Typography sx={{ fontSize: '16px', color: '#aaa', fontWeight: '600' }}>
+                                                                            {data.component}:
+                                                                        </Typography>
+                                                                        <Typography sx={{ fontSize: '14px', color: '#676767', fontWeight: '600' }}>
+                                                                            {data.value || '-'}
+                                                                        </Typography>
+                                                                    </Stack>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+
+                                                        <Stack direction="column" spacing={1} >
+                                                            {secondHalf.map((data, index) => (
+                                                                <Box key={`right-${index}`}>
+                                                                    <Stack direction={'row'} gap={1} alignItems={'center'}>
+                                                                        <Typography sx={{ fontSize: '16px', color: '#aaa', fontWeight: '600' }}>
+                                                                            {data.component}:
+                                                                        </Typography>
+                                                                        <Typography sx={{ fontSize: '14px', color: '#676767', fontWeight: '600' }}>
+                                                                            {data.value || '-'}
+                                                                        </Typography>
+                                                                    </Stack>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </>
+                                                );
+                                            })()}
+                                        </Stack>
                                     </Stack>
+
+
                                 </Card>
                             </Box>
 
                             : ''}
-
-
                     </Box>
 
                     <Box sx={{
@@ -382,10 +409,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                     }}
                                 />
                                 <Box>
-
-
                                     <Stack direction={'row'} alignItems={'start'} spacing={2}>
-
                                         <Typography
                                             sx={{
                                                 color: '#676767',
@@ -400,7 +424,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResBankStatement?.extraction?.reason?.info}`} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
@@ -489,10 +513,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResBankStatement?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
+                                                    border: `4px solid ${apiResBankStatement?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
                                                     borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
                                                     borderRadius: '50%',
                                                     padding: '7px',
@@ -525,10 +549,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
 
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResBankStatement?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
+                                                    border: `4px solid ${apiResBankStatement?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResBankStatement?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
@@ -659,7 +683,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResCreditBurea?.extraction?.reason?.info}`} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
@@ -748,10 +772,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResCreditBurea?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
+                                                    border: `4px solid ${apiResBankStatement?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
                                                     borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
                                                     borderRadius: '50%',
                                                     padding: '7px',
@@ -784,10 +808,10 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
 
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={`${apiResCreditBurea?.validation_result?.reason?.info}`} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status === 'present' ? '#00c853' : 'red'
+                                                    border: `4px solid ${apiResCreditBurea?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResCreditBurea?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'
                                                         }`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
@@ -827,124 +851,121 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                             <Box sx={{ mt: "30px", width: '100%' }}>
 
                                 <Box>
-                                    {paginatedData1?.map((item, index) => (
-                                        <TableContainer
-                                            sx={{
-                                                overflowY: 'auto',
-                                                height: '70vh',
-                                                bgcolor: '#fafafa',
-                                                borderRadius: 4,
-                                                boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
-                                                border: '2px solid #e0e0e0',
-                                                transition: 'all 0.3s ease-in-out',
-                                                '&:hover': {
-                                                    boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
-                                                },
-                                            }}
-                                        >
-                                            <Table stickyHeader>
-                                                <TableHead>
-                                                    <TableRow
-                                                    >
-                                                        {['Account Info', 'CSV Data', 'Page', 'Page Confidence'].map((title, index) => (
-                                                            <TableCell
-                                                                key={index}
-                                                                sx={{
-                                                                    fontSize: '14px',
-                                                                    fontWeight: 600,
-                                                                    color: '#676767',
-                                                                    borderBottom: '2px solid #fff',
-                                                                    borderRight: '2px solid #fff',
-                                                                    letterSpacing: '1px',
-                                                                    padding: '16px 20px',
-                                                                    transition: 'all 0.2s ease-in-out',
-                                                                    '&:hover': {
-                                                                        transform: 'scale(1.05)',
-                                                                        cursor: 'pointer',
-                                                                    },
-                                                                    whiteSpace: 'nowrap'
-                                                                }}
-                                                            >
-                                                                {title}
-                                                            </TableCell>
-                                                        ))}
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {paginatedData1?.map((item, index) => (
-                                                        <React.Fragment key={index}>
-                                                            <TableRow
-                                                                hover
-                                                                sx={{
-                                                                    backgroundColor: '#fff',
-                                                                    '&:hover': {
-                                                                        backgroundColor: '#f1f5f8',
-                                                                        transform: 'scale(1.02)',
-                                                                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                                                                    },
-                                                                    borderBottom: '2px solid #e0e0e0',
-                                                                    borderRadius: '8px',
-                                                                    transition: 'all 0.3s ease-in-out',
-                                                                }}
-                                                            >
-                                                                <TableCell sx={{ fontSize: '13px', color: '#333', padding: '12px 20px', borderRight: '2px solid #e0e0e0' }}>
-                                                                    <Markdown
-                                                                        style={{
-                                                                            fontSize: '14px',
-                                                                            fontFamily: 'Arial, sans-serif',
-                                                                            color: '#333',
-                                                                        }}
-                                                                    >
-                                                                        {item.account_info}
-                                                                    </Markdown>
-                                                                </TableCell>
 
-                                                                <TableCell sx={{ fontSize: '14px', color: '#555', padding: '12px 20px', borderRight: '2px solid #e0e0e0' }}>
-                                                                    {item.page}
-                                                                </TableCell>
-                                                                <TableCell sx={{ fontSize: '14px', color: '#555', padding: '12px 20px' }}>
-                                                                    {item.page_confidence}
-                                                                </TableCell>
-                                                            </TableRow>
-
-                                                        </React.Fragment>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                            {paginatedData1?.length > 0 && (
-                                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, mb: 2 }}>
-                                                    <Pagination
-                                                        count={totalPages_2}
-                                                        page={currentPage_2}
-                                                        onChange={(e, val) => handlePageChange1(e, val, 'page_2')}
-                                                        shape="rounded"
-                                                        variant="outlined"
-                                                        sx={{
-                                                            '& .MuiPaginationItem-root': {
+                                    <TableContainer
+                                        sx={{
+                                            overflowY: 'auto',
+                                            height: '70vh',
+                                            bgcolor: '#fafafa',
+                                            borderRadius: 4,
+                                            boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
+                                            border: '2px solid #e0e0e0',
+                                            transition: 'all 0.3s ease-in-out',
+                                            '&:hover': {
+                                                boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
+                                            },
+                                        }}
+                                    >
+                                        <Table stickyHeader>
+                                            <TableHead>
+                                                <TableRow
+                                                >
+                                                    {paginatedData1?.map((title, index) => (
+                                                        <TableCell
+                                                            key={index}
+                                                            sx={{
                                                                 fontSize: '14px',
-                                                                color: '#424242',
-                                                                borderRadius: '20px',
-                                                                border: '1px solid #e0e0e0',
-                                                                padding: '4px 12px',
-                                                                transition: 'all 0.3s',
+                                                                fontWeight: 600,
+                                                                color: '#676767',
+                                                                borderBottom: '2px solid #fff',
+                                                                borderRight: '2px solid #fff',
+                                                                letterSpacing: '1px',
+                                                                padding: '16px 20px',
+                                                                transition: 'all 0.2s ease-in-out',
                                                                 '&:hover': {
-                                                                    backgroundColor: '#1976d2',
-                                                                    color: '#fff',
+                                                                    transform: 'scale(1.05)',
                                                                     cursor: 'pointer',
                                                                 },
+                                                                whiteSpace: 'nowrap'
+                                                            }}
+                                                        >
+                                                            {title.component}
+                                                        </TableCell>
+                                                    ))}
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+
+                                                <React.Fragment>
+
+                                                    <TableRow
+                                                        hover
+                                                        sx={{
+                                                            backgroundColor: '#fff',
+                                                            '&:hover': {
+                                                                backgroundColor: '#f1f5f8',
+                                                                transform: 'scale(1.02)',
+                                                                boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
                                                             },
-                                                            '& .Mui-selected': {
+                                                            borderBottom: '2px solid #e0e0e0',
+                                                            borderRadius: '8px',
+                                                            transition: 'all 0.3s ease-in-out',
+                                                        }}
+                                                    >
+                                                        {paginatedData1?.map((item, index) => (
+                                                            <TableCell sx={{ fontSize: '13px', color: '#333', padding: '12px 20px', borderRight: '2px solid #e0e0e0' }}>
+                                                                <Markdown
+                                                                    style={{
+                                                                        fontSize: '14px',
+                                                                        fontFamily: 'Arial, sans-serif',
+                                                                        color: '#333',
+                                                                    }}
+                                                                >
+                                                                    {item.value}
+                                                                </Markdown>
+                                                            </TableCell>
+                                                        ))}
+
+                                                    </TableRow>
+
+                                                </React.Fragment>
+
+                                            </TableBody>
+                                        </Table>
+                                        {paginatedData1?.length > 0 && (
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, mb: 2 }}>
+                                                <Pagination
+                                                    count={totalPages_2}
+                                                    page={currentPage_2}
+                                                    onChange={(e, val) => handlePageChange1(e, val, 'page_2')}
+                                                    shape="rounded"
+                                                    variant="outlined"
+                                                    sx={{
+                                                        '& .MuiPaginationItem-root': {
+                                                            fontSize: '14px',
+                                                            color: '#424242',
+                                                            borderRadius: '20px',
+                                                            border: '1px solid #e0e0e0',
+                                                            padding: '4px 12px',
+                                                            transition: 'all 0.3s',
+                                                            '&:hover': {
                                                                 backgroundColor: '#1976d2',
                                                                 color: '#fff',
-                                                                border: 'none',
+                                                                cursor: 'pointer',
                                                             },
-                                                        }}
-                                                    />
-                                                </Box>
-                                            )}
-                                        </TableContainer>
+                                                        },
+                                                        '& .Mui-selected': {
+                                                            backgroundColor: '#1976d2',
+                                                            color: '#fff',
+                                                            border: 'none',
+                                                        },
+                                                    }}
+                                                />
+                                            </Box>
+                                        )}
+                                    </TableContainer>
 
-                                    ))}
+
                                 </Box>
 
 

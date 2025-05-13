@@ -1,0 +1,77 @@
+{
+  "extraction": {
+    "overall_confidence": 0.9499999999999998,
+    "pages": [
+      {
+        "page": 1,
+        "personal_info": "**Personal & Account Information**\nName: Kartik Kankane\nDate of Birth / DOB: Not Present\nPAN / Tax ID: EMGPK0916M\nAddress: Not Present\nContact / Phone / Email: 9425895677, kartikkankane007@gmail.com\nReport Date: 10-09-2024",
+        "credit_report": "**Credit Report Details**\n\n**Experian Credit Score**\nYour Experian Credit Report is summarized in the form of Experian Credit Score which ranges from 300 - 900.\n- Score: 801\n- Score Factors:\n  1. Recency: Recent Credit Account Defaults\n  2. Leverage: Credit Accounts with on-time re-payment history\n  3. Coverage: Non-delinquent and delinquent Credit Accounts\n  4. Delinquency Status: Defaults on Credit Accounts (current & recent periodic intervals)\n  5. Credit Applications: Credit Account Applications over last 30 days\n\n**Report Summary**\n- Credit Account Summary:\n  - Total number of Accounts: 10\n  - Active Accounts: 6\n  - Closed Accounts: 4\n- Current Balance Amount Summary:\n  - Total Current Bal. amt: 20,342\n  - Secured Accounts amt: 0\n  - Unsecured Accounts amt: 20,342\n- Credit Enquiry Summary:\n  - Last 7 days credit enquiries: 0\n  - Last 30 days credit enquiries: 0\n  - Last 90 days credit enquiries: 0\n  - Last 180 days credit enquiries: 0\n- Non-Credit Enquiry Summary:\n  - Last 7 days non-credit enquiries: 0\n  - Last 30 days non-credit enquiries: 0\n  - Last 90 days non-credit enquiries: 0\n  - Last 180 days non-credit enquiries: 0\n\n**Summary: Credit Account Information**\n- Account Details:\n  - Acct 1: ICICI Bank, CREDIT CARDS, 0000000015377458, Individual, 11-10-2022, CLOSED, 20191025, 16,390, 0\n  - Acct 2: Citi Capital Services, CONSUMER LOAN, 804004485997, Individual, 31-07-2020, CLOSED, 20190401, 3,500, 0\n  - Acct 3: ICICI Bank, CREDIT CARDS, 0000000016975981, Individual, 28-07-2024, ACTIVE, 20200712, 1,577.70, 8,455\n  - [Additional accounts as per the image]",
+        "page_confidence": 0.95
+      },
+      {
+        "page": 2,
+        "personal_info": "**Personal & Account Information**\nName: Deepak Kankane\nDate of Birth / DOB: 08-11-1996\nPAN / Tax ID: EMGPK0916M\nAddress: CO JAGDISH DADIYA TENDAY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR TENDY TOWER Maharashtra 411028\nContact / Phone / Email: 9112363216, KARTIK.KANKANE@ACCENTURE.COM",
+        "credit_report": "**Credit Report Details**\n\n**Credit Cards**\n- Account Number: 0000000015377458\n- Date Opened: 25-10-2019\n- Date Closed: 11-10-2022\n- Ownership: Individual\n- Account Status: CLOSED\n- Highest Credit: 16,390\n- Current Balance: 0\n- Amount Overdue: 0\n- Last Payment Date: 18-02-2021\n- Credit Limit Amount: 45,000\n\n**Payment History**\n- DPD (Days Past Due) for 2022: Jan 0, Feb 0, Mar 0, Apr 0, May 0, Jun 0, Jul 0, Aug 0, Sep 0, Oct 0, Nov 0, Dec 0\n\n**Consumer Loan**\n- Lender: Clix Capital Services Private Limited\n- Address: 188/1.RAGHUNATH GANJ,NEAR DENA BANK MURWARA,KATNI.RAGHUNATH GANJ,KATNI RAGHUNATH GANJ,KATNI MP 483501",
+        "page_confidence": 0.95
+      },
+      {
+        "page": 3,
+        "personal_info": "**Personal & Account Information**\nName: Deepak Kannake Kartik\nDate of Birth / DOB: 08-11-1996\nPAN / Tax ID: EMPGKOP196M\nAddress: 1) JAGDISH DADIYA TRENDY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR T TRENDY TOWER Maharashtra 411028, 2) SO DEEPAK KANKANE 18 RAGHUNATH GANJ UMWARA Madhya Pradesh 483501, 3) ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SZE MAGRPATTA CYBER CITY Maharashtra 411013\nContact / Phone / Email: 9425859677, kartikkannake007@gmail.com",
+        "credit_report": "**Credit Report Details**\nCredit Score: Not Present\nAccount Summary:\n- Account Number: 804004485997\n  Date Opened: 01-04-2019\n  Date Closed: 03-07-2020\n  Loan Type: CONSUMER LOAN\n  Account Status: CLOSED\n  Sanctioned Amount: 3,500\n  Current Balance: 0\n  Amount Overdue: 0\n  Last Payment Date: 03-07-2020\n- Account Number: 0000000016975981\n  Date Opened: 12-07-2020\n  Date Reported: 20-04-2028\n  Loan Type: CREDIT CARDS\n  Account Status: ACTIVE\n  Highest Credit: 1,57,770\n  Current Balance: 8,455\n  Amount Overdue: 0\n  Last Payment Date: 15-07-2024\nOutstanding Balance: Not Present\nCredit Limit: 3,000,000 (for Credit Card)\nPayment History: Not Present\nInquiries: Not Present\nPublic Records: Not Present",
+        "page_confidence": 0.95
+      }
+    ],
+    "reason": {
+      "info": "Moderately low confidence in OCR results. Please review and verify.",
+      "level": "warning"
+    }
+  },
+  "validation_result": {
+    "address_status": "present",
+    "personal_info_status": "present",
+    "components": [
+      {
+        "component": "full_name",
+        "present": true,
+        "confidence": 0.95,
+        "value": "Kartik Kankane; Deepak Kankane; Deepak Kannake Kartik"
+      },
+      {
+        "component": "date_of_birth",
+        "present": true,
+        "confidence": 0.95,
+        "value": "08-11-1996"
+      },
+      {
+        "component": "pan_num",
+        "present": true,
+        "confidence": 0.95,
+        "value": "EMGPK0916M; EMPGKOP196M"
+      },
+      {
+        "component": "full_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "CO JAGDISH DADIYA TENDAY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR TENDY TOWER Maharashtra 411028; JAGDISH DADIYA TRENDY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR T TRENDY TOWER Maharashtra 411028; SO DEEPAK KANKANE 18 RAGHUNATH GANJ UMWARA Madhya Pradesh 483501; ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SZE MAGRPATTA CYBER CITY Maharashtra 411013"
+      },
+      {
+        "component": "phone_number",
+        "present": true,
+        "confidence": 0.95,
+        "value": "9425895677; 9112363216; 9425859677"
+      },
+      {
+        "component": "email_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "kartikkankane007@gmail.com; KARTIK.KANKANE@ACCENTURE.COM; kartikkannake007@gmail.com"
+      }
+    ],
+    "overall_confidence": 0.9500000000000001,
+    "document_type": "credit_report",
+    "reason": {
+      "info": "Information is likely accurate.",
+      "level": "success"
+    }
+  }
+}
