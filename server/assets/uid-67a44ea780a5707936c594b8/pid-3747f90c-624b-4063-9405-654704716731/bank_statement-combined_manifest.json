@@ -1,0 +1,71 @@
+{
+  "source_file_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\controllers\\smfgDocumentUpdate\\1747308885180-8120584_Sunny.pdf",
+  "extraction": {
+    "overall_confidence": 0.9783862994229011,
+    "pages": [
+      {
+        "page": 1,
+        "account_info": "text\nAccount Information:\n    Holder Name: Not Present\n    Account Number: Not Present\n    Address: Not Present\n    Contact: Not Present\n    Opening Balance: N/A\n    Closing Balance: N/A",
+        "csv_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-3747f90c-624b-4063-9405-654704716731\\page_csv\\page_1.csv",
+        "page_confidence": 0.9813187500000005
+      },
+      {
+        "page": 2,
+        "account_info": "text\nAccount Information:\n    Holder Name: Not Present\n    Account Number: Not Present\n    Address: Not Present\n    Contact: Not Present\n    Opening Balance: N/A\n    Closing Balance: N/A",
+        "csv_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-3747f90c-624b-4063-9405-654704716731\\page_csv\\page_2.csv",
+        "page_confidence": 0.9830522875816994
+      },
+      {
+        "page": 3,
+        "account_info": "text\nAccount Information:\n    Holder Name: Not Present\n    Account Number: Not Present\n    Address: Not Present\n    Contact: Not Present\n    Opening Balance: N/A\n    Closing Balance: N/A",
+        "csv_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-3747f90c-624b-4063-9405-654704716731\\page_csv\\page_3.csv",
+        "page_confidence": 0.9737133757961788
+      },
+      {
+        "page": 4,
+        "account_info": "text\nAccount Information:\n    Holder Name: Not Present\n    Account Number: Not Present\n    Address: Not Present\n    Contact: Not Present\n    Opening Balance: 19513.00\n    Closing Balance: 1167.80",
+        "csv_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-3747f90c-624b-4063-9405-654704716731\\page_csv\\page_4.csv",
+        "page_confidence": 0.975460784313726
+      }
+    ],
+    "combined_csv_path": "C:\\SMFG-UPDATED\\smfgIndia-update\\server\\assets\\uid-67a44ea780a5707936c594b8\\pid-3747f90c-624b-4063-9405-654704716731\\combined_transactions.csv",
+    "reason": {
+      "info": "High confidence in OCR results.",
+      "level": "success"
+    }
+  },
+  "validation_result": {
+    "address_status": "not_present",
+    "personal_info_status": "not_present",
+    "components": [
+      {
+        "component": "full_name",
+        "present": false,
+        "confidence": 0.0
+      },
+      {
+        "component": "city_district",
+        "present": false,
+        "confidence": 0.0
+      },
+      {
+        "component": "state_province",
+        "present": false,
+        "confidence": 0.0
+      },
+      {
+        "component": "postal_code",
+        "present": false,
+        "confidence": 0.0
+      }
+    ],
+    "overall_confidence": 0.0,
+    "document_type": "bank_statement",
+    "reason": {
+      "info": "Please review and verify. Information might be missing or inaccurate.",
+      "level": "error"
+    }
+  },
+  "uuid": "67a44ea780a5707936c594b8",
+  "process_id": "3747f90c-624b-4063-9405-654704716731"
+}

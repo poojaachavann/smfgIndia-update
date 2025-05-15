@@ -601,8 +601,6 @@
 
 // export default UploadDocuments;
 
-
-
 import React, { useState } from 'react';
 import {
   Box,
@@ -629,8 +627,8 @@ const ColorlibStepIconRoot = styled('div')(({ ownerState }) => ({
   backgroundColor: ownerState.completed
     ? '#4caf50'
     : ownerState.error
-    ? '#f44336'
-    : '#e0e0e0',
+      ? '#009688'
+      : '#e0e0e0',
   zIndex: 1,
   color: '#fff',
   width: 35,
@@ -640,7 +638,7 @@ const ColorlibStepIconRoot = styled('div')(({ ownerState }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   fontWeight: 600,
-  fontFamily:"sans-serif",
+  fontFamily: "sans-serif",
   ...(ownerState.active && {
     boxShadow: '0 0 0 4px #a5d6a7',
   }),
@@ -674,17 +672,27 @@ export default function UploadDocuments({ domainPath, userLoginData, analizeDocu
   const handleFileChange = (e, key) => {
     const file = e.target.files[0];
     if (!file) return;
+
     setUploadedFiles(prev => ({
       ...prev,
       [key]: file,
     }));
+
+    e.target.value = '';
   };
 
   const handleDeleteFile = (key) => {
-    setUploadedFiles(prev => ({
-      ...prev,
-      [key]: null,
-    }));
+    setUploadedFiles(prev => {
+      const updatedFiles = { ...prev, [key]: null };
+      if (key === 'id') {
+        setActiveStep(0);
+      } else if (key === 'bank') {
+        setActiveStep(1);
+      } else if (key === 'credit') {
+        setActiveStep(2);
+      }
+      return updatedFiles;
+    });
   };
 
   const isStepComplete = index => {
@@ -920,13 +928,15 @@ function FileItem({ label, file, bgColor, color, isActive, onDelete }) {
         onClick={onDelete}
         sx={{
           cursor: 'pointer',
-          color: 'red',
+          color: '#607d8b',
           '&:hover': { opacity: 0.7 },
         }}
       />
     </Box>
   );
 }
+
+
 
 
 

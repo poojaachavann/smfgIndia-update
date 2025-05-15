@@ -1,0 +1,79 @@
+{
+  "extraction": {
+    "overall_confidence": 0.96,
+    "pages": [
+      {
+        "page": 1,
+        "personal_info": "**Personal & Account Information**  \nName: Kartik Kankane  \nDate of Birth / DOB: Not Present  \nPAN / Tax ID: EMGPK0916M  \nAddress: Not Present  \nContact / Phone / Email: 9425895677, kartikkankane007@gmail.com  \nReport Date: 10-09-2024",
+        "credit_report": "**Credit Report Details**\n\n**Experian Credit Score**\nYour Experian Credit Report is summarized in the form of Experian Credit Score which ranges from 300 - 900.\n- Score: 801\n- Score Factors:\n  1. Recency: Recent Credit Account Defaults\n  2. Leverage: Credit Accounts with on-time re-payment history\n  3. Coverage: Non-delinquent and delinquent Credit Accounts\n  4. Delinquency Status: Defaults on Credit Accounts (current & recent periodic intervals)\n  5. Credit Applications: Credit Account Applications over last 30 days\n\n**Report Summary**\n- Credit Account Summary\n  - Total number of Accounts: 10\n  - Active Accounts: 6\n  - Closed Accounts: 4\n- Current Balance Amount Summary\n  - Total Current Bal. amt: 20,342\n  - Secured Accounts amt: 0\n  - Unsecured Accounts amt: 20,342\n- Credit Enquiry Summary\n  - Last 7 days credit enquiries: 0\n  - Last 30 days credit enquiries: 0\n  - Last 90 days credit enquiries: 0\n  - Last 180 days credit enquiries: 0\n- Non-Credit Enquiry Summary\n  - Last 7 days non-credit enquiries: 0\n  - Last 30 days non-credit enquiries: 0\n  - Last 90 days non-credit enquiries: 0\n  - Last 180 days non-credit enquiries: 0\n\n**Summary: Credit Account Information**\n- Account 1: ICICI Bank, CREDIT CARDS, 0000000015377458, Individual, 11-10-2022, CLOSED, 20191025, 16,390, 0\n- Account 2: Citi Capital Services Private Limited, CONSUMER LOAN, 804004485997, Individual, 31-07-2020, CLOSED, 20190401, 3,500, 0\n- Account 3: ICICI Bank, CREDIT CARDS, 0000000016975981, Individual, 28-07-2024, ACTIVE, 20200712, 1,577.70, 8,455\n- Account 4: ARTHIMPACT DIGITAL LOANS PRIVATE LIMITED, UNSECURED LOAN, PYTMPH14438145016087, Individual, 28-02-2022, CLOSED, 20200701, 8,250, 0\n- Account 5: CapFloat Financial Services Pvt Ltd, PERSONAL LOAN, KAT2IE001230354, Individual, 31-07-2024, ACTIVE, 20210304, 1,500, 0\n- Account 6: IDFC FIRST BANK LIMITED, PERSONAL LOAN, 54029258, Individual, 30-09-2022, CLOSED, 20211017, 30,000, 0\n- Account 7: HDFC Bank Ltd, CREDIT CARDS, 000101390002021468, Individual, 31-07-2024, ACTIVE, 20220106, 1,63,389, 7,916\n- Account 8: Karur Vysya Bank Ltd, CREDIT LOAN, KAT2IE001230354, Individual, 31-07-2024, ACTIVE, 20210304, 6,000, 0\n- Account 9: SBI Cards and Payment Services Private Limited, CREDIT CARDS, 7217407543674297073, Individual, 04-08-2024, ACTIVE, 20230329, 48,622, 0\n- Account 10: ICICI Bank, CREDIT CARDS, 0000000027827112, Individual, 02-08-2024, ACTIVE, 20231029, 6,599, 3,971",
+        "page_confidence": 0.98
+      },
+      {
+        "page": 2,
+        "personal_info": "**Personal & Account Information**\nName: Deepak Kankane\nDate of Birth / DOB: 08-11-1996\nPAN / Tax ID: EMGPK0916M\nAddress: CO JAGDISH DADIYA TENDAY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR TENDY TOWER Maharashtra 411028, SO DEEPAK KANKANE 188 1 RAGHUNATH GANJ UNWARA Madhya Pradesh 483501, ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SEZ MAGARPATTA CYBER CITY Maharashtra 411013\nContact / Phone / Email: 9112363216, KARTIK.KANKANE@ACCENTURE.COM",
+        "credit_report": "**Credit Report Details**\nCredit Score: Not Present\nAccount Summary:\n- Account Number: 0000000015377458\n- Date Opened: 25-10-2019\n- Date Closed: 11-10-2022\n- Ownership: Individual\n- Account Status: CLOSED\n- Highest Credit: 16,390\n- Current Balance: 0\n- Amount Overdue: 0\n- Last Payment Date: 18-02-2021\n\nOutstanding Balance: Not Present\nCredit Limit: 45,000\nPayment History:\n- DPD 2022: Dec 0, Nov 0, Oct 0, Sep 0, Aug 0, Jul 0, Jun 0, May 0, Apr 0, Mar 0, Feb 0, Jan 0\n- DPD 2021: Dec 0, Nov 0, Oct 0, Sep 0, Aug 0, Jul 0, Jun 0, May 0, Apr 0, Mar 0, Feb 0, Jan 0\n- DPD 2020: Dec 0, Nov 0, Oct 0, Sep 0, Aug 0, Jul 0, Jun 0, May 0, Apr 0, Mar 0, Feb 0, Jan 0\n\nInquiries: Not Present\nPublic Records: Not Present\nCollections: Not Present",
+        "page_confidence": 0.95
+      },
+      {
+        "page": 3,
+        "personal_info": "**Personal & Account Information**\nName: Deepak Kannake Kartik\nDate of Birth / DOB: 08-11-1996\nPAN / Tax ID: EMPGKOP196M\nAddress: 1) JAGDISH DADIYA TRENDY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR T TRENDY TOWER Maharashtra 411028, 2) SO DEEPAK KANKANE 18 RAGHUNATH GANJ UMWARA Madhya Pradesh 483501, 3) ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SZE MAGARPATTA CYBER CITY Maharashtra 411013\nContact / Phone / Email: 9425859677, kartikkankane007@gmail.com",
+        "credit_report": "**Credit Report Details**\nCredit Score: Not Present\nAccount Summary:\n- Account Type: CONSUMER LOAN\n  - Account Number: 804004485997\n  - Date Opened: 01-04-2019\n  - Date Closed: 03-07-2020\n  - Sanctioned Amount: 3,500\n  - Current Balance: 0\n  - Account Status: CLOSED\n  - Last Payment Date: 03-07-2020\n- Account Type: CREDIT CARDS\n  - Account Number: 0000000016975981\n  - Date Opened: 12-07-2020\n  - Account Status: ACTIVE\n  - Highest Credit: 1,57,770\n  - Current Balance: 8,455\n  - Credit Limit: 3,00,000\nOutstanding Balance: Not Present\nCredit Limit: Not Present\nPayment History: Not Present\nDelinquencies: Not Present\nInquiries: Not Present\nPublic Records: Not Present\nCollections: Not Present",
+        "page_confidence": 0.95
+      }
+    ],
+    "reason": {
+      "info": "High confidence in OCR results.",
+      "level": "success"
+    }
+  },
+  "validation_result": {
+    "address_status": "present",
+    "personal_info_status": "present",
+    "components": [
+      {
+        "component": "full_name",
+        "present": true,
+        "confidence": 0.95,
+        "value": "Kartik Kankane; Deepak Kankane; Deepak Kannake Kartik"
+      },
+      {
+        "component": "date_of_birth",
+        "present": true,
+        "confidence": 0.95,
+        "value": "08-11-1996"
+      },
+      {
+        "component": "pan_num",
+        "present": true,
+        "confidence": 0.95,
+        "value": "EMGPK0916M; EMPGKOP196M"
+      },
+      {
+        "component": "full_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "CO JAGDISH DADIYA TENDAY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR TENDY TOWER Maharashtra 411028; SO DEEPAK KANKANE 188 1 RAGHUNATH GANJ UNWARA Madhya Pradesh 483501; ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SEZ MAGARPATTA CYBER CITY Maharashtra 411013; JAGDISH DADIYA TRENDY TOWER TOWER 32, FLAT NO 1305 AMNORA PARK TOWNSHIP NR T TRENDY TOWER Maharashtra 411028; SO DEEPAK KANKANE 18 RAGHUNATH GANJ UMWARA Madhya Pradesh 483501; ACCENTURE SOLUTIONS PVT LTD BUILDING NO B 4 SZE MAGARPATTA CYBER CITY Maharashtra 411013"
+      },
+      {
+        "component": "phone_number",
+        "present": true,
+        "confidence": 0.95,
+        "value": "9425895677; 9112363216; 9425859677"
+      },
+      {
+        "component": "email_address",
+        "present": true,
+        "confidence": 0.95,
+        "value": "kartikkankane007@gmail.com; KARTIK.KANKANE@ACCENTURE.COM"
+      }
+    ],
+    "overall_confidence": 0.9500000000000001,
+    "document_type": "credit_report",
+    "reason": {
+      "info": "Information is likely accurate.",
+      "level": "success"
+    }
+  },
+  "uuid": "67a44ea780a5707936c594b8",
+  "process_id": "3747f90c-624b-4063-9405-654704716731"
+}
