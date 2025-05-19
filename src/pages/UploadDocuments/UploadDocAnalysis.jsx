@@ -8,7 +8,9 @@ import {
     Button,
     Card,
     CardContent,
+    Grid,
     Pagination,
+    Paper,
     Stack,
     Table,
     TableBody,
@@ -69,12 +71,16 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
     }, [userLoginData])
 
 
-    const paginatedData = apiResBankStatement?.extraction?.pages.slice(
+    const pages = apiResBankStatement?.extraction?.pages?.length
+        ? apiResBankStatement.extraction.pages
+        : uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.pages;
+
+    const paginatedData = pages?.slice(
         (currentPage_1 - 1) * itemsPerPage,
         currentPage_1 * itemsPerPage
     );
 
-    const totalPages_1 = Math.ceil(apiResBankStatement?.extraction?.pages.length / itemsPerPage);
+    const totalPages_1 = Math.ceil(pages?.length / itemsPerPage);
 
     const handlePageChange = (event, value, pageType) => {
         if (pageType === 'page_1') {
@@ -82,18 +88,23 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
         }
     };
 
-    const paginatedData1 = uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components || apiResCreditBurea?.validation_result?.components?.slice(
+    const components = uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components?.length
+        ? uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components
+        : apiResCreditBurea?.validation_result?.components;
+
+    const paginatedData1 = components?.slice(
         (currentPage_2 - 1) * itemsPerPage2,
         currentPage_2 * itemsPerPage2
     );
 
-    const totalPages_2 = Math.ceil(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.components || apiResCreditBurea?.validation_result?.components?.length / itemsPerPage2);
+    const totalPages_2 = Math.ceil(components?.length / itemsPerPage2);
 
     const handlePageChange1 = (event, value, pageType) => {
         if (pageType === 'page_2') {
             setCurrentPage_2(value);
         }
     };
+
 
 
     const [expandedIdProof, setExpandedIdProof] = useState(false);
@@ -117,6 +128,169 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
     console.log('apiResIdProof', apiResIdProof)
     console.log('apiResBankStatement', apiResBankStatement)
     console.log('apiResCreditBurea', apiResCreditBurea)
+
+    const [showUploadedData, setShowUploadedData] = useState(false);
+    const [showUploadedData1, setShowUploadedData1] = useState(false);
+    const [showUploadedData2, setShowUploadedData2] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowUploadedData(true);
+            setShowUploadedData1(true);
+            setShowUploadedData2(true);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+
+    // id proof
+    const confidence = parseFloat(
+        showUploadedData
+            ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.extraction?.overall_confidence
+            : apiResIdProof?.extraction?.overall_confidence
+    );
+
+    const confidencePercent = (confidence * 100).toFixed(0);
+
+    const getColor = (value) => {
+        if (value < 85) return 'red';
+        if (value > 95) return '#00c853';
+        if (value >= 85 && value <= 95) return '#f0ad4e';
+        return '#aaa';
+    };
+
+
+    const reasonInfo = showUploadedData
+        ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.extraction?.reason?.info
+        : apiResIdProof?.extraction?.reason?.info;
+
+
+    const reasonInfoValidation = showUploadedData
+        ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.validation_result?.reason?.info
+        : apiResIdProof?.validation_result?.reason?.info;
+
+    const addressStatus = showUploadedData
+        ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.validation_result?.address_status
+        : apiResIdProof?.validation_result?.address_status;
+
+    const isAddressPresent = addressStatus === 'present';
+
+
+    const personalInfoReason = showUploadedData
+        ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.validation_result?.reason?.info
+        : apiResIdProof?.validation_result?.reason?.info;
+
+    const personalInfoStatus = showUploadedData
+        ? uploadedData?.[0]?.file_response?.idProof?.at(-1)?.validation_result?.personal_info_status
+        : apiResIdProof?.validation_result?.personal_info_status;
+
+    const getBorderColor = (status) => {
+        if (status === 'present') return '#00c853';
+        if (status === 'partial') return '#f0ad4e';
+        return 'red';
+    };
+    // clossed 
+
+    //bank statement
+
+    const confidenceBankStatement = parseFloat(
+        showUploadedData1
+            ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence
+            : apiResBankStatement?.extraction?.overall_confidence
+    );
+
+    const confidencePercentBankStatement = (confidenceBankStatement * 100).toFixed(0);
+
+    const getColorBankStatement = (value) => {
+        if (value < 85) return 'red';
+        if (value > 95) return '#00c853';
+        if (value >= 85 && value <= 95) return '#f0ad4e';
+        return '#aaa';
+    };
+
+
+    const reasonInfoBankStatement = showUploadedData1
+        ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.extraction?.reason?.info
+        : apiResBankStatement?.extraction?.reason?.info;
+
+
+    const reasonInfoValidationBankStatement = showUploadedData1
+        ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info
+        : apiResBankStatement?.validation_result?.reason?.info;
+
+    const addressStatusBankStatement = showUploadedData1
+        ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.address_status
+        : apiResBankStatement?.validation_result?.address_status;
+
+    const isAddressPresentBankStatement = addressStatusBankStatement === 'present';
+
+
+    const personalInfoReasonBankStatement = showUploadedData1
+        ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info
+        : apiResBankStatement?.validation_result?.reason?.info;
+
+    const personalInfoStatusBankStatement = showUploadedData1
+        ? uploadedData?.[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.personal_info_status
+        : apiResBankStatement?.validation_result?.personal_info_status;
+
+    const getBorderColorBankStatement = (status) => {
+        if (status === 'present') return '#00c853';
+        if (status === 'partial') return '#f0ad4e';
+        return 'red';
+    };
+
+    //closed
+
+    //credit bureo
+    const confidenceCreditBureo = parseFloat(
+        showUploadedData2
+            ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence
+            : apiResCreditBurea?.extraction?.overall_confidence
+    );
+
+    const confidencePercentCreditBureo = (confidenceCreditBureo * 100).toFixed(0);
+
+    const getColorCreditBureo = (value) => {
+        if (value < 85) return 'red';
+        if (value > 95) return '#00c853';
+        if (value >= 85 && value <= 95) return '#f0ad4e';
+        return '#aaa';
+    };
+
+
+    const reasonInfoCreditBureo = showUploadedData2
+        ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.extraction?.reason?.info
+        : apiResCreditBurea?.extraction?.reason?.info;
+
+
+    const reasonInfoValidationCreditBureo = showUploadedData2
+        ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info
+        : apiResCreditBurea?.validation_result?.reason?.info;
+
+    const addressStatusCreditBureo = showUploadedData2
+        ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.address_status
+        : apiResCreditBurea?.validation_result?.address_status;
+
+    const isAddressPresentCreditBureo = addressStatusCreditBureo === 'present';
+
+
+    const personalInfoReasonCreditBureo = showUploadedData2
+        ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.reason?.info
+        : apiResCreditBurea?.validation_result?.reason?.info;
+
+    const personalInfoStatusCreditBureo = showUploadedData2
+        ? uploadedData?.[0]?.file_response?.creditBureau?.at(-1)?.validation_result?.personal_info_status
+        : apiResCreditBurea?.validation_result?.personal_info_status;
+
+    const getBorderColorCreditBureo = (status) => {
+        if (status === 'present') return '#00c853';
+        if (status === 'partial') return '#f0ad4e';
+        return 'red';
+    };
+
+    //closed
+
 
     return (
         <Sidebar title={"Upload Documents"}>
@@ -143,8 +317,6 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                     }}
                                 />
                                 <Box>
-
-
                                     <Stack direction={'row'} alignItems={'start'} spacing={2}>
 
                                         <Typography
@@ -161,7 +333,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${apiResIdProof?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfo || 'No info available'} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
@@ -242,7 +414,15 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#686868' }}>Quality:</Typography>
 
                                         <Box>
-                                            <Typography sx={{ fontSize: '16px', fontWeight: '600', color: (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) < 85 ? 'red' : (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) > 95 ? '#00c853' : (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) >= 85 && (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) <= 95 ? '#f0ad4e' : '#aaa' }}>{(parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0)} <span style={{ color: '#aaa' }}>/ 100</span></Typography>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '16px',
+                                                    fontWeight: '600',
+                                                    color: getColor(confidencePercent),
+                                                }}
+                                            >
+                                                {confidencePercent} <span style={{ color: '#aaa' }}>/ 100</span>
+                                            </Typography>
                                         </Box>
                                     </Stack>
                                 </Box>
@@ -250,22 +430,25 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${apiResIdProof?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfoValidation || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResIdProof?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
-                                                    borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
+                                                    border: `4px solid ${isAddressPresent ? '#00c853' : 'red'}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow: isAddressPresent
+                                                        ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                        : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow: isAddressPresent
+                                                            ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                            : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -283,21 +466,31 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         </Tooltip>
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
-                                        <Tooltip title={`${uploadedData[0]?.file_response?.bankStatement?.at(-1)?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={personalInfoReason || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResIdProof?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResIdProof?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
+                                                    border: `4px solid ${getBorderColor(personalInfoStatus)}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow:
+                                                        personalInfoStatus === 'present'
+                                                            ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                            : personalInfoStatus === 'partial'
+                                                                ? '0 4px 12px rgba(255, 165, 0, 0.3)'
+                                                                : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow:
+                                                            personalInfoStatus === 'present'
+                                                                ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                                : personalInfoStatus === 'partial'
+                                                                    ? '0 6px 18px rgba(255, 165, 0, 0.4)'
+                                                                    : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -309,7 +502,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                         borderRadius: '50%',
                                                         objectFit: 'cover',
                                                     }}
-                                                    alt="Address Info"
+                                                    alt="Personal Info"
                                                 />
                                             </Box>
                                         </Tooltip>
@@ -321,21 +514,36 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                         }
 
 
-                        {expandedIdProof ?
+                        {expandedIdProof && (
                             <Box sx={{ mt: 4, width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                <Card sx={{ width: '100%', maxWidth: 800, p: 3, borderRadius: 3, boxShadow: 3, bgcolor: "#f0f0f4" }}>
-                                    <Stack direction="row" spacing={3} alignItems="flex-start">
+                                <Paper
+                                    elevation={4}
+                                    sx={{
+                                        width: '100%',
+                                        maxWidth: 900,
+                                        p: 4,
+                                        borderRadius: 4,
+                                        background: 'rgba(255, 255, 255, 0.75)',
+                                        backdropFilter: 'blur(12px)',
+                                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+                                    }}
+                                >
+                                    <Stack direction="row" spacing={4}>
                                         <Avatar
                                             src={`${API.filePath}${(apiResIdProof?.extraction?.faces[0][0] ||
-                                                uploadedData[0]?.file_response?.idProof?.at(-1)?.extraction?.faces[0][0]
-                                            )
+                                                uploadedData[0]?.file_response?.idProof?.at(-1)?.extraction?.faces[0][0])
                                                 ?.replace(/^.*?assets[\\/]/, '')
                                                 ?.replace(/\\/g, '/')}`}
                                             alt="Profile"
-                                            sx={{ width: 100, height: 100, borderRadius: '50%', boxShadow: 2 }}
+                                            sx={{
+                                                width: 120,
+                                                height: 120,
+                                                border: '3px solid white',
+                                                boxShadow: 3
+                                            }}
                                         />
 
-                                        <Stack direction="row" gap={6} flexWrap="wrap">
+                                        <Grid container spacing={2}>
                                             {(() => {
                                                 const components = apiResIdProof
                                                     ? apiResIdProof?.validation_result?.components
@@ -347,46 +555,44 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
 
                                                 return (
                                                     <>
-                                                        <Stack direction="column" spacing={1}>
-                                                            {firstHalf.map((data, index) => (
-                                                                <Box key={`left-${index}`}>
-                                                                    <Stack direction={'row'} gap={1} alignItems={'center'}>
-                                                                        <Typography sx={{ fontSize: '16px', color: '#aaa', fontWeight: '600' }}>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <Stack spacing={1}>
+                                                                {firstHalf.map((data, index) => (
+                                                                    <Stack key={`left-${index}`} direction="row" spacing={1} alignItems="center">
+                                                                        <Typography variant="body2" sx={{ color: '#777', fontWeight: 600 }}>
                                                                             {data.component}:
                                                                         </Typography>
-                                                                        <Typography sx={{ fontSize: '14px', color: '#676767', fontWeight: '600' }}>
+                                                                        <Typography variant="body2" sx={{ color: '#222', fontWeight: 500 }}>
                                                                             {data.value || '-'}
                                                                         </Typography>
                                                                     </Stack>
-                                                                </Box>
-                                                            ))}
-                                                        </Stack>
+                                                                ))}
+                                                            </Stack>
+                                                        </Grid>
 
-                                                        <Stack direction="column" spacing={1} >
-                                                            {secondHalf.map((data, index) => (
-                                                                <Box key={`right-${index}`}>
-                                                                    <Stack direction={'row'} gap={1} alignItems={'center'}>
-                                                                        <Typography sx={{ fontSize: '16px', color: '#aaa', fontWeight: '600' }}>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <Stack spacing={1}>
+                                                                {secondHalf.map((data, index) => (
+                                                                    <Stack key={`right-${index}`} direction="row" spacing={1} alignItems="center">
+                                                                        <Typography variant="body2" sx={{ color: '#777', fontWeight: 600 }}>
                                                                             {data.component}:
                                                                         </Typography>
-                                                                        <Typography sx={{ fontSize: '14px', color: '#676767', fontWeight: '600' }}>
+                                                                        <Typography variant="body2" sx={{ color: '#222', fontWeight: 500 }}>
                                                                             {data.value || '-'}
                                                                         </Typography>
                                                                     </Stack>
-                                                                </Box>
-                                                            ))}
-                                                        </Stack>
+                                                                ))}
+                                                            </Stack>
+                                                        </Grid>
                                                     </>
                                                 );
                                             })()}
-                                        </Stack>
+                                        </Grid>
                                     </Stack>
-
-
-                                </Card>
+                                </Paper>
                             </Box>
+                        )}
 
-                            : ''}
                     </Box>
 
                     <Box sx={{
@@ -424,7 +630,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${apiResBankStatement?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfoBankStatement || 'No info available'} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
@@ -505,30 +711,42 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#686868' }}>Quality:</Typography>
 
                                         <Box>
-                                            <Typography sx={{ fontSize: '16px', fontWeight: '600', color: (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) < 85 ? 'red' : (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) > 95 ? '#00c853' : (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) >= 85 && (parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) <= 95 ? '#f0ad4e' : '#aaa' }}>{(parseFloat(uploadedData[0]?.file_response?.bankStatement?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0)} <span style={{ color: '#aaa' }}>/ 100</span></Typography>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '16px',
+                                                    fontWeight: '600',
+                                                    color: getColorBankStatement(confidencePercentBankStatement),
+                                                }}
+                                            >
+                                                {confidencePercentBankStatement} <span style={{ color: '#aaa' }}>/ 100</span>
+                                            </Typography>
                                         </Box>
                                     </Stack>
                                 </Box>
 
+
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${apiResBankStatement?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfoValidationBankStatement || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResBankStatement?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
-                                                    borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
+                                                    border: `4px solid ${isAddressPresentBankStatement ? '#00c853' : 'red'}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow: isAddressPresentBankStatement
+                                                        ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                        : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow: isAddressPresentBankStatement
+                                                            ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                            : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -544,26 +762,33 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 />
                                             </Box>
                                         </Tooltip>
-
-
-
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
-                                        <Tooltip title={`${apiResBankStatement?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={personalInfoReasonBankStatement || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResBankStatement?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResBankStatement?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'}`,
+                                                    border: `4px solid ${getBorderColorBankStatement(personalInfoStatusBankStatement)}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow:
+                                                        personalInfoStatusBankStatement === 'present'
+                                                            ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                            : personalInfoStatusBankStatement === 'partial'
+                                                                ? '0 4px 12px rgba(255, 165, 0, 0.3)'
+                                                                : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow:
+                                                            personalInfoStatusBankStatement === 'present'
+                                                                ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                                : personalInfoStatusBankStatement === 'partial'
+                                                                    ? '0 6px 18px rgba(255, 165, 0, 0.4)'
+                                                                    : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -575,7 +800,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                         borderRadius: '50%',
                                                         objectFit: 'cover',
                                                     }}
-                                                    alt="Address Info"
+                                                    alt="Personal Info"
                                                 />
                                             </Box>
                                         </Tooltip>
@@ -683,7 +908,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 .replace(/^.*?(\d{13}-)/, '')}
                                         </Typography>
 
-                                        <Tooltip title={`${apiResCreditBurea?.extraction?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfoCreditBureo || 'No info available'} arrow>
                                             <InfoIcon sx={{ color: '#aaa', fontSize: '20px' }} />
                                         </Tooltip>
                                     </Stack>
@@ -764,7 +989,15 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                         <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#686868' }}>Quality:</Typography>
 
                                         <Box>
-                                            <Typography sx={{ fontSize: '16px', fontWeight: '600', color: (parseFloat(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) < 85 ? 'red' : (parseFloat(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) > 95 ? '#00c853' : (parseFloat(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) >= 85 && (parseFloat(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0) <= 95 ? '#f0ad4e' : '#aaa' }}>{(parseFloat(uploadedData[0]?.file_response?.creditBureau?.at(-1)?.extraction?.overall_confidence) * 100)?.toFixed(0)} <span style={{ color: '#aaa' }}>/ 100</span></Typography>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '16px',
+                                                    fontWeight: '600',
+                                                    color: getColorCreditBureo(confidencePercentCreditBureo),
+                                                }}
+                                            >
+                                                {confidencePercentCreditBureo} <span style={{ color: '#aaa' }}>/ 100</span>
+                                            </Typography>
                                         </Box>
                                     </Stack>
                                 </Box>
@@ -772,22 +1005,25 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Stack direction={'row'} alignItems={'center'} gap={1}>
 
-                                        <Tooltip title={`${apiResCreditBurea?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={reasonInfoValidationCreditBureo || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResBankStatement?.validation_result?.address_status === 'present' ? '#00c853' : 'red'}`,
-                                                    borderColor: 'linear-gradient(45deg, #00c853, #64dd17)',
+                                                    border: `4px solid ${isAddressPresentCreditBureo ? '#00c853' : 'red'}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow: isAddressPresentCreditBureo
+                                                        ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                        : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow: isAddressPresentCreditBureo
+                                                            ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                            : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -803,27 +1039,33 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                 />
                                             </Box>
                                         </Tooltip>
-
-
-
                                     </Stack>
                                     <Stack direction={'row'} alignItems={'center'} gap={1} >
-                                        <Tooltip title={`${apiResCreditBurea?.validation_result?.reason?.info}`} arrow>
+                                        <Tooltip title={personalInfoReasonCreditBureo || 'No info available'} arrow>
                                             <Box
                                                 sx={{
-                                                    border: `4px solid ${apiResCreditBurea?.validation_result?.personal_info_status === 'present' ? '#00c853' : apiResCreditBurea?.validation_result?.personal_info_status === 'partial' ? '#f0ad4e' : 'red'
-                                                        }`,
+                                                    border: `4px solid ${getBorderColorCreditBureo(personalInfoStatusCreditBureo)}`,
                                                     borderRadius: '50%',
                                                     padding: '7px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     background: 'white',
-                                                    boxShadow: '0 4px 12px rgba(0, 128, 0, 0.3)',
+                                                    boxShadow:
+                                                        personalInfoStatusCreditBureo === 'present'
+                                                            ? '0 4px 12px rgba(0, 128, 0, 0.3)'
+                                                            : personalInfoStatusCreditBureo === 'partial'
+                                                                ? '0 4px 12px rgba(255, 165, 0, 0.3)'
+                                                                : '0 4px 12px rgba(255, 0, 0, 0.3)',
                                                     transition: 'transform 0.3s ease-in-out',
                                                     '&:hover': {
                                                         transform: 'scale(1.1)',
-                                                        boxShadow: '0 6px 18px rgba(0, 128, 0, 0.4)',
+                                                        boxShadow:
+                                                            personalInfoStatusCreditBureo === 'present'
+                                                                ? '0 6px 18px rgba(0, 128, 0, 0.4)'
+                                                                : personalInfoStatusCreditBureo === 'partial'
+                                                                    ? '0 6px 18px rgba(255, 165, 0, 0.4)'
+                                                                    : '0 6px 18px rgba(255, 0, 0, 0.4)',
                                                     },
                                                 }}
                                             >
@@ -835,7 +1077,7 @@ export default function UploadDocAnalysis({ domainPath, userLoginData, isLoading
                                                         borderRadius: '50%',
                                                         objectFit: 'cover',
                                                     }}
-                                                    alt="Address Info"
+                                                    alt="Personal Info"
                                                 />
                                             </Box>
                                         </Tooltip>

@@ -70,9 +70,9 @@ export default function App() {
           console.log('response ai analysis', response?.data?.answer);
           setApiResCreditBurea(response.data.answer)
           setIsLoadingcreditbuero(false)
-          setTimeout(() => {
-            window.location.reload()
-          }, 500)
+          // setTimeout(() => {
+          //   window.location.reload()
+          // }, 500)
 
         }
       }
@@ -93,7 +93,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/uploadDocument" element={<UploadDocuments domainPath={domainPath} userLoginData={userLoginData} analizeDocument={analizeDocument} />} />
-          <Route path="/home" element={<History />} />
+          <Route path="/home" element={<History domainPath={domainPath} userLoginData={userLoginData} analizeDocument={analizeDocument} />} />
           <Route path="/CostAnalysis" element={<CostAnalysis />} />
 
           <Route path="/uploadDocument/:id" element={<UploadDocAnalysis domainPath={domainPath} userLoginData={userLoginData} isLoadingIdProof={isLoadingIdProof} isLoadingBankStatement={isLoadingBankStatement} isLoadingcreditbuero={isLoadingcreditbuero} apiResIdProof={apiResIdProof} apiResBankStatement={apiResBankStatement} apiResCreditBurea={apiResCreditBurea} />} />

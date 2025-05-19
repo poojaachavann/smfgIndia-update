@@ -16,7 +16,7 @@ const uniqueId = uuidv4();
 
 const getPythonCommand = (script, filePath, userId, domain) => {
     const pythonInterpreter = domain === "localhost:5173"
-        ? 'C:\\SMFG-UPDATED\\smfgIndia-update\\server\\smfgEnv\\Scripts\\python.exe'
+        ? 'C:\\smfgIndiaUpdate\\server\\smfgUpdateEnv\\Scripts\\python.exe'
         : 'python3.11';
 
     return `${pythonInterpreter} ${script} --file_path "${filePath}" --uuid "${userId}" --process_id "${uniqueId}"`;

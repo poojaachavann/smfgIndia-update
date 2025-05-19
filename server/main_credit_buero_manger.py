@@ -184,6 +184,8 @@ Contact / Phone / Email: 912234567890, john.doe@example.com
             "reason": reason,
         },
         "validation_result": validation_result,
+        "uuid": uuid,
+        "process_id": process_id,
     }
     combined_json_path = os.path.join(base_path, "credit_report-combined_manifest.json")
     with open(combined_json_path, "w", encoding="utf-8") as jf:

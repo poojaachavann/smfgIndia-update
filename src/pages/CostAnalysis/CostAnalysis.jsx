@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Sidebar from '../../Component/Sidebar'; // Adjust path if needed
+import Sidebar from '../../Component/Sidebar';
 import { motion } from 'framer-motion';
 
 const rows = [

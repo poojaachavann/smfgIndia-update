@@ -2,167 +2,69 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../Component/Sidebar';
 import {
     Table, TableBody, TableCell, TableContainer,
-    TableHead, TableRow, Paper, Checkbox, Box,
-    Typography, TextField, InputAdornment, Collapse, IconButton,
-    Stack, Button, Card, CardContent, Avatar, Tooltip
+    TableHead, TableRow, Paper, Box, Typography,
+    TextField, InputAdornment
 } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import InfoIcon from '@mui/icons-material/Info';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import axios from 'axios';
+import API from '../../Component/BaseURL';
 
-import pdficon from '../../assets/pdf.png';
-
-import addressInfo from '../../assets/addressInfo.png'
-
-import personalInfo from '../../assets/personalInfo.png'
-
-import checkIicon from '../../assets/checkicon.png'
-
-function History() {
+function History({ domainPath, userLoginData }) {
     const [users, setUsers] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [expandedUserIds, setExpandedUserIds] = useState([]);
-    const [selectedUsersData, setSelectedUsersData] = useState({});
+    const [searchQuery, setSearchQuery] = useState("");
 
-    useEffect(() => {
-        const mockUsers = [
-            {
-                id: 1,
-                fullName: "Pooja Chavan",
-                dob: "1990-01-15",
-                gender: "Female",
-                aadharCardNumber: "1234-5678-9012",
-                aadhar: "Pooja_Adhar.pdf",
-                bankStatement: "pooja_bank.pdf",
-                creditReport: "pooja_credit.pdf",
-
-
-                analysis: {
-                    aadhar: {
-                        quality: 92,
-                        addressMatch: 'present',
-                        personalInfoMatch: 'complete',
-                        fullName: 'Pooja Chavan',
-                        dob: '1990-01-15',
-                        gender: 'Female',
-                        aadharCardNumber: '1234-5678-9012',
-                        address: 'Some Address, Some City',
-                        issueDate: '2015-05-10',
-                        expiryDate: 'N/A',
-                        issuingAuthority: 'UIDAI'
-                    },
-                    bankStatement: {
-                        quality: 88,
-                        accountNumberMatch: 'present',
-                        transactionCount: 50
-                    },
-                    creditReport: {
-                        score: 750,
-                        negativeRemarks: 0
-                    }
-                }
-            },
-            {
-                id: 2,
-                fullName: "Yugal Otari",
-                dob: "1988-05-20",
-                gender: "Male",
-                aadharCardNumber: "2345-6789-0123",
-                aadhar: "Yugal_Adhar.pdf",
-                bankStatement: "yugal_bank.pdf",
-                creditReport: "yugal_credit.pdf",
-                analysis: {
-                    aadhar: {
-                        quality: 78,
-                        addressMatch: 'not present',
-                        personalInfoMatch: 'partial',
-                        fullName: 'Yugal Otari',
-                        dob: '1988-05-20',
-                        gender: 'Male',
-                        aadharCardNumber: '2345-6789-0123',
-                        address: 'Another Address',
-                        issueDate: '2018-11-22',
-                        expiryDate: 'N/A',
-                        issuingAuthority: 'UIDAI'
-                    },
-                    bankStatement: {
-                        quality: 95,
-                        accountNumberMatch: 'present',
-                        transactionCount: 120
-                    },
-                    creditReport: {
-                        score: 680,
-                        negativeRemarks: 1
-                    }
-                }
-            },
-            {
-                id: 3,
-                fullName: "Sanika Mahtre",
-                dob: "1992-08-10",
-                gender: "Female",
-                aadharCardNumber: "3456-7890-1234",
-                aadhar: "Sanika_Adhar.pdf",
-                bankStatement: "sanika_bank.pdf",
-                creditReport: "sanika_credit.pdf",
-                analysis: {
-                    aadhar: {
-                        quality: 98,
-                        addressMatch: 'present',
-                        personalInfoMatch: 'complete',
-                        fullName: 'Sanika Mahtre',
-                        dob: '1992-08-10',
-                        gender: 'Female',
-                        aadharCardNumber: '3456-7890-1234',
-                        address: 'Yet Another Address, Different City',
-                        issueDate: '2020-03-01',
-                        expiryDate: 'N/A',
-                        issuingAuthority: 'UIDAI'
-                    },
-                    bankStatement: {
-                        quality: 85,
-                        accountNumberMatch: 'present',
-                        transactionCount: 75
-                    },
-                    creditReport: {
-                        score: 790,
-                        negativeRemarks: 0
-                    }
-                }
-            }
-        ];
-        setUsers(mockUsers);
-    }, []);
-
-    const handleCheckboxToggle = (user) => {
-        setExpandedUserIds(prev =>
-            prev.includes(user.id)
-                ? prev.filter(userId => userId !== user.id)
-                : [...prev, user.id]
-        );
-
-        setSelectedUsersData(prev => ({
-            ...prev,
-            [user.id]: user
-        }));
+    const uploadDocumentData = async () => {
+        try {
+            const response = await axios.get(API.uploadDataFetch);
+            const filtered = response.data?.uploadedData.filter(
+                (data) => data._id === userLoginData?._id
+            );
+            setUsers(filtered);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const filteredUsers = users.filter(user =>
-        [user.fullName, user.dob, user.gender, user.aadharCardNumber]
-            .some(field => field.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    useEffect(() => {
+        uploadDocumentData();
+    }, [userLoginData]);
+
+    const extractComponentsAsObject = (components = []) => {
+        const obj = {};
+        components.forEach(item => {
+            obj[item.component] = item.value || "-";
+        });
+        return obj;
+    };
+
+    const componentKeys = [
+        'full_name',
+        'date_of_birth',
+        'gender',
+        'aadhaar_num',
+        'full_address',
+        'city_district',
+        'state_province',
+        'postal_code'
+    ];
+
+    const componentLabels = {
+        full_name: "Full Name",
+        date_of_birth: "Date of Birth",
+        gender: "Gender",
+        aadhaar_num: "Aadhaar Number",
+        full_address: "Full Address",
+        city_district: "City / District",
+        state_province: "State / Province",
+        postal_code: "Postal Code"
+    };
 
     return (
         <Sidebar title={"History"}>
             <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
                 <Box sx={{ width: "250px" }}>
                     <TextField
-                        placeholder="Search user..."
+                        placeholder="Search by name or Aadhaar..."
                         variant="outlined"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -183,158 +85,83 @@ function History() {
                 </Box>
             </Box>
 
-            <TableContainer component={Paper} elevation={3} sx={{ borderRadius: "12px", overflow: "hidden" }}>
-                <Table>
-                    <TableHead sx={{ backgroundColor: "#1976d2" }}>
-                        <TableRow>
-                            <TableCell sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Select</TableCell>
-                            <TableCell sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Full Name</TableCell>
-                            <TableCell sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Date Of Birth</TableCell>
-                            <TableCell sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Gender</TableCell>
-                            <TableCell sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Aadhar Card Number</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredUsers.length > 0 ? (
-                            filteredUsers.map((user, index) => {
-                                const isExpanded = expandedUserIds.includes(user.id);
-
-                                return (
-                                    <React.Fragment key={user.id}>
-                                        <TableRow hover>
-                                            <TableCell align="center">
-                                                <Checkbox
-                                                    checked={isExpanded}
-                                                    onChange={() => handleCheckboxToggle(user)}
-                                                />
-                                            </TableCell>
-                                            <TableCell align="center">{user.fullName}</TableCell>
-                                            <TableCell align="center">{user.dob}</TableCell>
-                                            <TableCell align="center">{user.gender}</TableCell>
-                                            <TableCell align="center">{user.aadharCardNumber}</TableCell>
-                                        </TableRow>
-                                        {isExpanded && selectedUsersData[user.id] && (
-                                            <TableRow>
-                                                <TableCell colSpan={5} sx={{ padding: 2 }}>
-                                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-
-                                                        <Box sx={{
-                                                            bgcolor: "#fff",
-                                                            p: 3,
-                                                            borderRadius: "10px",
-                                                            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-                                                        }}>
-                                                            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} mb={2}>
-                                                                <Stack direction="row" spacing={2} alignItems="center">
-                                                                    <img src={pdficon} alt="Aadhar PDF" style={{ width: '50px', height: '50px', mixBlendMode: 'darken' }} />
-                                                                    <Box>
-                                                                        <Typography sx={{ color: '#676767', fontSize: '18px', fontWeight: '600', mb: '5px' }}>
-                                                                            Aadhar - {selectedUsersData[user.id].aadhar}
-                                                                        </Typography>
-                                                                        <Typography sx={{ color: '#999', fontSize: '15px', fontStyle: 'italic' }}>
-                                                                            ID Proof
-                                                                        </Typography>
-                                                                    </Box>
-                                                                </Stack>
-                                                                <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                                                    <Typography sx={{ fontWeight: 'bold' }}>Quality: {selectedUsersData[user.id].analysis?.aadhar?.quality}/100</Typography>
-                                                                    <Tooltip title={`Address Match: ${selectedUsersData[user.id].analysis?.aadhar?.addressMatch}`} arrow>
-                                                                        {selectedUsersData[user.id].analysis?.aadhar?.addressMatch === 'present' ? <CheckCircleOutlineIcon color="success" /> : <ErrorOutlineIcon color="error" />}
-                                                                    </Tooltip>
-                                                                    <Tooltip title={`Personal Info Match: ${selectedUsersData[user.id].analysis?.aadhar?.personalInfoMatch}`} arrow>
-                                                                        {selectedUsersData[user.id].analysis?.aadhar?.personalInfoMatch === 'complete' ? <CheckCircleOutlineIcon color="success" /> : selectedUsersData[user.id].analysis?.aadhar?.personalInfoMatch === 'partial' ? <WarningAmberOutlinedIcon color="warning" /> : <ErrorOutlineIcon color="error" />}
-                                                                    </Tooltip>
-                                                                </Stack>
-                                                            </Stack>
-                                                            <Collapse in={true} timeout="auto" unmountOnExit>
-                                                                <Box sx={{ pl: 2 }}>
-                                                                    <Typography variant="subtitle1" gutterBottom>Aadhar Details:</Typography>
-                                                                    <Typography>Full Name: {selectedUsersData[user.id].analysis?.aadhar?.fullName}</Typography>
-                                                                    <Typography>Date of Birth: {selectedUsersData[user.id].analysis?.aadhar?.dob}</Typography>
-                                                                    <Typography>Gender: {selectedUsersData[user.id].analysis?.aadhar?.gender}</Typography>
-                                                                    <Typography>Aadhar Number: {selectedUsersData[user.id].analysis?.aadhar?.aadharCardNumber}</Typography>
-                                                                    <Typography>Address: {selectedUsersData[user.id].analysis?.aadhar?.address}</Typography>
-                                                                    <Typography>Issue Date: {selectedUsersData[user.id].analysis?.aadhar?.issueDate}</Typography>
-                                                                    <Typography>Expiry Date: {selectedUsersData[user.id].analysis?.aadhar?.expiryDate || 'N/A'}</Typography>
-                                                                    <Typography>Issuing Authority: {selectedUsersData[user.id].analysis?.aadhar?.issuingAuthority}</Typography>
-                                                                </Box>
-                                                            </Collapse>
-                                                        </Box>
-
-                                                        <Box sx={{
-                                                            bgcolor: "#fff",
-                                                            p: 3,
-                                                            borderRadius: "10px",
-                                                            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-                                                        }}>
-                                                            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} mb={2}>
-                                                                <Stack direction="row" spacing={2} alignItems="center">
-                                                                    <img src={pdficon} alt="Bank Statement PDF" style={{ width: '50px', height: '50px', mixBlendMode: 'darken' }} />
-                                                                    <Box>
-                                                                        <Typography sx={{ color: '#676767', fontSize: '18px', fontWeight: '600', mb: '5px' }}>
-                                                                            Bank Statement - {selectedUsersData[user.id].bankStatement}
-                                                                        </Typography>
-                                                                        <Typography sx={{ color: '#999', fontSize: '15px', fontStyle: 'italic' }}>
-                                                                            Financial Document
-                                                                        </Typography>
-                                                                    </Box>
-                                                                </Stack>
-                                                                <Typography sx={{ fontWeight: 'bold' }}>Quality: {selectedUsersData[user.id].analysis?.bankStatement?.quality}/100</Typography>
-                                                            </Stack>
-                                                            <Collapse in={true} timeout="auto" unmountOnExit>
-                                                                <Box sx={{ pl: 2 }}>
-                                                                    <Typography variant="subtitle1" gutterBottom>Bank Statement Details:</Typography>
-                                                                    <Typography>Account Number Match: {selectedUsersData[user.id].analysis?.bankStatement?.accountNumberMatch}</Typography>
-                                                                    <Typography>Transaction Count: {selectedUsersData[user.id].analysis?.bankStatement?.transactionCount}</Typography>
-
-                                                                </Box>
-                                                            </Collapse>
-                                                        </Box>
-
-                                                        <Box sx={{
-                                                            bgcolor: "#fff",
-                                                            p: 3,
-                                                            borderRadius: "10px",
-                                                            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-                                                        }}>
-                                                            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} mb={2}>
-                                                                <Stack direction="row" spacing={2} alignItems="center">
-                                                                    <img src={pdficon} alt="Credit Report PDF" style={{ width: '50px', height: '50px', mixBlendMode: 'darken' }} />
-                                                                    <Box>
-                                                                        <Typography sx={{ color: '#676767', fontSize: '18px', fontWeight: '600', mb: '5px' }}>
-                                                                            Credit Report - {selectedUsersData[user.id].creditReport}
-                                                                        </Typography>
-                                                                        <Typography sx={{ color: '#999', fontSize: '15px', fontStyle: 'italic' }}>
-                                                                            Financial Assessment
-                                                                        </Typography>
-                                                                    </Box>
-                                                                </Stack>
-                                                                <Typography sx={{ fontWeight: 'bold' }}>Credit Score: {selectedUsersData[user.id].analysis?.creditReport?.score}</Typography>
-                                                            </Stack>
-                                                            <Collapse in={true} timeout="auto" unmountOnExit>
-                                                                <Box sx={{ pl: 2 }}>
-                                                                    <Typography variant="subtitle1" gutterBottom>Credit Report Details:</Typography>
-                                                                    <Typography>Negative Remarks: {selectedUsersData[user.id].analysis?.creditReport?.negativeRemarks}</Typography>
-                                                                </Box>
-                                                            </Collapse>
-                                                        </Box>
-                                                    </Box>
-                                                </TableCell>
-                                            </TableRow>
-                                        )}
-                                    </React.Fragment>
-                                );
-                            })
-                        ) : (
+            <Box sx={{
+                maxHeight: "70vh",
+                overflow: "auto",
+                borderRadius: "12px",
+                boxShadow: 3,
+                backgroundColor: "#fff"
+            }}>
+                <TableContainer component={Paper} sx={{
+                    minWidth: "800px",
+                    overflow: "auto",
+                    borderRadius: "12px"
+                }}
+                >
+                    <Table stickyHeader>
+                        <TableHead sx={{ backgroundColor: "#1976d2" }}>
                             <TableRow>
-                                <TableCell colSpan={5} align="center">
-                                    <Typography>No results found</Typography>
-                                </TableCell>
+                                {componentKeys.map((key) => (
+                                    <TableCell
+                                        key={key}
+                                        sx={{
+                                            color: "#fff",
+                                            fontWeight: "bold",
+                                            textAlign: "center",
+                                            whiteSpace: "nowrap",
+                                            backgroundColor: "#1976d2",
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1
+                                        }}
+                                    >
+                                        {componentLabels[key]}
+                                    </TableCell>
+                                ))}
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {users.length > 0 ? (
+                                users
+                                    .filter((user) => {
+                                        const componentsArray = user?.file_response?.idProof?.[0]?.validation_result?.components || [];
+                                        const componentsObj = extractComponentsAsObject(componentsArray);
+                                        const searchString = `${componentsObj.full_name || ""} ${componentsObj.aadhaar_num || ""}`.toLowerCase();
+                                        return searchString.includes(searchQuery.toLowerCase());
+                                    })
+                                    .map((user) => {
+                                        const componentsArray = user?.file_response?.idProof?.[0]?.validation_result?.components || [];
+                                        const componentsObj = extractComponentsAsObject(componentsArray);
+
+                                        return (
+                                            <TableRow key={user._id} hover sx={{
+                                                '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' },
+                                                '&:hover': { backgroundColor: '#e3f2fd' },
+                                                cursor: 'pointer'
+
+                                            }}
+                                                onClick={() => window.location.href = `/uploadDocument/${user?.file_response?.idProof?.[0]?.process_id
+                                                    }`}
+                                            >
+                                                {componentKeys.map((key) => (
+                                                    <TableCell key={key} align="center">
+                                                        {componentsObj[key] || "-"}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        );
+                                    })
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={componentKeys.length} align="center">
+                                        <Typography>No results found</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
         </Sidebar>
     );
 }
