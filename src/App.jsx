@@ -9,7 +9,6 @@ import API from "./Component/BaseURL"
 import History from "./pages/History/History"
 import CostAnalysis from "./pages/CostAnalysis/CostAnalysis"
 
-
 export default function App() {
 
   const urls = window.location.href
@@ -71,9 +70,9 @@ export default function App() {
           console.log('response ai analysis', response?.data?.answer);
           setApiResCreditBurea(response.data.answer)
           setIsLoadingcreditbuero(false)
-          // setTimeout(() => {
-          //   window.location.reload()
-          // }, 1000)
+          setTimeout(() => {
+            window.location.reload()
+          }, 500)
 
         }
       }
