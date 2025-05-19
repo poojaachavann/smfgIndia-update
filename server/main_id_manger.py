@@ -223,6 +223,8 @@ def main(file_paths=[], out_dir="assets", uuid=None, process_id=None):
     validation_result = validate_document(results['extraction']['pages']['personal_info'], document_type="id_proof")
    
     results['validation_result'] = validation_result
+    results['uuid']=uuid
+    results['process_id']=process_id
     write_json(results,json_path)
    
     print("Validation Results :", extraction_results)
